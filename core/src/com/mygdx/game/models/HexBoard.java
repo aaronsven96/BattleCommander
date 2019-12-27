@@ -10,17 +10,17 @@ public interface HexBoard<T> {
     /*
      * A function that returns the object at position x,y
      */
-    public T getHex(int x, int y);
+    public T getHex(Position p);
 
     /*
      * A function that returns a list of neighbors to an hex at x,y
      */
-    public List<T> getHexNeighbors(int x, int y);
+    public List<T> getHexNeighbors(Position p);
 
     /*
      * A function that sets a hex at position x,y
      */
-    public boolean setHex(int x, int y, T hex);
+    public boolean setHex(Position p, T hex);
 
     /*
      *

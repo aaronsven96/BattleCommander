@@ -18,15 +18,15 @@ public interface Move {
     /**
      * The current move
      */
-    Direction currentMove();
+    Command currentMove();
 
     /**
      * Iterates to the next move
      */
-    Direction nextMove();
+    Command nextMove();
 
     /**
      * A list of all the Directions a unit will move with this move
      */
-    List<Direction> getMovement();
+    List<Command> getMovement();
 }
