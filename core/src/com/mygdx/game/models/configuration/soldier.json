@@ -1,0 +1,6 @@
+{
+  "Name": "Soldier",
+  "Description": "An example configuration file for a soldier",
+  "Health": 5,
+  "Strength": 10
+}
