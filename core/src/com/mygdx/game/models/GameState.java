@@ -1,5 +1,7 @@
 package com.mygdx.game.models;
 
+import java.util.List;
+
 /**
  * A class that represents all information about the game
  */
@@ -25,7 +27,12 @@ public interface GameState {
     boolean advanceTurn();
 
     /**
-     *
+     * Get possibles positions for action
+     */
+    List<Position> getsAllPossiblePositionsForAnActionTypeAUnitCanMake(int unitID, Action action);
+
+    /**
+     * Get Hes bao
      */
 
     //Todo Define functions which we need t o show to user
