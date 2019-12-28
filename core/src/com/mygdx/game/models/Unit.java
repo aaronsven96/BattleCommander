@@ -8,5 +8,4 @@ public interface Unit {
 
     public void setUnitState(UnitState unitState);
 
-
 }

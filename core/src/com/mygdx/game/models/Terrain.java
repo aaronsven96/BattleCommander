@@ -14,17 +14,6 @@ public interface Terrain {
     public String getType();
 
     /**
-     * Get the units that on on this hex
-     */
-    public List<Unit> getUnits();
-
-    /**
-     * Get the interaction of the tile
-     */
-    public Optional<Interaction> getInteraction();
-
-
-    /**
      * The Defense of the tile
      */
     public int getDefense();
