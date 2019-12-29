@@ -1,4 +1,4 @@
-package com.mygdx.game.models;
+package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -25,10 +25,21 @@ public class BoardDrawer implements Disposable {
         drawer = new ShapeDrawer(batch, region);
     }
 
+    // Draws an array of hexes based on a boolean array
+    int spacing = 25;
+    int size = 50;
+    int half = size/2;
     public void drawHexes(boolean[][] whereToDraw){
-        for(int i=0; i<whereToDraw.length; i++){
-            for(int j=0; j<whereToDraw[0].length; j++){
-                drawer.polygon(x, y, 6, 30,30,0,3);
+        for(int x=0; x<whereToDraw.length; x++){
+            for(int y=0; y<whereToDraw[x].length; y++){
+                // If the row is odd, then offset it.
+                if((y+1)%2== 1) {
+                    drawer.polygon( size+spacing + (size+spacing)*2 * x, 0 + (size+spacing-half) * y, 6, 50, 50, 0, 1);
+                }
+                else {
+                    drawer.polygon( 0 + (size+spacing)*2 * x, 0 + (size+spacing-half) * y, 6, 50, 50, 0, 1);
+                }
+
             }
         }
 

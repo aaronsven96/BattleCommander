@@ -119,5 +119,6 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         implementation "space.earlygrey:shapedrawer:$shapedrawerVersion"
+        implementation 'com.google.code.gson:gson:2.8.6'
     }
 }

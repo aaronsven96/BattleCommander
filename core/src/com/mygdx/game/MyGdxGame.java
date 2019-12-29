@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.models.Position;
 
+import java.util.Arrays;
+
 import javax.xml.soap.Text;
 
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -20,6 +22,8 @@ public class MyGdxGame extends ApplicationAdapter {
     Texture img;
     ShapeDrawer drawer;
     Texture texture;
+    BoardDrawer boardDrawer;
+    boolean[][] booleans = new boolean[4][4];
 
     @Override
     public void create() {
@@ -32,6 +36,10 @@ public class MyGdxGame extends ApplicationAdapter {
         pixmap.dispose();
         TextureRegion region = new TextureRegion(img, 0, 0, 100, 100);
         drawer = new ShapeDrawer(batch, region);
+        boardDrawer = new BoardDrawer(batch);
+        for(boolean[] i: booleans) {
+            Arrays.fill(i, Boolean.TRUE);
+        }
     }
 
     @Override
@@ -39,7 +47,7 @@ public class MyGdxGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-
+        boardDrawer.drawHexes(booleans);
         //batch.draw(img, 0, 0);
         drawHex(100,100,drawer);
         batch.end();
