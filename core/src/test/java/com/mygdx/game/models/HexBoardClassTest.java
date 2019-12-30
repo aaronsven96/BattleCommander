@@ -21,7 +21,7 @@ public class HexBoardClassTest {
         p2 = new PositionClass(9, 9);
         p3 = new PositionClass(10, 0);
 
-        // Sets up the board with dummy Strings
+        // Set up the board with dummy Strings
         for (int i = 0; i < h.getBoard()[0].length; i++) {
             for (int j = 0; j < h.getBoard().length; j++) {
                 h.getBoard()[i][j] = (T) ("" + i + j);
