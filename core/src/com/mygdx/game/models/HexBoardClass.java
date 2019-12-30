@@ -23,6 +23,7 @@ public class HexBoardClass<T> implements HexBoard {
     @Nullable
     @Override
     public T getHex(Position p) {
+        // Returns null if position outside bounds
         return p.getX() >= 0 && p.getX() <= xLength - 1 && p.getY() >= 0 && p.getY() <= yLength - 1 ? board[p.getX()][p.getY()] : null;
     }
 
