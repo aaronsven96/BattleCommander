@@ -64,7 +64,7 @@ public class HexBoardClass<T> implements HexBoard {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false; // Returns false if null Object passed in
+        return false; // Returns false if position outside bounds or null Object passed in
     }
 
     public T[][] getBoard() {
