@@ -18,7 +18,7 @@ public class HexBoardClass<T> implements HexBoard {
     }
 
     /*
-     * A function that returns the object at position x,y
+     * Returns the object at position x,y
      */
     @Nullable
     @Override
@@ -27,7 +27,7 @@ public class HexBoardClass<T> implements HexBoard {
     }
 
     /*
-     * A function that returns a list of neighbors to an hex at x,y
+     * Returns a list of neighbors to an hex at x,y
      */
     @Override
     public List getHexNeighbors(Position p) {
@@ -55,7 +55,7 @@ public class HexBoardClass<T> implements HexBoard {
     }
 
     /*
-     * A function that sets a hex at position x,y
+     * Sets a hex at position x,y
      */
     @Nullable
     @Override
