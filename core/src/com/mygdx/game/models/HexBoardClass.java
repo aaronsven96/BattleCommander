@@ -13,8 +13,8 @@ public class HexBoardClass<T> implements HexBoard {
 
     public HexBoardClass(T o, int xLength, int yLength) {
         board = (T[][]) new Object[xLength][yLength];
-        this.xLength = xLength;
-        this.yLength = yLength;
+        this.xLength = xLength; // Number of rows
+        this.yLength = yLength; // Number of columns
     }
 
     /*
