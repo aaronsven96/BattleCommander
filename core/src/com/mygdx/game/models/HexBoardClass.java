@@ -27,7 +27,7 @@ public class HexBoardClass<T> implements HexBoard {
     }
 
     /*
-     * Returns a list of neighbors to an hex at x,y
+     * Returns a list of neighbors to a hex at x,y
      */
     @Override
     public List getHexNeighbors(Position p) {
