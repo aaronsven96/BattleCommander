@@ -9,12 +9,12 @@ import java.util.*;
  */
 public class HexBoardClass<T> implements HexBoard {
     private T[][] board;
-    private int xLength, yLength;
+    private int xRows, yColumns;
 
-    public HexBoardClass(T o, int xLength, int yLength) {
-        board = (T[][]) new Object[xLength][yLength];
-        this.xLength = xLength; // Number of rows
-        this.yLength = yLength; // Number of columns
+    public HexBoardClass(T o, int xRows, int yColumns) {
+        board = (T[][]) new Object[xRows][yColumns];
+        this.xRows = xRows; // Number of rows
+        this.yColumns = yColumns; // Number of columns
     }
 
     /*
@@ -24,7 +24,7 @@ public class HexBoardClass<T> implements HexBoard {
     @Override
     public T getHex(Position p) {
         // Returns null if the position is outside the Array bounds
-        return p.getX() >= 0 && p.getX() <= xLength - 1 && p.getY() >= 0 && p.getY() <= yLength - 1 ? board[p.getX()][p.getY()] : null;
+        return p.getX() >= 0 && p.getX() <= xRows - 1 && p.getY() >= 0 && p.getY() <= yColumns - 1 ? board[p.getX()][p.getY()] : null;
     }
 
     /*
@@ -38,19 +38,19 @@ public class HexBoardClass<T> implements HexBoard {
         if (p.getX() >= 1) neighbors.add(board[p.getX() - 1][p.getY()]);
 
         // Top right neighbor
-        if (p.getX() >= 1 && p.getY() <= yLength - 2) neighbors.add(board[p.getX() - 1][p.getY() + 1]);
+        if (p.getX() >= 1 && p.getY() <= yColumns - 2) neighbors.add(board[p.getX() - 1][p.getY() + 1]);
 
         // Left neighbor
         if (p.getY() >= 1) neighbors.add(board[p.getX()][p.getY() - 1]);
 
         // Right neighbor
-        if (p.getY() <= yLength - 2) neighbors.add(board[p.getX()][p.getY() + 1]);
+        if (p.getY() <= yColumns - 2) neighbors.add(board[p.getX()][p.getY() + 1]);
 
         // Bottom left neighbor
-        if (p.getX() <= xLength - 2 && p.getY() >= 1) neighbors.add(board[p.getX() + 1][p.getY() - 1]);
+        if (p.getX() <= xRows - 2 && p.getY() >= 1) neighbors.add(board[p.getX() + 1][p.getY() - 1]);
 
         // Bottom right neighbor
-        if (p.getX() <= xLength - 2) neighbors.add(board[p.getX() + 1][p.getY()]);
+        if (p.getX() <= xRows - 2) neighbors.add(board[p.getX() + 1][p.getY()]);
 
         return neighbors;
     }
@@ -61,7 +61,7 @@ public class HexBoardClass<T> implements HexBoard {
     @Nullable
     @Override
     public boolean setHex(Position p, Object hex) {
-        if (p.getX() >= 0 && p.getX() <= xLength - 1 && p.getY() >= 0 && p.getY() <= yLength - 1) {
+        if (p.getX() >= 0 && p.getX() <= xRows - 1 && p.getY() >= 0 && p.getY() <= yColumns - 1) {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
