@@ -3,10 +3,11 @@ package com.mygdx.game.models;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
+/*
+ * Validation tests for the HexBoardClass
+ */
 public class HexBoardClassTest {
     static Object o;
     static HexBoardClass<Object> h;
@@ -44,12 +45,21 @@ public class HexBoardClassTest {
 
     @Test
     public void setHex() {
-        assertEquals("Should be true", true, h.setHex(p1, "P1"));
+        // Valid positions
+        assertTrue("Should be true", h.setHex(p1, "P1"));
         assertEquals("Should be P1", "P1", h.getHex(p1));
-        assertEquals("Should be true", true, h.setHex(p2, "P2"));
+        assertTrue("Should be true", h.setHex(p2, "P2"));
         assertEquals("Should be P2", "P2", h.getHex(p2));
-        assertEquals("Should be false", false, h.setHex(p3, "P3"));
-        assertEquals("Should be false", false, h.setHex(p3, null));
+
+        // Valid positions with null hex Object
+        assertTrue("Should be false", h.setHex(p1, null));
+        assertNull("Should be P1", h.getHex(p1));
+        assertTrue("Should be false", h.setHex(p2, null));
+        assertNull("Should be P1", h.getHex(p2));
+
+        // Invalid positions
+        assertFalse("Should be false", h.setHex(p3, "P3"));
+        assertFalse("Should be false", h.setHex(p3, null));
     }
 
     @Test

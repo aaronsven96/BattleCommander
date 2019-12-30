@@ -61,11 +61,12 @@ public class HexBoardClass<T> implements HexBoard {
     @Nullable
     @Override
     public boolean setHex(Position p, Object hex) {
+        // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
         if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false; // Returns false if the position is outside the Array bounds or if a null Object is passed in
+        return false; // Returns false if the position is outside the Array bounds
     }
 
     /*
