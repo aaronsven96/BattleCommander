@@ -2,6 +2,7 @@ package com.mygdx.game.models;
 
 import com.google.gson.Gson;
 
+<<<<<<< HEAD
 public class BasicUnit {
     String name; //unit name
     String unitType; //the type of unit
@@ -14,6 +15,18 @@ public class BasicUnit {
     int speed; //movement speed
     UnitState state; //unit's current state
 
+=======
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class BasicUnit {
+    private int health; //unit health
+    private int strength; //base strength
+    private int ranged_strength; //base ranged strength
+    private int speed; //movement speed
+    String unitType; //the type of unit
+>>>>>>> c90d4da263cc1c448487793fb8046cc45763687f
 
 
     public BasicUnit() {
@@ -27,9 +40,15 @@ public class BasicUnit {
 
     }
 
-    public BasicUnit(String unitType) {
-        String content = new Scanner(new File("filename")).useDelimiter("\Z").next();
+    public BasicUnit(String configuration) {
+        String content = null;
+        try {
+            content = new Scanner(new File("filename")).useDelimiter("\\Z").next();
+        } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("No configuration file found for the Unit.");
+        }
         Gson gson = new Gson();
+<<<<<<< HEAD
         content = gson.fromJson(content, String.class);
         String[] parts = content.split("");
 
@@ -162,5 +181,7 @@ public class BasicUnit {
      */
     public void setState ( int new_state_ ) {
         state = new_state;
+=======
+>>>>>>> c90d4da263cc1c448487793fb8046cc45763687f
     }
 }
