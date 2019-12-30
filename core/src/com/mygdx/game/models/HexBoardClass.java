@@ -9,8 +9,7 @@ import java.util.*;
  */
 public class HexBoardClass<T> implements HexBoard {
     private T[][] board;
-    private int xLength;
-    private int yLength;
+    private int xLength, yLength;
 
     public HexBoardClass(T o, int xLength, int yLength) {
         board = (T[][]) new Object[xLength][yLength];
