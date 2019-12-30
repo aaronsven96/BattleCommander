@@ -23,7 +23,7 @@ public class HexBoardClass<T> implements HexBoard {
     @Nullable
     @Override
     public T getHex(Position p) {
-        // Returns null if position outside bounds
+        // Returns null if the position is outside the Array bounds
         return p.getX() >= 0 && p.getX() <= xLength - 1 && p.getY() >= 0 && p.getY() <= yLength - 1 ? board[p.getX()][p.getY()] : null;
     }
 
@@ -65,9 +65,12 @@ public class HexBoardClass<T> implements HexBoard {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false; // Returns false if position outside bounds or null Object passed in
+        return false; // Returns false if the position is outside the Array bounds or if a null Object is passed in
     }
 
+    /*
+     * Returns the board
+     */
     public T[][] getBoard() {
         return board;
     }
