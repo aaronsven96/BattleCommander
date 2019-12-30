@@ -1,5 +1,7 @@
 package com.mygdx.game.models;
 
+import jdk.internal.jline.internal.Nullable;
+
 import java.util.*;
 
 /*
@@ -19,6 +21,7 @@ public class HexBoardClass<T> implements HexBoard {
     /*
      * A function that returns the object at position x,y
      */
+    @Nullable
     @Override
     public T getHex(Position p) {
         return p.getX() >= 0 && p.getX() <= xLength - 1 && p.getY() >= 0 && p.getY() <= yLength - 1 ? board[p.getX()][p.getY()] : null;
@@ -55,25 +58,18 @@ public class HexBoardClass<T> implements HexBoard {
     /*
      * A function that sets a hex at position x,y
      */
+    @Nullable
     @Override
     public boolean setHex(Position p, Object hex) {
         if (p.getX() >= 0 && p.getX() <= xLength - 1 && p.getY() >= 0 && p.getY() <= yLength - 1) {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false;
+        return false; // Returns false if null Object passed in
     }
 
     public T[][] getBoard() {
         return board;
-    }
-
-    public int getxLength() {
-        return xLength;
-    }
-
-    public int getyLength() {
-        return yLength;
     }
 
 }

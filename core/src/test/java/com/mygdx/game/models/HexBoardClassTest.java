@@ -10,9 +10,7 @@ import static org.junit.Assert.*;
 public class HexBoardClassTest {
     static Object o;
     static HexBoardClass<Object> h;
-    static PositionClass p1;
-    static PositionClass p2;
-    static PositionClass p3;
+    static PositionClass p1, p2, p3;
 
     @BeforeClass
     public static <T> void setUpBeforeAll() {
@@ -22,12 +20,11 @@ public class HexBoardClassTest {
         p2 = new PositionClass(9, 9);
         p3 = new PositionClass(10, 0);
 
-        for (int i = 0; i < h.getxLength(); i++) {
-            for (int j = 0; j < h.getyLength(); j++) {
+        for (int i = 0; i < h.getBoard()[0].length; i++) {
+            for (int j = 0; j < h.getBoard().length; j++) {
                 h.getBoard()[i][j] = (T) ("" + i + j);
             }
         }
-
     }
 
     @Test
@@ -52,11 +49,13 @@ public class HexBoardClassTest {
         assertEquals("Should be true", true, h.setHex(p2, "P2"));
         assertEquals("Should be P2", "P2", h.getHex(p2));
         assertEquals("Should be false", false, h.setHex(p3, "P3"));
+        assertEquals("Should be false", false, h.setHex(p3, null));
     }
 
     @Test
     public void getBoard() {
         assertEquals("Should be 10", 10, h.getBoard().length);
+        assertEquals("Should be 10", 10, h.getBoard()[0].length);
     }
 
 }
