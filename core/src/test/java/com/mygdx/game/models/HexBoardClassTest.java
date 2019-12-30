@@ -51,6 +51,7 @@ public class HexBoardClassTest {
         assertEquals("Should be P1", "P1", h.getHex(p1));
         assertEquals("Should be true", true, h.setHex(p2, "P2"));
         assertEquals("Should be P2", "P2", h.getHex(p2));
+        assertEquals("Should be false", false, h.setHex(p3, "P3"));
     }
 
     @Test
