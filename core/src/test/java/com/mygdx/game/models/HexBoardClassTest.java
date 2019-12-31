@@ -52,7 +52,7 @@ public class HexBoardClassTest {
         assertTrue("Should be true", h.setHex(p2, "P2"));
         assertEquals("Should be P2", "P2", h.getHex(p2));
 
-        // Valid positions with null hex Object
+        // Valid positions with a null hex Object
         assertTrue("Should be false", h.setHex(p1, null));
         assertNull("Should be P1", h.getHex(p1));
         assertTrue("Should be false", h.setHex(p2, null));
