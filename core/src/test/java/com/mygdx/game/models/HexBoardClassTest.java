@@ -45,6 +45,7 @@ public class HexBoardClassTest {
         assertEquals("Should be 55", "55", h1.getHex(m));
         assertEquals("Should be 90", "90", h1.getHex(bl));
         assertEquals("Should be 99", "99", h1.getHex(br));
+        
         assertNull("Should be null", h1.getHex(oob));
     }
 
@@ -80,24 +81,32 @@ public class HexBoardClassTest {
         assertEquals("Should be 2", 2, n5.size());
         assertEquals("Should be 89", "89", n5.get(0));
         assertEquals("Should be 98", "98", n5.get(1));
+
+        assertEquals("Should be 0", 0, h1.getHexNeighbors(oob).size());
     }
 
     @Test
     public void setHex() {
         // Valid positions
-        assertTrue("Should be true", h1.setHex(tl, "P1"));
-        assertEquals("Should be P1", "P1", h1.getHex(tl));
-        assertTrue("Should be true", h1.setHex(br, "P2"));
-        assertEquals("Should be P2", "P2", h1.getHex(br));
+        assertTrue("Should be true", h1.setHex(tl, "TL"));
+        assertEquals("Should be TL", "TL", h1.getHex(tl));
+        assertTrue("Should be true", h1.setHex(tr, "TR"));
+        assertEquals("Should be TR", "TR", h1.getHex(tr));
+        assertTrue("Should be true", h1.setHex(m, "MI"));
+        assertEquals("Should be MI", "MI", h1.getHex(m));
+        assertTrue("Should be true", h1.setHex(bl, "BL"));
+        assertEquals("Should be BL", "BL", h1.getHex(bl));
+        assertTrue("Should be true", h1.setHex(br, "BR"));
+        assertEquals("Should be BR", "BR", h1.getHex(br));
 
         // Valid positions with a null hex Object
-        assertTrue("Should be false", h1.setHex(tl, null));
-        assertNull("Should be P1", h1.getHex(tl));
-        assertTrue("Should be false", h1.setHex(br, null));
-        assertNull("Should be P1", h1.getHex(br));
+        assertTrue("Should be true", h1.setHex(tl, null));
+        assertNull("Should be null", h1.getHex(tl));
+        assertTrue("Should be true", h1.setHex(br, null));
+        assertNull("Should be null", h1.getHex(br));
 
         // Invalid positions
-        assertFalse("Should be false", h1.setHex(oob, "P3"));
+        assertFalse("Should be false", h1.setHex(oob, "OB"));
         assertFalse("Should be false", h1.setHex(oob, null));
     }
 

@@ -34,6 +34,9 @@ public class HexBoardClass<T> implements HexBoard {
     public List getHexNeighbors(Position p) {
         List<T> neighbors = new ArrayList<>();
 
+        // Invalid position check
+        if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) return neighbors;
+
         // Top left neighbor
         if (p.getX() >= 1) neighbors.add(board[p.getX() - 1][p.getY()]);
 
