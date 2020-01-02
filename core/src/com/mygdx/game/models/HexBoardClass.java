@@ -12,6 +12,8 @@ public class HexBoardClass<T> implements HexBoard {
     private int numRows, numColumns;
 
     public HexBoardClass(T o, int numRows, int numColumns) {
+        if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("Number of rows/columns must be positive");
+
         board = (T[][]) new Object[numRows][numColumns];
         this.numRows = numRows; // Number of rows
         this.numColumns = numColumns; // Number of columns
