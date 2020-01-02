@@ -45,7 +45,7 @@ public class HexBoardClassTest {
         assertEquals("Should be 55", "55", h1.getHex(m));
         assertEquals("Should be 90", "90", h1.getHex(bl));
         assertEquals("Should be 99", "99", h1.getHex(br));
-        
+
         assertNull("Should be null", h1.getHex(oob));
     }
 
