@@ -8,4 +8,9 @@ public interface Unit {
 
     public void setUnitState(UnitState unitState);
 
+    /**
+     * The Id of the unit
+     */
+    public int getUnitId();
+
 }

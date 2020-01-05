@@ -18,4 +18,8 @@ public interface Terrain {
      */
     public int getDefense();
 
+    /**
+     * Gets the Terrain State of the Terrain, e.g. impassable
+     */
+    public TerrainState getTerrainState();
 }
