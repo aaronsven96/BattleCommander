@@ -8,24 +8,23 @@ import java.util.List;
 public interface HexBoard<T> {
 
     /*
-     * A function that returns the object at position x,y
+     * Returns the object at position x,y
      */
     public T getHex(Position p);
 
     /*
-     * A function that returns a list of neighbors to an hex at x,y
+     * Returns a list of neighbors to a hex at x,y
      */
     public List<T> getHexNeighbors(Position p);
 
     /*
-     * A function that sets a hex at position x,y
+     * Sets a hex at position x,y
      */
     public boolean setHex(Position p, T hex);
 
     /*
-     *
+     * Returns the board
      */
-
-    
+    public T[][] getBoard();
 
 }
