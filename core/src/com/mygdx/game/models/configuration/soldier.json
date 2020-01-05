@@ -1,9 +1,10 @@
 {
   "Name": "Soldier",
   "Description": "An example configuration file for a soldier",
-  "Max_Health": 5,
+  "Max Health": 5,
   "Strength": 10,
   "Ranged Strength": 0,
   "Range": 1,
-  "Speed": 1
+  "Speed": 1,
+  "Attributes": []
 }
