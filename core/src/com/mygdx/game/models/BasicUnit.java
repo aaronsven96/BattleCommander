@@ -41,15 +41,6 @@ public class BasicUnit {
         JsonObject unit;
         unit = gson.fromJson(content, JsonObject.class);
         unit.get("Speed").getAsInt();
-        String[] parts = content.split("");
-
-        String name=parts[0];
-        String description=parts[1];
-        int max_health=parts[2];
-        int strength=parts[3];
-        int ranged_strength=parts[4];
-        int range=parts[5];
-        int speed=parts[6];
 
         health=max_health; //set the unit's health to its max health
 
