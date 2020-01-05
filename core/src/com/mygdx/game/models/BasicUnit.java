@@ -161,7 +161,7 @@ public class BasicUnit {
     /**
      * Changes the unit's state
      */
-    public void setState ( int new_state_ ) {
+    public void setState ( UnitState new_state ) {
         state = new_state;
     }
 }
