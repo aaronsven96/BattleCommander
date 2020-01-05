@@ -13,8 +13,10 @@ public class BoardDrawer implements Disposable {
     private Batch batch;
     private ShapeDrawer drawer;
     Texture texture;
+    int size;
 
-    BoardDrawer(Batch batch){
+    BoardDrawer(Batch batch, int size) {
+        this.size = size;
         this.batch = batch;
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
@@ -26,23 +28,19 @@ public class BoardDrawer implements Disposable {
     }
 
     // Draws an array of hexes based on a boolean array
-    int spacing = 25;
-    int size = 50;
-    int half = size/2;
-    public void drawHexes(boolean[][] whereToDraw){
-        for(int x=0; x<whereToDraw.length; x++){
-            for(int y=0; y<whereToDraw[x].length; y++){
-                // If the row is odd, then offset it.
-                if((y+1)%2== 1) {
-                    drawer.polygon( size+spacing + (size+spacing)*2 * x, 0 + (size+spacing-half) * y, 6, 50, 50, 0, 1);
-                }
-                else {
-                    drawer.polygon( 0 + (size+spacing)*2 * x, 0 + (size+spacing-half) * y, 6, 50, 50, 0, 1);
-                }
 
+    public void drawHexes(boolean[][] whereToDraw) {
+        int yOffset = 0;
+        int xOffset = 0;
+        for (int x = 0; x < whereToDraw.length; x++) {
+            for (int y = 0; y < whereToDraw[x].length; y++) {
+                drawer.polygon(100 + xOffset, 100 + yOffset, 6, size, size, 0, 3);
+                yOffset += 2*size-10;
             }
-        }
+            xOffset += 1.5 * size;
+            yOffset = ((x+1) * size) -(5 * (x+1));
 
+        }
     }
 
     @Override

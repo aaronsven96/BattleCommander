@@ -22,19 +22,37 @@ public interface GameState {
     boolean setMove(int playerId, Move move);
 
     /**
+     * Returns whether a move is possibly blocked
+     */
+    boolean isMoveBlocked(int playerId, Move move);
+
+    /**
      * Advances turn if possible
      */
     boolean advanceTurn();
 
     /**
-     * Get possibles positions for action
+     * Get Hex Map which holds most of the game information
      */
-    List<Position> getsAllPossiblePositionsForAnActionTypeAUnitCanMake(int unitID, Action action);
+    HexMap getHexMap();
 
     /**
-     * Get Hes bao
+     * Gets the current turn state
      */
+    TurnState getTurnState();
 
+
+    /**
+     * Generate save file
+     * returns if the game was successfully saved
+     */
+    public boolean generateSaveFile(String filename);
+
+    /**
+     * Initilizes the game state with a save file
+     * returns if the file was Successfully loaded
+     */
+    public boolean loadSaveFile(String filename);
     //Todo Define functions which we need t o show to user
 
 }

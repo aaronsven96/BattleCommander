@@ -23,7 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
     ShapeDrawer drawer;
     Texture texture;
     BoardDrawer boardDrawer;
-    boolean[][] booleans = new boolean[4][4];
+    boolean[][] booleans = new boolean[5][5];
 
     @Override
     public void create() {
@@ -36,10 +36,25 @@ public class MyGdxGame extends ApplicationAdapter {
         pixmap.dispose();
         TextureRegion region = new TextureRegion(img, 0, 0, 100, 100);
         drawer = new ShapeDrawer(batch, region);
-        boardDrawer = new BoardDrawer(batch);
+        boardDrawer = new BoardDrawer(batch, 40);
         for(boolean[] i: booleans) {
             Arrays.fill(i, Boolean.TRUE);
         }
+
+
+       /* booleans[0][0] = Boolean.FALSE;
+        booleans[1][1] = Boolean.FALSE;
+        booleans[1][2] = Boolean.FALSE;
+        booleans[2][3] = Boolean.FALSE;
+        booleans[2][4] = Boolean.FALSE;*/
+
+        /*// This will be use to shape the board
+        for(int x=0; x<5; x++){
+            for(int y=0; y<5; y++){
+                    if(x == y)
+                        booleans[x][y] = Boolean.FALSE;
+            }
+        }*/
     }
 
     @Override
@@ -49,7 +64,6 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.begin();
         boardDrawer.drawHexes(booleans);
         //batch.draw(img, 0, 0);
-        drawHex(100,100,drawer);
         batch.end();
     }
 
@@ -57,10 +71,5 @@ public class MyGdxGame extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         img.dispose();
-    }
-
-    private void drawHex(int x, int y, ShapeDrawer drawer) {
-        drawer.polygon(x, y, 6, 30,30,0,3);
-        //drawer.filledPolygon(x,y,6,30);
     }
 }
