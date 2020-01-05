@@ -10,6 +10,7 @@ public class GameListener implements InputProcessor {
     GameListener(){
 
     }
+
     @Override
     public boolean keyDown(int keycode) {
         return false;

@@ -19,4 +19,9 @@ public interface Player {
      */
     Move addPlayerMove();
 
+    /**
+     * returns a list of units ids for a player
+     */
+    List<Integer> getPlayerUnits();
+
 }

@@ -3,7 +3,7 @@ package com.mygdx.game.models;
 import java.util.List;
 
 /**
- * A class that represents all information about the game
+ * A class that represents all information about the game. Methods should relate to changing the game state
  */
 public interface GameState {
 

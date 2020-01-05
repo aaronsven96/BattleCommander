@@ -1,7 +1,5 @@
 package com.mygdx.game.models;
 
-import jdk.internal.jline.internal.Nullable;
-
 import java.util.*;
 
 /*
@@ -22,7 +20,6 @@ public class HexBoardClass<T> implements HexBoard {
     /*
      * Returns the object at position x,y
      */
-    @Nullable
     @Override
     public T getHex(Position p) {
         // Returns null if the position is outside the Array bounds
@@ -63,7 +60,6 @@ public class HexBoardClass<T> implements HexBoard {
     /*
      * Sets a hex at position x,y
      */
-    @Nullable
     @Override
     public boolean setHex(Position p, Object hex) {
         // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
