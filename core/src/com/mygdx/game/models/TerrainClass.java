@@ -27,24 +27,24 @@ public class TerrainClass implements Terrain {
      * @param filename the filename
      * @return the Terrain from the configuration file
      */
-    public static TerrainClass getTerrainFromConfig(String filename) {
-        String content;
-        try {
-            content = new Scanner(new File(filename)).useDelimiter("\\Z").next();
-        } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("No configuration file found for the Terrain.");
-        }
-
-        Gson gson = new Gson();
-        JsonObject terrain;
-        terrain = gson.fromJson(content, JsonObject.class);
-
-        String type = terrain.get("Type").getAsString();
-        int defense = terrain.get("Defense").getAsInt();
-        TerrainState terrainState = terrain.get("Terrain State").getAsString();
-
-        return new TerrainClass(type, defense, terrainState);
-    }
+//    public static TerrainClass getTerrainFromConfig(String filename) {
+//        String content;
+//        try {
+//            content = new Scanner(new File(filename)).useDelimiter("\\Z").next();
+//        } catch (FileNotFoundException e) {
+//            throw new IllegalArgumentException("no configuration file found for the Terrain");
+//        }
+//
+//        Gson gson = new Gson();
+//        JsonObject terrain;
+//        terrain = gson.fromJson(content, JsonObject.class);
+//
+//        String type = terrain.get("Type").getAsString();
+//        int defense = terrain.get("Defense").getAsInt();
+//        TerrainState terrainState = terrain.get("Terrain State").getAsString();
+//
+//        return new TerrainClass(type, defense, terrainState);
+//    }
 
     /**
      * Returns the type of the Terrain.

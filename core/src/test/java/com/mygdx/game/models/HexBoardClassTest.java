@@ -29,7 +29,7 @@ public class HexBoardClassTest {
         br = new PositionClass(9, 9); // bottom right
         oob = new PositionClass(10, 0); // out of bounds
 
-        // Set up the board with dummy Strings
+        // set up the board with dummy Strings
         for (int i = 0; i < h1.getBoard()[0].length; i++) {
             for (int j = 0; j < h1.getBoard().length; j++) {
                 h1.getBoard()[i][j] = (T) ("" + i + j);
