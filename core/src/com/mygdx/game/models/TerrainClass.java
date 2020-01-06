@@ -7,8 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-/*
- * A class that represents a tile in the game
+/**
+ * A class that represents a tile in the game.
  */
 public class TerrainClass implements Terrain {
     private String type;
@@ -21,6 +21,12 @@ public class TerrainClass implements Terrain {
         this.terrainState = terrainState;
     }
 
+    /**
+     * Returns the Terrain from the configuration file.
+     *
+     * @param filename filename
+     * @return the Terrain from the configuration file
+     */
     public static TerrainClass getTerrainFromConfig(String filename) {
         String content;
         try {
@@ -40,24 +46,30 @@ public class TerrainClass implements Terrain {
         return new TerrainClass(type, defense, terrainState);
     }
 
-    /*
-     * The type of the terrain
+    /**
+     * Returns the type of the Terrain.
+     *
+     * @return the type of the Terrain
      */
     @Override
     public String getType() {
         return type;
     }
 
-    /*
-     * The Defense of the tile
+    /**
+     * Returns the defense of the tile.
+     *
+     * @return the defense of the tile.
      */
     @Override
     public int getDefense() {
         return defense;
     }
 
-    /*
-     * Gets the Terrain State of the Terrain, e.g. impassable
+    /**
+     * Returns the Terrain State of the Terrain (e.g., impassable).
+     *
+     * @return the Terrain State of the Terrain (e.g., impassable)
      */
     @Override
     public TerrainState getTerrainState() {
