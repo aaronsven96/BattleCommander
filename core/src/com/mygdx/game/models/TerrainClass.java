@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/*
+ * A class that represents a tile in the game
+ */
 public class TerrainClass implements Terrain {
     private String type;
     private int defense;
