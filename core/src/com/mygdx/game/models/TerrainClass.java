@@ -25,9 +25,11 @@ public class TerrainClass implements Terrain {
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("No configuration file found for the Terrain.");
         }
+
         Gson gson = new Gson();
         JsonObject terrain;
         terrain = gson.fromJson(content, JsonObject.class);
+
         String type = terrain.get("Type").getAsString();
         int defense = terrain.get("Defense").getAsInt();
         TerrainState terrainState = terrain.get("Terrain State").getAsString();
