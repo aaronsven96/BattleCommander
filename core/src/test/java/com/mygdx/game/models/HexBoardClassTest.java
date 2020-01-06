@@ -22,14 +22,14 @@ public class HexBoardClassTest {
         h1 = new HexBoardClass<>(o, 10, 10);
         h2 = new HexBoardClass<>(o, 7, 9);
 
-        tl = new PositionClass(0, 0); // top left
-        tr = new PositionClass(0, 9); // top right
-        m = new PositionClass(5, 5); // middle
-        bl = new PositionClass(9, 0); // bottom left
-        br = new PositionClass(9, 9); // bottom right
-        oob = new PositionClass(10, 0); // out of bounds
+        tl = new PositionClass(0, 0); // Top left
+        tr = new PositionClass(0, 9); // Top right
+        m = new PositionClass(5, 5); // Middle
+        bl = new PositionClass(9, 0); // Bottom left
+        br = new PositionClass(9, 9); // Bottom right
+        oob = new PositionClass(10, 0); // Out of bounds
 
-        // set up the board with dummy Strings
+        // Set up the board with dummy Strings
         for (int i = 0; i < h1.getBoard()[0].length; i++) {
             for (int j = 0; j < h1.getBoard().length; j++) {
                 h1.getBoard()[i][j] = (T) ("" + i + j);
@@ -86,7 +86,7 @@ public class HexBoardClassTest {
 
     @Test
     public void setHex() {
-        // valid positions
+        // Valid positions
         assertTrue("Should be true", h1.setHex(tl, "TL"));
         assertEquals("Should be TL", "TL", h1.getHex(tl));
         assertTrue("Should be true", h1.setHex(tr, "TR"));
@@ -98,13 +98,13 @@ public class HexBoardClassTest {
         assertTrue("Should be true", h1.setHex(br, "BR"));
         assertEquals("Should be BR", "BR", h1.getHex(br));
 
-        // valid positions with a null hex Object
+        // Valid positions with a null hex Object
         assertTrue("Should be true", h1.setHex(tl, null));
         assertNull("Should be null", h1.getHex(tl));
         assertTrue("Should be true", h1.setHex(br, null));
         assertNull("Should be null", h1.getHex(br));
 
-        // invalid positions
+        // Invalid positions
         assertFalse("Should be false", h1.setHex(oob, "OB"));
         assertFalse("Should be false", h1.setHex(oob, null));
     }

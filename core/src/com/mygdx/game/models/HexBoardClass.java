@@ -13,8 +13,8 @@ public class HexBoardClass<T> implements HexBoard {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
 
         board = (T[][]) new Object[numRows][numColumns];
-        this.numRows = numRows; // number of rows
-        this.numColumns = numColumns; // number of columns
+        this.numRows = numRows; // Number of rows
+        this.numColumns = numColumns; // Number of columns
     }
 
     /**
@@ -30,34 +30,34 @@ public class HexBoardClass<T> implements HexBoard {
     }
 
     /**
-     * Returns a list of neighbors to a hex at x,y.
+     * Returns a List of neighbors to a hex at x,y.
      *
      * @param p the position
-     * @return a list of neighbors to a hex at x,y
+     * @return a List of neighbors to a hex at x,y
      */
     @Override
     public List getHexNeighbors(Position p) {
         List<T> neighbors = new ArrayList<>();
 
-        // invalid position check
+        // Invalid position check
         if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) return neighbors;
 
-        // top left neighbor
+        // Top left neighbor
         if (p.getX() >= 1) neighbors.add(board[p.getX() - 1][p.getY()]);
 
-        // top right neighbor
+        // Top right neighbor
         if (p.getX() >= 1 && p.getY() <= numColumns - 2) neighbors.add(board[p.getX() - 1][p.getY() + 1]);
 
-        // left neighbor
+        // Left neighbor
         if (p.getY() >= 1) neighbors.add(board[p.getX()][p.getY() - 1]);
 
-        // right neighbor
+        // Right neighbor
         if (p.getY() <= numColumns - 2) neighbors.add(board[p.getX()][p.getY() + 1]);
 
-        // bottom left neighbor
+        // Bottom left neighbor
         if (p.getX() <= numRows - 2 && p.getY() >= 1) neighbors.add(board[p.getX() + 1][p.getY() - 1]);
 
-        // bottom right neighbor
+        // Bottom right neighbor
         if (p.getX() <= numRows - 2) neighbors.add(board[p.getX() + 1][p.getY()]);
 
         return neighbors;
@@ -72,12 +72,12 @@ public class HexBoardClass<T> implements HexBoard {
      */
     @Override
     public boolean setHex(Position p, Object hex) {
-        // null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
+        // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
         if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false; // returns false if the position is outside the Array bounds
+        return false; // Returns false if the position is outside the Array bounds
     }
 
     /**

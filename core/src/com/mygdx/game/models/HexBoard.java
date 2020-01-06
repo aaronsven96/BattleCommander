@@ -13,7 +13,7 @@ public interface HexBoard<T> {
     public T getHex(Position p);
 
     /**
-     * Returns a list of neighbors to a hex at x,y.
+     * Returns a List of neighbors to a hex at x,y.
      */
     public List<T> getHexNeighbors(Position p);
 
