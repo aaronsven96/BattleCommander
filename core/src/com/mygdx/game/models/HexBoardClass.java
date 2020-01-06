@@ -13,8 +13,8 @@ public class HexBoardClass<T> implements HexBoard {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("Number of rows/columns must be positive");
 
         board = (T[][]) new Object[numRows][numColumns];
-        this.numRows = numRows; // Number of rows
-        this.numColumns = numColumns; // Number of columns
+        this.numRows = numRows; // number of rows
+        this.numColumns = numColumns; // number of columns
     }
 
     /**
@@ -39,25 +39,25 @@ public class HexBoardClass<T> implements HexBoard {
     public List getHexNeighbors(Position p) {
         List<T> neighbors = new ArrayList<>();
 
-        // Invalid position check
+        // invalid position check
         if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) return neighbors;
 
-        // Top left neighbor
+        // top left neighbor
         if (p.getX() >= 1) neighbors.add(board[p.getX() - 1][p.getY()]);
 
-        // Top right neighbor
+        // top right neighbor
         if (p.getX() >= 1 && p.getY() <= numColumns - 2) neighbors.add(board[p.getX() - 1][p.getY() + 1]);
 
-        // Left neighbor
+        // left neighbor
         if (p.getY() >= 1) neighbors.add(board[p.getX()][p.getY() - 1]);
 
-        // Right neighbor
+        // right neighbor
         if (p.getY() <= numColumns - 2) neighbors.add(board[p.getX()][p.getY() + 1]);
 
-        // Bottom left neighbor
+        // bottom left neighbor
         if (p.getX() <= numRows - 2 && p.getY() >= 1) neighbors.add(board[p.getX() + 1][p.getY() - 1]);
 
-        // Bottom right neighbor
+        // bottom right neighbor
         if (p.getX() <= numRows - 2) neighbors.add(board[p.getX() + 1][p.getY()]);
 
         return neighbors;
@@ -72,12 +72,12 @@ public class HexBoardClass<T> implements HexBoard {
      */
     @Override
     public boolean setHex(Position p, Object hex) {
-        // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
+        // null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
         if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false; // Returns false if the position is outside the Array bounds
+        return false; // returns false if the position is outside the Array bounds
     }
 
     /**
