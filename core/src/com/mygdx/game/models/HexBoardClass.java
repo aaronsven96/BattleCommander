@@ -2,8 +2,8 @@ package com.mygdx.game.models;
 
 import java.util.*;
 
-/*
- * The hex board of Type T that we will use as the map of the game. T will be a terrain
+/**
+ * The hex board of Type T that we will use as the map of the game. T will be a terrain.
  */
 public class HexBoardClass<T> implements HexBoard {
     private T[][] board;
@@ -17,8 +17,11 @@ public class HexBoardClass<T> implements HexBoard {
         this.numColumns = numColumns; // Number of columns
     }
 
-    /*
-     * Returns the object at position x,y
+    /**
+     * Returns the object at position x,y.
+     *
+     * @param p the position
+     * @return the object at position x,y
      */
     @Override
     public T getHex(Position p) {
@@ -26,8 +29,11 @@ public class HexBoardClass<T> implements HexBoard {
         return p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1 ? board[p.getX()][p.getY()] : null;
     }
 
-    /*
-     * Returns a list of neighbors to a hex at x,y
+    /**
+     * Returns a list of neighbors to a hex at x,y.
+     *
+     * @param p the position
+     * @return a list of neighbors to a hex at x,y
      */
     @Override
     public List getHexNeighbors(Position p) {
@@ -57,8 +63,12 @@ public class HexBoardClass<T> implements HexBoard {
         return neighbors;
     }
 
-    /*
-     * Sets a hex at position x,y
+    /**
+     * Sets a hex at position x,y.
+     *
+     * @param p   the position
+     * @param hex the hex
+     * @return true if the position is set, false otherwise
      */
     @Override
     public boolean setHex(Position p, Object hex) {
@@ -70,8 +80,10 @@ public class HexBoardClass<T> implements HexBoard {
         return false; // Returns false if the position is outside the Array bounds
     }
 
-    /*
-     * Returns the board
+    /**
+     * Returns the board.
+     *
+     * @return the board
      */
     public T[][] getBoard() {
         return board;
