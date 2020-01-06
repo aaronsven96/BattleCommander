@@ -12,11 +12,17 @@ public class PositionClass implements Position {
         this.y = y;
     }
 
+    /*
+     * Gets the x-position
+     */
     @Override
     public int getX() {
         return x;
     }
 
+    /*
+     * Gets the y-position
+     */
     @Override
     public int getY() {
         return y;

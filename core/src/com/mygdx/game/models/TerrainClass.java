@@ -12,22 +12,27 @@ public class TerrainClass implements Terrain {
     private int defense;
     private TerrainState terrainState;
 
-    public TerrainClass() {
+    public TerrainClass(String type, int defense, TerrainState terrainState) {
+        this.type = type;
+        this.defense = defense;
+        this.terrainState = terrainState;
     }
 
-    public static void create() {
-        String content = null;
+    public static TerrainClass getTerrainFromConfig(String filename) {
+        String content;
         try {
-            content = new Scanner(new File("filename")).useDelimiter("\\Z").next();
+            content = new Scanner(new File(filename)).useDelimiter("\\Z").next();
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("No configuration file found for the Terrain.");
         }
         Gson gson = new Gson();
         JsonObject terrain;
         terrain = gson.fromJson(content, JsonObject.class);
-        terrain.get("Type").getAsString();
-        terrain.get("Defense").getAsInt();
-        terrain.get("Terrain State").getAsString();
+        String type = terrain.get("Type").getAsString();
+        int defense = terrain.get("Defense").getAsInt();
+        TerrainState terrainState = terrain.get("Terrain State").getAsString();
+
+        return new TerrainClass(type, defense, terrainState);
     }
 
     /*
