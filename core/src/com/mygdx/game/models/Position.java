@@ -1,16 +1,16 @@
 package com.mygdx.game.models;
 
-/*
- * Represents an x,y position on the board
+/**
+ * A class that represents an x,y position on the board.
  */
 public interface Position {
     /**
-     * Gets the x-position
+     * Returns the x-position.
      */
     int getX();
 
     /**
-     * Gets the y-position
+     * Returns the y-position.
      */
     int getY();
 

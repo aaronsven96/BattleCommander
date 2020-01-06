@@ -1,7 +1,7 @@
 package com.mygdx.game.models;
 
-/*
- * Represents an x,y position on the board
+/**
+ * A class that represents an x,y position on the board.
  */
 public class PositionClass implements Position {
     private int x;
@@ -12,16 +12,20 @@ public class PositionClass implements Position {
         this.y = y;
     }
 
-    /*
-     * Gets the x-position
+    /**
+     * Returns the x-position.
+     *
+     * @return the x-position
      */
     @Override
     public int getX() {
         return x;
     }
 
-    /*
-     * Gets the y-position
+    /**
+     * Returns the y-position.
+     *
+     * @return the y-position
      */
     @Override
     public int getY() {

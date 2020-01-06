@@ -24,7 +24,7 @@ public class TerrainClass implements Terrain {
     /**
      * Returns the Terrain from the configuration file.
      *
-     * @param filename filename
+     * @param filename the filename
      * @return the Terrain from the configuration file
      */
     public static TerrainClass getTerrainFromConfig(String filename) {
@@ -59,7 +59,7 @@ public class TerrainClass implements Terrain {
     /**
      * Returns the defense of the tile.
      *
-     * @return the defense of the tile.
+     * @return the defense of the tile
      */
     @Override
     public int getDefense() {

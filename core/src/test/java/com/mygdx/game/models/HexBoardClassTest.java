@@ -7,8 +7,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/*
- * Validation tests for the HexBoardClass
+/**
+ * Validation tests for the HexBoardClass.
  */
 public class HexBoardClassTest {
     static Object o;
