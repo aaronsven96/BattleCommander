@@ -28,8 +28,6 @@ public class TerrainClass implements Terrain {
         terrain.get("Type").getAsString();
         terrain.get("Defense").getAsInt();
         terrain.get("Terrain State").getAsString();
-
-        health = max_health; //set the unit's health to its max health
     }
 
     /*
