@@ -26,25 +26,22 @@ public class TerrainClass implements Terrain {
      * @return the Terrain from the configuration file
      */
     public static TerrainClass getTerrainFromConfig(String filename) {
-        FileHandle file;
-        String content;
         try {
-            file = Gdx.files.local(filename);
-            content = file.readString();
+            FileHandle file = Gdx.files.local(filename);
+            String content = file.readString();
+
+            Gson gson = new Gson();
+            JsonObject terrain = gson.fromJson(content, JsonObject.class);
+
+            String type = terrain.get("Type").getAsString();
+            int defense = terrain.get("Defense").getAsInt();
+            TerrainState terrainState = TerrainState.valueOf(terrain.get("Terrain State").getAsString());
+
+            return new TerrainClass(type, defense, terrainState);
         } catch (Exception e) {
-            System.out.println("No configuration file found for the Terrain.");
+            System.out.println("Configuration file for Terrain is missing or invalid.");
             e.printStackTrace();
         }
-
-        Gson gson = new Gson();
-        JsonObject terrain;
-        terrain = gson.fromJson(content, JsonObject.class);
-
-        String type = terrain.get("Type").getAsString();
-        int defense = terrain.get("Defense").getAsInt();
-        TerrainState terrainState = TerrainState.valueOf(terrain.get("Terrain State").getAsString());
-
-        return new TerrainClass(type, defense, terrainState);
     }
 
     /**
