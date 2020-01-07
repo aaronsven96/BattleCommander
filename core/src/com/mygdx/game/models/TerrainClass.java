@@ -1,11 +1,9 @@
 package com.mygdx.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 /**
  * A class that represents a tile in the game.
@@ -27,24 +25,27 @@ public class TerrainClass implements Terrain {
      * @param filename the filename
      * @return the Terrain from the configuration file
      */
-//    public static TerrainClass getTerrainFromConfig(String filename) {
-//        String content;
-//        try {
-//            content = new Scanner(new File(filename)).useDelimiter("\\Z").next();
-//        } catch (FileNotFoundException e) {
-//            throw new IllegalArgumentException("no configuration file found for the Terrain");
-//        }
-//
-//        Gson gson = new Gson();
-//        JsonObject terrain;
-//        terrain = gson.fromJson(content, JsonObject.class);
-//
-//        String type = terrain.get("Type").getAsString();
-//        int defense = terrain.get("Defense").getAsInt();
-//        TerrainState terrainState = terrain.get("Terrain State").getAsString();
-//
-//        return new TerrainClass(type, defense, terrainState);
-//    }
+    public static TerrainClass getTerrainFromConfig(String filename) {
+        FileHandle file;
+        String content;
+        try {
+            file = Gdx.files.local(filename);
+            content = file.readString();
+        } catch (Exception e) {
+            System.out.println("No configuration file found for the Terrain.");
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        JsonObject terrain;
+        terrain = gson.fromJson(content, JsonObject.class);
+
+        String type = terrain.get("Type").getAsString();
+        int defense = terrain.get("Defense").getAsInt();
+        TerrainState terrainState = TerrainState.valueOf(terrain.get("Terrain State").getAsString());
+
+        return new TerrainClass(type, defense, terrainState);
+    }
 
     /**
      * Returns the type of the Terrain.
