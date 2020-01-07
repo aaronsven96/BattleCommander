@@ -26,7 +26,7 @@ public class TerrainClass implements Terrain {
      * @return the Terrain from the configuration file
      */
     public static TerrainClass getTerrainFromConfig(String filename) {
-        FileHandle file = Gdx.files.internal();
+        FileHandle file = Gdx.files.internal(filename);
         String content = file.readString();
 
         Gson gson = new Gson();
