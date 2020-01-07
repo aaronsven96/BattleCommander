@@ -39,7 +39,7 @@ public class TerrainClass implements Terrain {
 
             return new TerrainClass(type, defense, terrainState);
         } catch (Exception e) {
-            System.out.println("Configuration file for Terrain is missing or invalid.");
+            System.out.println("The Terrain configuration file is missing or invalid.");
             e.printStackTrace();
         }
     }
