@@ -1,8 +1,5 @@
 package com.mygdx.game.models;
 
-import java.util.List;
-import java.util.Optional;
-
 /**
  * A class that represents a tile in the game.
  */
