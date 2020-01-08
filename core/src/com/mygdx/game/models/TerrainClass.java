@@ -19,6 +19,7 @@ public class TerrainClass implements Cloneable, Terrain {
         this.terrainState = terrainState;
     }
 
+    // Copy constructor
     public TerrainClass(TerrainClass original) {
         type = original.type;
         defense = original.defense;
@@ -45,11 +46,12 @@ public class TerrainClass implements Cloneable, Terrain {
         return new TerrainClass(type, defense, terrainState);
     }
 
-//    @Override
-//    public TerrainClass clone() throws CloneNotSupportedException {
-//        TerrainClass tc = (TerrainClass) super.clone();
-//        return tc;
-//    }
+    // Delete clone() method/Cloneable in favor of copy constructor?
+    @Override
+    public TerrainClass clone() throws CloneNotSupportedException {
+        TerrainClass tc = (TerrainClass) super.clone();
+        return tc;
+    }
 
     @Override
     public String getType() {
