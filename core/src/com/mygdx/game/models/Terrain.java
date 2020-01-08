@@ -19,4 +19,5 @@ public interface Terrain {
      * Gets the Terrain State of the Terrain (e.g., impassable).
      */
     public TerrainState getTerrainState();
+
 }
