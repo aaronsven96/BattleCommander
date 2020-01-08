@@ -19,6 +19,12 @@ public class TerrainClass implements Cloneable, Terrain {
         this.terrainState = terrainState;
     }
 
+    public TerrainClass(TerrainClass original) {
+        type = new String(original.type);
+        defense = original.defense;
+        terrainState = original.terrainState;
+    }
+
     /**
      * Returns the Terrain from the configuration file.
      *
@@ -39,6 +45,12 @@ public class TerrainClass implements Cloneable, Terrain {
         return new TerrainClass(type, defense, terrainState);
     }
 
+//    @Override
+//    public TerrainClass clone() throws CloneNotSupportedException {
+//        TerrainClass tc = (TerrainClass) super.clone();
+//        return tc;
+//    }
+
     @Override
     public String getType() {
         return type;
@@ -52,12 +64,6 @@ public class TerrainClass implements Cloneable, Terrain {
     @Override
     public TerrainState getTerrainState() {
         return terrainState;
-    }
-
-    @Override
-    public TerrainClass clone() throws CloneNotSupportedException {
-        TerrainClass tc = (TerrainClass) super.clone();
-        return tc;
     }
 
 }
