@@ -20,7 +20,7 @@ public class TerrainClass implements Cloneable, Terrain {
     }
 
     public TerrainClass(TerrainClass original) {
-        type = new String(original.type);
+        type = original.type;
         defense = original.defense;
         terrainState = original.terrainState;
     }
