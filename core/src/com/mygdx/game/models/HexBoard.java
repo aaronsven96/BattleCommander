@@ -9,21 +9,33 @@ public interface HexBoard<T> {
 
     /**
      * Returns the object at position x,y.
+     *
+     * @param p the position
+     * @return the object at position x,y
      */
     public T getHex(Position p);
 
     /**
      * Returns a List of neighbors to a hex at x,y.
+     *
+     * @param p the position
+     * @return a List of neighbors to a hex at x,y
      */
     public List<T> getHexNeighbors(Position p);
 
     /**
      * Sets a hex at position x,y.
+     *
+     * @param p   the position
+     * @param hex the hex
+     * @return true if the position is set, false otherwise
      */
     public boolean setHex(Position p, T hex);
 
     /**
      * Returns the board.
+     *
+     * @return the board
      */
     public T[][] getBoard();
 
