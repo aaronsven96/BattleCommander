@@ -32,9 +32,9 @@ public class TerrainClass implements Terrain {
         Gson gson = new Gson();
         JsonObject terrain = gson.fromJson(content, JsonObject.class);
 
-        String type = terrain.get("Type").getAsString();
-        int defense = terrain.get("Defense").getAsInt();
-        TerrainState terrainState = TerrainState.valueOf(terrain.get("Terrain State").getAsString());
+        String type = terrain.get("type").getAsString();
+        int defense = terrain.get("defense").getAsInt();
+        TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
 
         return new TerrainClass(type, defense, terrainState);
     }
