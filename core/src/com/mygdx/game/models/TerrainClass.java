@@ -21,8 +21,8 @@ public class TerrainClass implements Cloneable, Terrain {
 
     // Copy constructor
     public TerrainClass(TerrainClass original) {
-        type = original.type;
-        defense = original.defense;
+        type = original.type; // Immutable
+        defense = original.defense; // Immutable
         terrainState = original.terrainState; // Not sure if this is the proper way to copy enum
     }
 
