@@ -1,9 +1,9 @@
 package com.mygdx.game.models;
 
-public interface HexBoardCreator {
+public interface HexBoardCreator<T> {
 
     /**
      * Creates a HexBoard from a Boardable object
      */
-    HexBoard<Boardable> createHexBoard(String configurationFile);
+    HexBoard<T> createHexBoard(String configurationFile);
 }
