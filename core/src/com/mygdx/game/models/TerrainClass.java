@@ -23,7 +23,7 @@ public class TerrainClass implements Cloneable, Terrain {
     public TerrainClass(TerrainClass original) {
         type = original.type;
         defense = original.defense;
-        terrainState = original.terrainState;
+        terrainState = original.terrainState; // Not sure if this is the proper way to copy enum
     }
 
     /**
