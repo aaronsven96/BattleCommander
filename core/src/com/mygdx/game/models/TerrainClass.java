@@ -57,7 +57,6 @@ public class TerrainClass implements Cloneable, Terrain {
     @Override
     public TerrainClass clone() throws CloneNotSupportedException {
         TerrainClass tc = (TerrainClass) super.clone();
-        tc.terrainState = (TerrainState) terrainState.clone();
         return tc;
     }
 
