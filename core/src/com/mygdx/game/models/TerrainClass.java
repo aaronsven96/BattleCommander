@@ -13,7 +13,7 @@ public class TerrainClass implements Terrain {
     private int defense;
     private TerrainState terrainState;
 
-    public TerrainClass(String type, int defense, TerrainState terrainState) {
+    private TerrainClass(String type, int defense, TerrainState terrainState) {
         this.type = type;
         this.defense = defense;
         this.terrainState = terrainState;
