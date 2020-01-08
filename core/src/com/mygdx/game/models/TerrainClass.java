@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 /**
  * A class that represents a tile in the game.
  */
-public class TerrainClass implements Terrain, Cloneable {
+public class TerrainClass implements Cloneable, Terrain {
     private String type;
     private int defense;
     private TerrainState terrainState;
@@ -54,6 +54,11 @@ public class TerrainClass implements Terrain, Cloneable {
         return terrainState;
     }
 
-    public TerrainState
+    @Override
+    public TerrainClass clone() throws CloneNotSupportedException {
+        TerrainClass tc = (TerrainClass) super.clone();
+        tc.terrainState = (TerrainState) terrainState.clone();
+        return tc;
+    }
 
 }
