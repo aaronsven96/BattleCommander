@@ -20,8 +20,7 @@ public class ConfigurationFactory {
      * @return the Terrain Object
      */
     public TerrainClass makeTerrainFromConfig(String config) {
-        if (terrainHashMap.containsKey(config)) return terrainHashMap.get(config);
-        else return TerrainClass.getTerrainFromConfig(config);
+        return terrainHashMap.containsKey(config) ? terrainHashMap.get(config) : TerrainClass.getTerrainFromConfig(config);
     }
 
     /**
