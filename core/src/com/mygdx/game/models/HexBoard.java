@@ -3,7 +3,7 @@ package com.mygdx.game.models;
 import java.util.List;
 
 /**
- * The hex board of Type T that we will use as the map of the game. T will be a terrain.
+ * An interface for the hex board of Type T that we will use as the map of the game. T will be a terrain.
  */
 public interface HexBoard<T> {
 

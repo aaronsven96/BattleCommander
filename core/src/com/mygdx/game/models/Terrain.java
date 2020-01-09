@@ -1,7 +1,7 @@
 package com.mygdx.game.models;
 
 /**
- * A class that represents a tile in the game.
+ * An interface for a tile in the game.
  */
 public interface Terrain {
 
