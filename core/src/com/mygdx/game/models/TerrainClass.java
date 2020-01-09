@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 /**
  * A class that represents a tile in the game.
  */
-public class TerrainClass implements Cloneable, Terrain {
+public class TerrainClass implements Terrain {
     private String type;
     private int defense;
     private TerrainState terrainState;
@@ -21,9 +21,9 @@ public class TerrainClass implements Cloneable, Terrain {
 
     // Copy constructor
     public TerrainClass(TerrainClass original) {
-        type = original.type; // Immutable
-        defense = original.defense; // Immutable
-        terrainState = original.terrainState; // Not sure if this is the proper way to copy enum
+        type = original.type;
+        defense = original.defense;
+        terrainState = original.terrainState; // Immutable?
     }
 
     /**
@@ -44,13 +44,6 @@ public class TerrainClass implements Cloneable, Terrain {
         TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
 
         return new TerrainClass(type, defense, terrainState);
-    }
-
-    // Delete clone() method/Cloneable in favor of copy constructor?
-    @Override
-    public TerrainClass clone() throws CloneNotSupportedException {
-        TerrainClass tc = (TerrainClass) super.clone();
-        return tc;
     }
 
     @Override
