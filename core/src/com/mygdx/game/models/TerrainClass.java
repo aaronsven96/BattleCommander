@@ -23,7 +23,7 @@ public class TerrainClass implements Terrain {
     public TerrainClass(TerrainClass original) {
         type = original.type;
         defense = original.defense;
-        terrainState = original.terrainState; // Immutable?
+        terrainState = original.terrainState;
     }
 
     /**
