@@ -29,7 +29,7 @@ public class MyGdxGame extends ApplicationAdapter {
         pixmap.drawPixel(0, 0);
         texture = new Texture(pixmap); //remember to dispose of later
         pixmap.dispose();
-        TextureRegion region = new TextureRegion(img, 0, 0, 100, 100);
+        TextureRegion region = new TextureRegion(texture, 0, 0, 100, 100);
         drawer = new ShapeDrawer(batch, region);
         boardDrawer = new BoardDrawer(batch, 40);
         for(boolean[] i: booleans) {
