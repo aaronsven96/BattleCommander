@@ -24,13 +24,12 @@ public class MyGdxGame extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
         pixmap.drawPixel(0, 0);
         texture = new Texture(pixmap); //remember to dispose of later
         pixmap.dispose();
-        TextureRegion region = new TextureRegion(img, 0, 0, 100, 100);
+        TextureRegion region = new TextureRegion(texture, 0, 0, 100, 100);
         drawer = new ShapeDrawer(batch, region);
         boardDrawer = new BoardDrawer(batch, 40);
         for(boolean[] i: booleans) {
