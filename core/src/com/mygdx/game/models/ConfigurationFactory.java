@@ -19,8 +19,9 @@ public class ConfigurationFactory {
      * @param Config the pathname to the config file to create the terrain from
      * @return the Terrain Object
      */
-    public TerrainClass makeTerrainFromConfig(String config){
-        return TerrainClass.getTerrainFromConfig(config);
+    public TerrainClass makeTerrainFromConfig(String config) {
+        if (terrainHashMap.containsKey(config)) return terrainHashMap.get(config);
+        else return TerrainClass.getTerrainFromConfig(config);
     }
 
     /**
