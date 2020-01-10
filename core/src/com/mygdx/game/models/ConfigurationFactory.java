@@ -12,14 +12,14 @@ public class ConfigurationFactory {
 
     private ConfigurationFactory(){}
 
-    private HashMap<String, TerrainClass> terrainHashMap;
+    private HashMap<String, Terrain> terrainHashMap;
 
     /**
      *
      * @param Config the pathname to the config file to create the terrain from
      * @return the Terrain Object
      */
-    public TerrainClass makeTerrainFromConfig(String config) {
+    public Terrain makeTerrainFromConfig(String config) {
         return terrainHashMap.containsKey(config) ? terrainHashMap.get(config) : TerrainClass.getTerrainFromConfig(config);
     }
 
