@@ -14,8 +14,8 @@ public class HexBoardClass<T> implements HexBoard {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
 
         board = (T[][]) new Object[numRows][numColumns];
-        this.numRows = numRows; // Number of rows
-        this.numColumns = numColumns; // Number of columns
+        this.numRows = numRows; // number of rows
+        this.numColumns = numColumns; // number of columns
     }
 
     @Override
@@ -59,7 +59,7 @@ public class HexBoardClass<T> implements HexBoard {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false; // Returns false if the position is outside the Array bounds
+        return false; // returns false if the position is outside the Array bounds
     }
 
     public T[][] getBoard() {
