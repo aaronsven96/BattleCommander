@@ -1,25 +1,29 @@
 package com.mygdx.game.models;
 
-import java.util.List;
-import java.util.Optional;
-
 /**
- * A class that represents a tile in the game
+ * An interface for a tile in the game.
  */
 public interface Terrain {
 
     /**
-     * The type of the terrain
+     * Returns the type of the Terrain.
+     *
+     * @return the type of the Terrain
      */
     public String getType();
 
     /**
-     * The Defense of the tile
+     * Returns the defense of the tile.
+     *
+     * @return the defense of the tile
      */
     public int getDefense();
 
     /**
-     * Gets the Terrain State of the Terrain, e.g. impassable
+     * Returns the Terrain State of the Terrain (e.g., impassable).
+     *
+     * @return the Terrain State of the Terrain (e.g., impassable)
      */
     public TerrainState getTerrainState();
+
 }

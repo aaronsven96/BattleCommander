@@ -1,34 +1,29 @@
 package com.mygdx.game.models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/*
- * The hex board of Type T that we will use as the map of the game. T will be a terrain
+/**
+ * A class that represents the hex board of Type T that we will use as the map of the game. T will be a terrain.
  */
 public class HexBoardClass<T> implements HexBoard {
     private T[][] board;
     private int numRows, numColumns;
 
     public HexBoardClass(T o, int numRows, int numColumns) {
-        if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("Number of rows/columns must be positive");
+        if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
 
         board = (T[][]) new Object[numRows][numColumns];
-        this.numRows = numRows; // Number of rows
-        this.numColumns = numColumns; // Number of columns
+        this.numRows = numRows; // number of rows
+        this.numColumns = numColumns; // number of columns
     }
 
-    /*
-     * Returns the object at position x,y
-     */
     @Override
     public T getHex(Position p) {
         // Returns null if the position is outside the Array bounds
         return p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1 ? board[p.getX()][p.getY()] : null;
     }
 
-    /*
-     * Returns a list of neighbors to a hex at x,y
-     */
     @Override
     public List getHexNeighbors(Position p) {
         List<T> neighbors = new ArrayList<>();
@@ -57,9 +52,6 @@ public class HexBoardClass<T> implements HexBoard {
         return neighbors;
     }
 
-    /*
-     * Sets a hex at position x,y
-     */
     @Override
     public boolean setHex(Position p, Object hex) {
         // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
@@ -67,12 +59,9 @@ public class HexBoardClass<T> implements HexBoard {
             board[p.getX()][p.getY()] = (T) hex;
             return true;
         }
-        return false; // Returns false if the position is outside the Array bounds
+        return false; // returns false if the position is outside the Array bounds
     }
 
-    /*
-     * Returns the board
-     */
     public T[][] getBoard() {
         return board;
     }

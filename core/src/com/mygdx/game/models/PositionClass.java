@@ -1,7 +1,7 @@
 package com.mygdx.game.models;
 
-/*
- * Represents an x,y position on the board
+/**
+ * A class that represents an x,y position on the board.
  */
 public class PositionClass implements Position {
     private int x;
