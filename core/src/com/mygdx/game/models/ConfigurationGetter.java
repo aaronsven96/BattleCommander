@@ -2,6 +2,8 @@ package com.mygdx.game.models;
 
 import com.badlogic.gdx.Gdx;
 
+import java.util.Scanner;
+
 public class ConfigurationGetter {
 
     private ConfigurationGetter(){}
