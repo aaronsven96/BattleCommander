@@ -45,6 +45,8 @@ public class BoardDrawer implements Disposable {
         }
     }
 
+//    public void drawTextures()
+
     private Vector3[][] calculateCenterHexes(int size){
         int yOffset = 0;
         int xOffset = 0;

@@ -8,26 +8,26 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Validation tests for the HexBoardClass.
+ * Validation tests for the HexBoard.
  */
-public class HexBoardClassTest {
+public class HexBoardTest {
     static Object o;
-    static HexBoardClass<Object> h1, h2;
-    static PositionClass tl, tr, m, bl, br, oob;
+    static HexBoard<Object> h1, h2;
+    static Position tl, tr, m, bl, br, oob;
 
     @BeforeClass
     public static <T> void setUpBeforeAll() {
         o = new Object();
 
-        h1 = new HexBoardClass<>(o, 10, 10);
-        h2 = new HexBoardClass<>(o, 7, 9);
+        h1 = new HexBoard<>(o, 10, 10);
+        h2 = new HexBoard<>(o, 7, 9);
 
-        tl = new PositionClass(0, 0); // top left
-        tr = new PositionClass(0, 9); // top right
-        m = new PositionClass(5, 5); // middle
-        bl = new PositionClass(9, 0); // bottom left
-        br = new PositionClass(9, 9); // bottom right
-        oob = new PositionClass(10, 0); // out of bounds
+        tl = new Position(0, 0); // top left
+        tr = new Position(0, 9); // top right
+        m = new Position(5, 5); // middle
+        bl = new Position(9, 0); // bottom left
+        br = new Position(9, 9); // bottom right
+        oob = new Position(10, 0); // out of bounds
 
         // Set up the board with dummy Strings
         for (int i = 0; i < h1.getBoard()[0].length; i++) {
