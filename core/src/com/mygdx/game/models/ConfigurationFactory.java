@@ -16,7 +16,7 @@ public class ConfigurationFactory {
 
     /**
      *
-     * @param Config the pathname to the config file to create the terrain from
+     * @param config the pathname to the config file to create the terrain from
      * @return the Terrain Object
      */
     public Terrain makeTerrainFromConfig(String config) {
