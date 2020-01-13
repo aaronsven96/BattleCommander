@@ -25,10 +25,10 @@ public class ConfigurationFactory {
 
     /**
      *
-     * @param Config the pathname to the config file to create the terrain from
+     * @param config the pathname to the config file to create the terrain from
      * @return the Unit Object
      */
-    public Unit makeUnitFromConfig(String Config){
+    public Unit makeUnitFromConfig(String config){
         return null;
     }
 
