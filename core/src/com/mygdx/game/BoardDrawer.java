@@ -45,7 +45,6 @@ public class BoardDrawer implements Disposable {
         }
     }
 
-    //Commit Test
     private Vector3[][] calculateCenterHexes(int size){
         int yOffset = 0;
         int xOffset = 0;
