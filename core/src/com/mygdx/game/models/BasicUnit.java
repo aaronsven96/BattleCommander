@@ -7,19 +7,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class BasicUnit {
-    String name; //unit name
-    String unitType; //the type of unit
-    String description; //unit description
-    int max_health; //unit maximum health
-    int health; //unit current health
-    int strength; //base strength
-    int ranged_strength; //base ranged strength
-    int range; //unit's range of attack (if ranged unit)
-    int speed; //movement speed
-    UnitState state; //unit's current state
+public class BasicUnit implements Unit {
+    private String name; //unit name
+    private String unitType; //the type of unit
+    private String description; //unit description
+    private int max_health; //unit maximum health
+    private int health; //unit current health
+    private int strength; //base strength
+    private int ranged_strength; //base ranged strength
+    private int range; //unit's range of attack (if ranged unit)
+    private int speed; //movement speed
+    private UnitState state; //unit's current state
 
-    public BasicUnit() {
+    private BasicUnit() {
+        name="";
+        unitType="";
+        description="";
         max_health=0;
         health=0;
         strength=0;
@@ -27,10 +30,9 @@ public class BasicUnit {
         range=1;
         speed=1;
         state=UnitState.normal;
-
     }
 
-    public BasicUnit(String configuration) {
+    private BasicUnit(String configuration) {
         String content = null;
         try {
             content = new Scanner(new File("filename")).useDelimiter("\\Z").next();
@@ -40,11 +42,47 @@ public class BasicUnit {
         Gson gson = new Gson();
         JsonObject unit;
         unit = gson.fromJson(content, JsonObject.class);
-        unit.get("Speed").getAsInt();
+
+        name = unit.get("Name").getAsString();
+        description = unit.get("Description").getAsString();
+        max_health = unit.get("Max Health").getAsInt();
+        strength = unit.get("Strength").getAsInt();
+        ranged_strength = unit.get("Ranged Strength").getAsInt();
+        range = unit.get("Range").getAsInt();
+        speed = unit.get("Speed").getAsInt();
 
         health=max_health; //set the unit's health to its max health
+        state=UnitState.normal; //set the unit's state to normal
 
     }
+
+    /**
+     * Returns the type of the unit
+     */
+    public String getType(){
+        return unitType;
+    };
+
+    /**
+     * Returns the state of the unit
+     */
+    public UnitState getUnitState(){
+        return state;
+    };
+
+    /**
+     * Sets the state of the unit to desired state
+     */
+    public void setUnitState(UnitState unitState){
+        state = unitState;
+    };
+
+    /**
+     * Returns the Id of the unit
+     */
+    public int getUnitId(){
+        return 0;
+    };
 
     /**
      * Returns unit's name
@@ -107,13 +145,6 @@ public class BasicUnit {
      */
     public int getSpeed() {
         return speed;
-    }
-
-    /**
-     * Returns unit's state
-     */
-    public UnitState getState() {
-        return state;
     }
 
     /**
