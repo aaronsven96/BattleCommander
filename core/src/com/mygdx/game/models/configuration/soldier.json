@@ -1,10 +1,11 @@
 {
-  "Name": "Soldier",
+  "Type": "Soldier",
   "Description": "An example configuration file for a soldier",
   "Max Health": 5,
   "Strength": 10,
   "Ranged Strength": 0,
   "Range": 1,
   "Speed": 1,
+  "Area of Effect": "Skewer",
   "Attributes": []
 }

@@ -4,12 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class BasicUnit implements Unit {
-    private String name; //unit name
+    private String type; //unit name
     private String description; //unit description
     private int max_health; //unit maximum health
     private int health; //unit current health
@@ -19,8 +16,8 @@ public class BasicUnit implements Unit {
     private int speed; //movement speed
     private UnitState state; //unit's current state
 
-    private BasicUnit(String name, String description, int max_health, int strength, int ranged_strength, int range, int speed) {
-        this.name=name;
+    private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed) {
+        this.type=type;
         this.description=description;
         this.max_health=max_health;
         this.strength=strength;
@@ -34,7 +31,7 @@ public class BasicUnit implements Unit {
 
     //Copy constructor
     public BasicUnit(BasicUnit original) {
-        name=original.name;
+        type=original.type;
         description=original.description;
         max_health=original.max_health;
         strength=original.strength;
@@ -58,7 +55,7 @@ public class BasicUnit implements Unit {
         Gson gson = new Gson();
         JsonObject unit = gson.fromJson(content, JsonObject.class);
 
-        String name = unit.get("Name").getAsString();
+        String type = unit.get("Type").getAsString();
         String description = unit.get("Description").getAsString();
         int max_health = unit.get("Max Health").getAsInt();
         int strength = unit.get("Strength").getAsInt();
@@ -66,7 +63,7 @@ public class BasicUnit implements Unit {
         int range = unit.get("Range").getAsInt();
         int speed = unit.get("Speed").getAsInt();
 
-        return new BasicUnit(name, description, max_health, strength, ranged_strength, range, speed);
+        return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed);
     }
 
     /**
@@ -84,10 +81,10 @@ public class BasicUnit implements Unit {
     };
 
     /**
-     * Returns unit's name
+     * Returns unit's type
      */
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
     /**
