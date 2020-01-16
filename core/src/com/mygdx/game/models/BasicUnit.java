@@ -2,14 +2,14 @@ package com.mygdx.game.models;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class BasicUnit implements Unit {
     private String name; //unit name
-    private String unitType; //the type of unit
     private String description; //unit description
     private int max_health; //unit maximum health
     private int health; //unit current health
@@ -19,49 +19,55 @@ public class BasicUnit implements Unit {
     private int speed; //movement speed
     private UnitState state; //unit's current state
 
-    private BasicUnit() {
-        name="";
-        unitType="";
-        description="";
-        max_health=0;
-        health=0;
-        strength=0;
-        ranged_strength=0;
-        range=1;
-        speed=1;
-        state=UnitState.normal;
+    private BasicUnit(String name, String description, int max_health, int strength, int ranged_strength, int range, int speed) {
+        this.name=name;
+        this.description=description;
+        this.max_health=max_health;
+        this.strength=strength;
+        this.ranged_strength=ranged_strength;
+        this.range=range;
+        this.speed=speed;
+
+        this.health=max_health; //set the unit's health to its max health
+        this.state=UnitState.normal; //set the unit's state to normal
     }
 
-    private BasicUnit(String configuration) {
-        String content = null;
-        try {
-            content = new Scanner(new File("filename")).useDelimiter("\\Z").next();
-        } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("No configuration file found for the Unit.");
-        }
-        Gson gson = new Gson();
-        JsonObject unit;
-        unit = gson.fromJson(content, JsonObject.class);
-
-        name = unit.get("Name").getAsString();
-        description = unit.get("Description").getAsString();
-        max_health = unit.get("Max Health").getAsInt();
-        strength = unit.get("Strength").getAsInt();
-        ranged_strength = unit.get("Ranged Strength").getAsInt();
-        range = unit.get("Range").getAsInt();
-        speed = unit.get("Speed").getAsInt();
-
-        health=max_health; //set the unit's health to its max health
-        state=UnitState.normal; //set the unit's state to normal
-
+    //Copy constructor
+    public BasicUnit(BasicUnit original) {
+        name=original.name;
+        description=original.description;
+        max_health=original.max_health;
+        strength=original.strength;
+        ranged_strength=original.ranged_strength;
+        range=original.range;
+        speed=original.speed;
+        health=original.health;
+        state=original.state;
     }
 
     /**
-     * Returns the type of the unit
+     * Returns the Unit from the configuration file.
+     *
+     * @param filename the filename
+     * @return the Unit from the configuration file
      */
-    public String getType(){
-        return unitType;
-    };
+    public static BasicUnit getUnitFromConfig(String filename) {
+        FileHandle file = Gdx.files.internal(filename);
+        String content = file.readString();
+
+        Gson gson = new Gson();
+        JsonObject unit = gson.fromJson(content, JsonObject.class);
+
+        String name = unit.get("Name").getAsString();
+        String description = unit.get("Description").getAsString();
+        int max_health = unit.get("Max Health").getAsInt();
+        int strength = unit.get("Strength").getAsInt();
+        int ranged_strength = unit.get("Ranged Strength").getAsInt();
+        int range = unit.get("Range").getAsInt();
+        int speed = unit.get("Speed").getAsInt();
+
+        return new BasicUnit(name, description, max_health, strength, ranged_strength, range, speed);
+    }
 
     /**
      * Returns the state of the unit
@@ -78,24 +84,10 @@ public class BasicUnit implements Unit {
     };
 
     /**
-     * Returns the Id of the unit
-     */
-    public int getUnitId(){
-        return 0;
-    };
-
-    /**
      * Returns unit's name
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Returns unit's type
-     */
-    public String getUnitType() {
-        return unitType;
     }
 
     /**
