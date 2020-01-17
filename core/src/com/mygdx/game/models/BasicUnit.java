@@ -67,14 +67,13 @@ public class BasicUnit implements Unit {
     /**
      * Returns the Unit from the configuration file.
      *
-     * @param filePath the file path
+     * @param config the file path
      * @return the Unit from the configuration file
      */
-    public static BasicUnit getUnitFromConfig(String filePath) {
-        String file = ConfigurationGetter.getConfiguration(filePath);
+    public static BasicUnit getUnitFromConfig(String config) {
 
         Gson gson = new Gson();
-        JsonObject unit = gson.fromJson(file, JsonObject.class);
+        JsonObject unit = gson.fromJson(config, JsonObject.class);
 
         String type = unit.get("Type").getAsString();
         String description = unit.get("Description").getAsString();

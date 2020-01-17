@@ -15,10 +15,8 @@ public class BasicUnitClassTest {
     public static void UnitSetup() {
         soldier = BasicUnit.getUnitFromConfig(test);
 
-
         //archer = new BasicUnit("archer.json");
     }
-
 
 @Test
     public void getState(){
