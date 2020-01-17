@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+import static com.badlogic.gdx.Gdx.files;
+
 public class BasicUnit implements Unit {
     private String type; //unit name
     private String description; //unit description
@@ -29,6 +31,26 @@ public class BasicUnit implements Unit {
         this.state=UnitState.normal; //set the unit's state to normal
     }
 
+    //File name constructor
+   public BasicUnit(String filename){
+       FileHandle file = Gdx.files.internal(filename);
+       String content = file.readString();
+
+       Gson gson = new Gson();
+       JsonObject unit = gson.fromJson(content, JsonObject.class);
+
+       this.type = unit.get("Type").getAsString();
+       this.description = unit.get("Description").getAsString();
+       this.max_health = unit.get("Max Health").getAsInt();
+       this.strength = unit.get("Strength").getAsInt();
+       this.ranged_strength = unit.get("Ranged Strength").getAsInt();
+       this.range = unit.get("Range").getAsInt();
+       this.speed = unit.get("Speed").getAsInt();
+
+       this.health=max_health; //set the unit's health to its max health
+       this.state=UnitState.normal; //set the unit's state to normal
+   }
+
     //Copy constructor
     public BasicUnit(BasicUnit original) {
         type=original.type;
@@ -49,7 +71,7 @@ public class BasicUnit implements Unit {
      * @return the Unit from the configuration file
      */
     public static BasicUnit getUnitFromConfig(String filename) {
-        FileHandle file = Gdx.files.internal(filename);
+        FileHandle file = files.internal(filename);
         String content = file.readString();
 
         Gson gson = new Gson();
@@ -134,6 +156,13 @@ public class BasicUnit implements Unit {
      */
     public int getSpeed() {
         return speed;
+    }
+
+    /**
+     * Returns unit's state
+     */
+    public UnitState getState () {
+        return this.state;
     }
 
     /**

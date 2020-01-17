@@ -1,0 +1,11 @@
+{
+  "Type": "Archer",
+  "Description": "An example configuration file for an archer",
+  "Max Health": 15,
+  "Strength": 0,
+  "Ranged Strength": 10,
+  "Speed": 1,
+  "Range": 2,
+  "Area of Effect": "Skewer",
+  "Attributes": []
+}
