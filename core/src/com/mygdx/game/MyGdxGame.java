@@ -101,6 +101,7 @@ public class MyGdxGame extends Game {
         }
 
         boardDrawer.drawHexes(booleans);
+        boardDrawer.drawTextures(booleans);
         //batch.draw(img, 0, 0);
         batch.end();
 
