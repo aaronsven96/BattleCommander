@@ -48,8 +48,8 @@ public class BoardDrawer implements Disposable {
 
     public void drawTextures(boolean[][] whereToDraw) {
         Texture texture = new Texture(Gdx.files.internal("desktop/build/resources/main/badlogic.jpg"));
-        TextureRegion region1 = new TextureRegion(texture, 0, 0, 40, 40);
-        TextureRegion region2 = new TextureRegion(texture, 0, 20, 40, 40);
+        TextureRegion region1 = new TextureRegion(texture, 0, 2, 40, 40);
+        TextureRegion region2 = new TextureRegion(texture, 0, 0, 40, 40);
         for (int i = 0; i < centerHexes.length; i++) {
             Vector3[] centerHex = centerHexes[i];
             for (int j = 0; j < centerHex.length; j++) {
