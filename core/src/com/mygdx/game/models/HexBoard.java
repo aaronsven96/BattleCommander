@@ -36,8 +36,8 @@ public class HexBoard<T> {
      * @param p the position
      * @return a List of neighbors to a hex at x,y
      */
-    public List getHexNeighbors(Position p) {
-        List neighbors = new ArrayList<>();
+    public List<T> getHexNeighbors(Position p) {
+        List<T> neighbors = new ArrayList<>();
 
         // Invalid position check
         if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) return neighbors;
