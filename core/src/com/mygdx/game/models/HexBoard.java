@@ -10,7 +10,7 @@ public class HexBoard<T> {
     private T[][] board;
     private int numRows, numColumns;
 
-    public HexBoard(T o, int numRows, int numColumns) {
+    public HexBoard(T obj, int numRows, int numColumns) {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
 
         board = (T[][]) new Object[numRows][numColumns];
@@ -37,7 +37,7 @@ public class HexBoard<T> {
      * @return a List of neighbors to a hex at x,y
      */
     public List getHexNeighbors(Position p) {
-        List<T> neighbors = new ArrayList<>();
+        List neighbors = new ArrayList<>();
 
         // Invalid position check
         if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) return neighbors;
@@ -70,7 +70,7 @@ public class HexBoard<T> {
      * @param hex the hex
      * @return true if the position is set, false otherwise
      */
-    public boolean setHex(Position p, Object hex) {
+    public boolean setHex(Position p, T hex) {
         // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
         if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
             board[p.getX()][p.getY()] = (T) hex;
