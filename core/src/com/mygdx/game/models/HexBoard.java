@@ -73,7 +73,7 @@ public class HexBoard<T> {
     public boolean setHex(Position p, T hex) {
         // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
         if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
-            board[p.getX()][p.getY()] = (T) hex;
+            board[p.getX()][p.getY()] = hex;
             return true;
         }
         return false; // returns false if the position is outside the Array bounds
