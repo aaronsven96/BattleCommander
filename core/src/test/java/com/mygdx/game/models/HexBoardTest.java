@@ -11,16 +11,16 @@ import static org.junit.Assert.*;
  * Validation tests for the HexBoard.
  */
 public class HexBoardTest {
-    static Object o;
+    static Object obj;
     static HexBoard<Object> h1, h2;
     static Position tl, tr, m, bl, br, oob;
 
     @BeforeClass
     public static <T> void setUpBeforeAll() {
-        o = new Object();
+        obj = new Object();
 
-        h1 = new HexBoard<>(o, 10, 10);
-        h2 = new HexBoard<>(o, 7, 9);
+        h1 = new HexBoard<>(obj, 10, 10);
+        h2 = new HexBoard<>(obj, 7, 9);
 
         tl = new Position(0, 0); // top left
         tr = new Position(0, 9); // top right
