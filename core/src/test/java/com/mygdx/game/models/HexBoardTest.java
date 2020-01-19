@@ -17,8 +17,6 @@ public class HexBoardTest {
 
     @BeforeClass
     public static void setUpBeforeAll() {
-        obj = "";
-
         h1 = new HexBoard<>(obj, 10, 10);
         h2 = new HexBoard<>(obj, 7, 9);
 
