@@ -11,14 +11,13 @@ import static org.junit.Assert.*;
  * Validation tests for the HexBoard.
  */
 public class HexBoardTest {
-    static String obj;
     static HexBoard<String> h1, h2;
     static Position tl, tr, m, bl, br, oob;
 
     @BeforeClass
     public static void setUpBeforeAll() {
-        h1 = new HexBoard<>(obj, 10, 10);
-        h2 = new HexBoard<>(obj, 7, 9);
+        h1 = new HexBoard<>(null, 10, 10);
+        h2 = new HexBoard<>(null, 7, 9);
 
         tl = new Position(0, 0); // top left
         tr = new Position(0, 9); // top right
