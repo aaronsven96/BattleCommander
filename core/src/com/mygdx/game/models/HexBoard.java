@@ -85,7 +85,7 @@ public class HexBoard<T> {
      *
      * @return the number of rows in the board
      */
-    protected int getNumRows() {
+    int getNumRows() {
         return numRows;
     }
 
@@ -94,7 +94,7 @@ public class HexBoard<T> {
      *
      * @return the number of columns in the board
      */
-    protected int getNumColumns() {
+    int getNumColumns() {
         return numColumns;
     }
 
