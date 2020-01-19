@@ -1,5 +1,8 @@
 package com.mygdx.game.models;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import java.util.HashMap;
 
 /**
@@ -14,9 +17,11 @@ public class ConfigurationFactory {
 
     private HashMap<String, Terrain> terrainHashMap;
 
+    private static final Gson GSON = new Gson();
+
     /**
      *
-     * @param Config the pathname to the config file to create the terrain from
+     * @param config the pathname to the config file to create the terrain from
      * @return the Terrain Object
      */
     public Terrain makeTerrainFromConfig(String config) {
@@ -32,4 +37,16 @@ public class ConfigurationFactory {
         return null;
     }
 
+    public UnitAction getActionFromConfig(String configFile){
+        String config = ConfigurationGetter.getConfiguration(configFile);
+        JsonObject object = GSON.fromJson(config, JsonObject.class);
+        Action action = Action.valueOf(object.get("actionType").getAsString());
+        switch (action){
+            case SUPPORT:
+            case MOVE:
+            case ATTACK:
+        }
+
+        return null;
+    }
 }

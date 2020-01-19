@@ -5,7 +5,7 @@ public interface Command {
     /**
      * Get the action associated with the command
      */
-    Action getAction();
+    String getAction();
 
     /**
      * Get position that the action is directed at

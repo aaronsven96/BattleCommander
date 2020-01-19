@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+import java.util.List;
+
 import static com.badlogic.gdx.Gdx.files;
 
 public class BasicUnit implements Unit {
@@ -85,6 +87,16 @@ public class BasicUnit implements Unit {
 
         return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed);
     }
+
+    public List<UnitAction> getActions(){
+        return null;
+    }
+
+    public boolean isCommandValid(Command command){
+        return true;
+    }
+
+
 
     /**
      * Returns the state of the unit
@@ -211,4 +223,6 @@ public class BasicUnit implements Unit {
     public void setState ( UnitState new_state ) {
         state = new_state;
     }
+
+
 }
