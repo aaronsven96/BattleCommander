@@ -80,12 +80,21 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns the board.
+     * Returns the number of rows in the board.
      *
-     * @return the board
+     * @return the number of rows in the board
      */
-    public T[][] getBoard() {
-        return board;
+    protected int getNumRows() {
+        return numRows;
+    }
+
+    /**
+     * Returns the number of columns in the board.
+     *
+     * @return the number of columns in the board
+     */
+    protected int getNumColumns() {
+        return numColumns;
     }
 
 }

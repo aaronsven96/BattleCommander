@@ -11,13 +11,13 @@ import static org.junit.Assert.*;
  * Validation tests for the HexBoard.
  */
 public class HexBoardTest {
-    static Object obj;
-    static HexBoard<Object> h1, h2;
+    static String obj;
+    static HexBoard<String> h1, h2;
     static Position tl, tr, m, bl, br, oob;
 
     @BeforeClass
-    public static <T> void setUpBeforeAll() {
-        obj = new Object();
+    public static void setUpBeforeAll() {
+        obj = "";
 
         h1 = new HexBoard<>(obj, 10, 10);
         h2 = new HexBoard<>(obj, 7, 9);
@@ -30,9 +30,10 @@ public class HexBoardTest {
         oob = new Position(10, 0); // out of bounds
 
         // Set up the board with dummy Strings
-        for (int i = 0; i < h1.getBoard()[0].length; i++) {
-            for (int j = 0; j < h1.getBoard().length; j++) {
-                h1.getBoard()[i][j] = (T) ("" + i + j);
+        for (int i = 0; i < h1.getNumRows(); i++) {
+            for (int j = 0; j < h1.getNumColumns(); j++) {
+                Position pos = new Position(i, j);
+                h1.setHex(pos, "" + i + j);
             }
         }
     }
@@ -110,12 +111,12 @@ public class HexBoardTest {
     }
 
     @Test
-    public void getBoard() {
-        assertEquals("should be 10", 10, h1.getBoard().length);
-        assertEquals("should be 10", 10, h1.getBoard()[0].length);
+    public void getBoardDimensions() {
+        assertEquals("should be 10", 10, h1.getNumRows());
+        assertEquals("should be 10", 10, h1.getNumColumns());
 
-        assertEquals("should be 7", 7, h2.getBoard().length);
-        assertEquals("should be 9", 9, h2.getBoard()[0].length);
+        assertEquals("should be 7", 7, h2.getNumRows());
+        assertEquals("should be 9", 9, h2.getNumColumns());
     }
 
 }
