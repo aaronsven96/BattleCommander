@@ -40,8 +40,8 @@ public class HexBoardTest {
 
     @Test
     public void getHex() {
-        assertEquals("should be 00", String.format("%02d", 0), h1.getHex(tl));
-        assertEquals("should be 00", String.format("%02d", 9), h1.getHex(tr));
+        assertEquals("should be 00", "00", h1.getHex(tl));
+        assertEquals("should be 00", "09", h1.getHex(tr));
         assertEquals("should be 55", "55", h1.getHex(m));
         assertEquals("should be 90", "90", h1.getHex(bl));
         assertEquals("should be 99", "99", h1.getHex(br));
