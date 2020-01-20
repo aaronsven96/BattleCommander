@@ -26,17 +26,22 @@ public class HexMap {
         this.textures = original.textures;
     }
 
-//    public static HexMap getHexMapFromConfig(String content) {
-//        Gson gson = new Gson();
-//        JsonObject terrain = gson.fromJson(content, JsonObject.class);
-//
-//        String type = terrain.get("type").getAsString();
-//        int defense = terrain.get("defense").getAsInt();
+    public static HexMap getHexMapFromConfig(String content) {
+        Gson gson = new Gson();
+        JsonObject hexMap = gson.fromJson(content, JsonObject.class);
+
+        HexBoard<List<Unit>> units = null;
+        HexBoard<Terrain> terrain = null;
+        HexBoard<Boolean> mapShape = null;
+        List<HexBoard<String>> textures = null;
+
+        String type = hexMap.get("type").getAsString();
+        int defense = hexMap.get("defense").getAsInt();
 //        TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
-//        String textures = terrain.get("texturePath").getAsString();
-//
-//        return new Terrain(type, defense, terrainState, textures);
-//    }
+        String texture = hexMap.get("texturePath").getAsString();
+
+        return new HexMap(units, terrain, mapShape, textures);
+    }
 
     /**
      * Get the units at a position P
