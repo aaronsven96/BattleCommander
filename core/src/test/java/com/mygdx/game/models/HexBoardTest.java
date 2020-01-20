@@ -99,9 +99,9 @@ public class HexBoardTest {
 
         // Valid positions with a null hex Object
         assertTrue("should be true", h1.setHex(tl, null));
-        assertEquals("should be null", null, h1.getHex(tl));
-//        assertTrue("should be true", h1.setHex(br, null));
-//        assertNull("should be null", h1.getHex(br));
+        assertEquals("should be Optional.empty()", Optional.empty(), h1.getHex(tl));
+        assertTrue("should be true", h1.setHex(br, null));
+        assertEquals("should be Optional.empty()", Optional.empty(), h1.getHex(br));
 
         // Invalid positions
         assertFalse("should be false", h1.setHex(oob, "OB"));
