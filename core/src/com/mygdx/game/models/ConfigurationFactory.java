@@ -35,4 +35,8 @@ public class ConfigurationFactory {
         return null;
     }
 
+    public HexMap makeMapFromConfig(String config){
+        return null;
+    }
+
 }
