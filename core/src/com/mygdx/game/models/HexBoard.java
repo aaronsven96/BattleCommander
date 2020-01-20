@@ -2,6 +2,7 @@ package com.mygdx.game.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A class that represents the hex board of Type T that we will use as the map of the game. T will be a terrain.
@@ -25,10 +26,10 @@ public class HexBoard<T> {
      * @param p the position
      * @return the object at position x,y
      */
-    public T getHex(Position p) {
+    public Optional<T> getHex(Position p) {
         // Returns null if the position is outside the Array bounds
         // TODO: use Optional class?
-        return p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1 ? board[p.getX()][p.getY()] : null;
+        return p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1 ? board[p.getX()][p.getY()] : Optional.empty();
     }
 
     /**
