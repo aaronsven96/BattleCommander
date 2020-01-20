@@ -1,7 +1,5 @@
 package com.mygdx.game.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -28,17 +26,17 @@ public class HexMap {
         this.textures = original.textures;
     }
 
-    public static HexMap getHexMapFromConfig(String content) {
-        Gson gson = new Gson();
-        JsonObject terrain = gson.fromJson(content, JsonObject.class);
-
-        String type = terrain.get("type").getAsString();
-        int defense = terrain.get("defense").getAsInt();
-        TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
-        Texture texture = new Texture(Gdx.files.internal(terrain.get("texture").getAsString()));
-
-        return new Terrain(type, defense, terrainState, texture);
-    }
+//    public static HexMap getHexMapFromConfig(String content) {
+//        Gson gson = new Gson();
+//        JsonObject terrain = gson.fromJson(content, JsonObject.class);
+//
+//        String type = terrain.get("type").getAsString();
+//        int defense = terrain.get("defense").getAsInt();
+//        TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
+//        String textures = terrain.get("texturePath").getAsString();
+//
+//        return new Terrain(type, defense, terrainState, textures);
+//    }
 
     /**
      * Get the units at a position P
