@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TerrainTest {
     static Terrain swamp;
-    static String test = "{\"type\": \"swamp\",\"description\": \"An example configuration file for a swamp terrain\",\"defense\": 10,\"terrainState\": \"IMPASSABLE\",\"texture\": \"\"desktop/build/resources/main/badlogic.jpg\"\"}";
+    static String test = "{\"type\": \"swamp\",\"description\": \"An example configuration file for a swamp terrain\",\"defense\": 10,\"terrainState\": \"IMPASSABLE\",\"texture\": \"desktop/build/resources/main/badlogic.jpg\"}";
 
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -31,7 +31,7 @@ public class TerrainTest {
 
     @Test
     public void getTexture() {
-        assertEquals("state should be IMPASSABLE", TerrainState.IMPASSABLE, swamp.getTerrainState());
+        assertEquals("texturePath should be desktop/build/resources/main/badlogic.jpg", "desktop/build/resources/main/badlogic.jpg", swamp.getTexture());
     }
 
 
