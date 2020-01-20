@@ -25,15 +25,22 @@ public class ConfigurationFactory {
      * @return the Terrain Object
      */
     public Terrain makeTerrainFromConfig(String config) {
-        return terrainHashMap.containsKey(config) ? terrainHashMap.get(config) : TerrainClass.getTerrainFromConfig(config);
+        if (!terrainHashMap.containsKey(config)) {
+            terrainHashMap.put(config, Terrain.getTerrainFromConfig(config));
+        }
+        return terrainHashMap.get(config);
     }
 
     /**
      *
-     * @param Config the pathname to the config file to create the terrain from
+     * @param config the pathname to the config file to create the terrain from
      * @return the Unit Object
      */
-    public Unit makeUnitFromConfig(String Config){
+    public Unit makeUnitFromConfig(String config){
+        return null;
+    }
+
+    public HexMap makeMapFromConfig(String config){
         return null;
     }
 
