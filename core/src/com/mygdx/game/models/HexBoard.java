@@ -29,7 +29,11 @@ public class HexBoard<T> {
     public Optional<T> getHex(Position p) {
         // Returns null if the position is outside the Array bounds
         // TODO: use Optional class?
-        return p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1 ? Optional.of(board[p.getX()][p.getY()]) : Optional.empty();
+        if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
+            return Optional.of(board[p.getX()][p.getY()]);
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
