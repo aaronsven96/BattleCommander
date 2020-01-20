@@ -34,5 +34,4 @@ public class TerrainTest {
         assertEquals("texturePath should be desktop/build/resources/main/badlogic.jpg", "desktop/build/resources/main/badlogic.jpg", swamp.getTexture());
     }
 
-
 }
