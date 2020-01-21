@@ -28,7 +28,16 @@
   ],
   "textures": [
     [
-      "texture1.png"
+      "swamp.png"
+    ],
+    [
+      "snow.png"
+    ],
+    [
+      "ocean.json"
+    ],
+    [
+      "desert.json"
     ]
   ]
 }
