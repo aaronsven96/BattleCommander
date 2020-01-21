@@ -10,10 +10,14 @@
     ]
   ],
   "terrain": [
-    "swamp.json",
-    "snow.json",
-    "ocean.json",
-    "desert.json"
+    [
+      "swamp.json",
+      "snow.json"
+    ],
+    [
+      "ocean.json",
+      "desert.json"
+    ]
   ],
   "mapShape": [
     false,
