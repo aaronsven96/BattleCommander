@@ -20,10 +20,12 @@
     "ocean.json",
     "desert.json"
   ],
-  "mapShape": false,
-  true,
-  false,
-  false,
+  "mapShape": [
+    false,
+    true,
+    false,
+    false
+  ],
   "textures": [
     [
       "texture1.png"
