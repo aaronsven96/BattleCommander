@@ -18,7 +18,7 @@ public class ConfigurationFactory {
 
     private HashMap<String, Terrain> terrainHashMap;
     private HashMap<String, HexMap> hexMapHashMap;
-    private HashMap<String, BasicUnit> unitsHashMap;
+    private HashMap<String, Unit> unitsHashMap;
 
     private static final Gson GSON = new Gson();
 

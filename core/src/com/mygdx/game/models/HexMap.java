@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HexMap {
@@ -32,19 +33,26 @@ public class HexMap {
         Gson gson = new Gson();
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
-        HexBoard<List<Unit>> units;
+        HexBoard<List<Unit>> units = new HexBoard<>(null, 2, 2);
         HexBoard<Terrain> terrain;
         HexBoard<Boolean> mapShape;
         List<HexBoard<String>> textures;
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
         JsonArray units1 = hexMap.get("units").getAsJsonArray();
+        int count1 = 0;
+        int count2 = 0;
         for (JsonElement j : units1) {
             JsonArray units2 = j.getAsJsonArray();
             for (JsonElement k : units2) {
                 String unit3 = k.getAsString();
-                cf.makeUnitFromConfig(unit3);
+                Unit unit4 = cf.makeUnitFromConfig(unit3);
+                List<Unit> unitsList = new ArrayList<Unit>();
+                unitsList.add(unit4);
+                units[count1][count2] = unitsList;
+                count1++;
             }
+            count2++;
         }
 
         String type = hexMap.get("type").getAsString();
