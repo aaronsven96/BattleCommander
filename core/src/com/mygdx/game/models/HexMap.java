@@ -43,8 +43,7 @@ public class HexMap {
             for (JsonElement k : units2) {
                 // do something
             }
-                units[] =HexBoard<List<Unit>> units = null;
-        })
+        }
 
         String type = hexMap.get("type").getAsString();
         int defense = hexMap.get("defense").getAsInt();
