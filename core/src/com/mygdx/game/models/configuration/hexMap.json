@@ -1,6 +1,6 @@
 {
   "units": [
-    [],
+    [null],
     [
       "soldier.json"
     ],
@@ -13,9 +13,12 @@
     ]
   ],
   "terrain": "swamp",
+  "snow",
+  "hills"
   "mapShape": false,
   true,
   false,
   false
-  "textures": []
+  "textures": [["texture1.png"]
+  ]
 }
