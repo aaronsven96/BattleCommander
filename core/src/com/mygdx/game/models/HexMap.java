@@ -41,7 +41,7 @@ public class HexMap {
         for (JsonElement j : units1) {
             JsonArray units2 = j.getAsJsonArray();
             for (JsonElement k : units2) {
-                // do something
+                String unit3 = k.getAsString();
             }
         }
 
