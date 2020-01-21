@@ -18,7 +18,7 @@
   "mapShape": false,
   true,
   false,
-  false
+  false,
   "textures": [["texture1.png"]
   ]
 }
