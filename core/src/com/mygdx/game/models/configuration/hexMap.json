@@ -1,6 +1,21 @@
 {
-  "units": [],
+  "units": [
+    [],
+    [
+      "soldier.json"
+    ],
+    [
+      "archer.json"
+    ],
+    [
+      "soldier.json",
+      "archer.json"
+    ]
+  ],
   "terrain": "swamp",
   "mapShape": false,
-  "textures": [],
+  true,
+  false,
+  false
+  "textures": []
 }
