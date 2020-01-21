@@ -1,6 +1,6 @@
 {
   "units": [
-    [null],
+    ["null"],
     [
       "soldier.json"
     ],
@@ -14,7 +14,7 @@
   ],
   "terrain": "swamp",
   "snow",
-  "hills"
+  "hills",
   "mapShape": false,
   true,
   false,
