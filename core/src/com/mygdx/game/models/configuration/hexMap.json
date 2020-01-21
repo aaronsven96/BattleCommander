@@ -1,6 +1,8 @@
 {
   "units": [
-    ["null"],
+    [
+      "null"
+    ],
     [
       "soldier.json"
     ],
@@ -19,6 +21,9 @@
   true,
   false,
   false,
-  "textures": [["texture1.png"]
+  "textures": [
+    [
+      "texture1.png"
+    ]
   ]
 }
