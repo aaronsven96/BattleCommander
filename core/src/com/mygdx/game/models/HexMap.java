@@ -1,5 +1,6 @@
 package com.mygdx.game.models;
 
+import com.badlogic.gdx.utils.Json;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -35,7 +36,7 @@ public class HexMap {
         HexBoard<Boolean> mapShape;
         List<HexBoard<String>> textures;
 
-        Unit[] unitsArr = hexMap.get("units").getAsJsonArray();
+        Json[] unitsArr = hexMap.get("units").getAsJsonArray();
         for (int i = 0; i < units.hexMap.getnames.lengthget("units").getAsJsonArray().size(); i++) {
             for (int j = 0; j < hexMap.get("units").getAsJsonArray().)
                 units[] =HexBoard<List<Unit>> units = null;
