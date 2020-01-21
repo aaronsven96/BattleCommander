@@ -43,7 +43,7 @@ public class HexMap {
             JsonArray units2 = j.getAsJsonArray();
             for (JsonElement k : units2) {
                 String unit3 = k.getAsString();
-                cf.makeUnitFromConfig();
+                cf.makeUnitFromConfig(unit3);
             }
         }
 
