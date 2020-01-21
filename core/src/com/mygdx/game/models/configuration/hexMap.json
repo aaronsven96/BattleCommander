@@ -1,13 +1,8 @@
 {
   "units": [
     [
-      "null"
-    ],
-    [
+      "null",
       "soldier.json"
-    ],
-    [
-      "archer.json"
     ],
     [
       "soldier.json",
