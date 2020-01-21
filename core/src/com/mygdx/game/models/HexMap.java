@@ -37,6 +37,7 @@ public class HexMap {
         HexBoard<Boolean> mapShape;
         List<HexBoard<String>> textures;
 
+        ConfigurationFactory cf = new ConfigurationFactory();
         JsonArray units1 = hexMap.get("units").getAsJsonArray();
         for (JsonElement j : units1) {
             JsonArray units2 = j.getAsJsonArray();
