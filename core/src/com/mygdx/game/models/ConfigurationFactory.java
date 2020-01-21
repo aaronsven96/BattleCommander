@@ -18,6 +18,7 @@ public class ConfigurationFactory {
 
     private HashMap<String, Terrain> terrainHashMap;
     private HashMap<String, HexMap> hexMapHashMap;
+    private HashMap<String, BasicUnit> unitsHashMap;
 
     private static final Gson GSON = new Gson();
 
@@ -41,7 +42,10 @@ public class ConfigurationFactory {
      * @return the Unit Object from the config file
      */
     public Unit makeUnitFromConfig(String config) {
-        return null;
+        if (!unitsHashMap.containsKey(config)) {
+            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(config);
+        }
+        return unitsHashMap.get(config);
     }
 
     /**
