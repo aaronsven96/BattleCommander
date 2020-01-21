@@ -20,10 +20,14 @@
     ]
   ],
   "mapShape": [
-    false,
-    true,
-    false,
-    false
+    [
+      false,
+      true
+    ],
+    [
+      false,
+      false
+    ]
   ],
   "textures": [
     [
