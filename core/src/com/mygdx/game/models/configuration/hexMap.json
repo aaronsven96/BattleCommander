@@ -14,9 +14,12 @@
       "archer.json"
     ]
   ],
-  "terrain": "swamp",
-  "snow",
-  "hills",
+  "terrain": [
+    "swamp.json",
+    "snow.json",
+    "ocean.json",
+    "desert.json"
+  ],
   "mapShape": false,
   true,
   false,
