@@ -30,10 +30,16 @@ public class HexMap {
         Gson gson = new Gson();
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
-        HexBoard<List<Unit>> units = null;
-        HexBoard<Terrain> terrain = null;
-        HexBoard<Boolean> mapShape = null;
-        List<HexBoard<String>> textures = null;
+        HexBoard<List<Unit>> units;
+        HexBoard<Terrain> terrain;
+        HexBoard<Boolean> mapShape;
+        List<HexBoard<String>> textures;
+
+        Unit[] unitsArr = hexMap.get("units").getAsJsonArray();
+        for (int i = 0; i < units.hexMap.getnames.lengthget("units").getAsJsonArray().size(); i++) {
+            for (int j = 0; j < hexMap.get("units").getAsJsonArray().)
+                units[] =HexBoard<List<Unit>> units = null;
+        })
 
         String type = hexMap.get("type").getAsString();
         int defense = hexMap.get("defense").getAsInt();
