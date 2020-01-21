@@ -37,7 +37,7 @@ public class HexMap {
         List<HexBoard<String>> textures;
 
         Json[] unitsArr = hexMap.get("units").getAsJsonArray();
-        for (int i = 0; i < units.hexMap.getnames.lengthget("units").getAsJsonArray().size(); i++) {
+        for (int i = 0; i < unitsArr.length; i++) {
             for (int j = 0; j < hexMap.get("units").getAsJsonArray().)
                 units[] =HexBoard<List<Unit>> units = null;
         })
