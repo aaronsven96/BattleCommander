@@ -34,11 +34,17 @@ public class Orders {
         return currentCommand;
     }
 
-    /* Iterates to the next Command and returns it*/
-    public Command nextCommand() {
-        currentCommandIndex += 1;
-        currentCommand = commands.get(currentCommandIndex);
-        return currentCommand;
+    /** Iterates to the next Command if it can, and returns a boolean of whether
+     * there is a next command
+     */
+    public boolean nextCommand() {
+        if (currentCommandIndex < length) {
+            currentCommand = commands.get(currentCommandIndex+1);
+            currentCommandIndex += 1;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getUnitId() {
