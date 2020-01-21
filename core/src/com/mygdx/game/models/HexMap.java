@@ -37,12 +37,13 @@ public class HexMap {
         HexBoard<Boolean> mapShape;
         List<HexBoard<String>> textures;
 
-        ConfigurationFactory cf = new ConfigurationFactory();
+        ConfigurationFactory cf = ConfigurationFactory.instance;
         JsonArray units1 = hexMap.get("units").getAsJsonArray();
         for (JsonElement j : units1) {
             JsonArray units2 = j.getAsJsonArray();
             for (JsonElement k : units2) {
                 String unit3 = k.getAsString();
+                cf.makeUnitFromConfig();
             }
         }
 
