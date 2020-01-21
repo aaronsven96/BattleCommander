@@ -34,10 +34,11 @@ public class Orders {
         return currentCommand;
     }
 
-    /* Iterates to the next Command */
-    public void nextCommand() {
+    /* Iterates to the next Command and returns it*/
+    public Command nextCommand() {
         currentCommandIndex += 1;
         currentCommand = commands.get(currentCommandIndex);
+        return currentCommand;
     }
 
     public int getUnitId() {
@@ -46,13 +47,5 @@ public class Orders {
 
     public void setUnitId(int unitId) {
         this.unitId = unitId;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 }
