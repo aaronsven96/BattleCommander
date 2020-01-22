@@ -51,9 +51,9 @@ public class HexMap {
                 unitsList.add(unit4);
                 Position p = new Position(count1, count2);
                 units.setHex(p, unitsList);
-                count1++;
+                count2++;
             }
-            count2++;
+            count1++;
         }
 
         String type = hexMap.get("type").getAsString();
