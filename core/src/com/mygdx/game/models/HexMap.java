@@ -49,7 +49,7 @@ public class HexMap {
                 String text = k.getAsString(); // "archer.json", "soldier.json", "null", etc.
                 Unit unit = cf.makeUnitFromConfig(text);
                 unitsList.add(unit);
-                units.setHex(new Position(row, column), unitsList); // add List to the Position in the HexBoard
+                units.setHex(new Position(row, column), unitsList); // setup each hex on the HexBoard
                 column++;
             }
             row++;
