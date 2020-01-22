@@ -46,7 +46,7 @@ public class HexMap {
             List<Unit> unitsList = new ArrayList<>();
             JsonArray jsonArray2 = j.getAsJsonArray();
             for (JsonElement k : jsonArray2) {
-                String text = k.getAsString();
+                String text = k.getAsString(); // "archer.json", "soldier.json", "null", etc.
                 Unit unit = cf.makeUnitFromConfig(text);
                 unitsList.add(unit);
                 units.setHex(new Position(row, column), unitsList);
