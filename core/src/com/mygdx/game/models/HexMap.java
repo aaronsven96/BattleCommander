@@ -49,8 +49,7 @@ public class HexMap {
                 Unit unit4 = cf.makeUnitFromConfig(unit3);
                 List<Unit> unitsList = new ArrayList<>();
                 unitsList.add(unit4);
-                Position p = new Position(count1, count2);
-                units.setHex(p, unitsList);
+                units.setHex(new Position(count1, count2), unitsList);
                 count2++;
             }
             count1++;
