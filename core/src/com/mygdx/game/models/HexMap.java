@@ -55,10 +55,10 @@ public class HexMap {
             count1++;
         }
 
-        String type = hexMap.get("type").getAsString();
-        int defense = hexMap.get("defense").getAsInt();
+//        String type = hexMap.get("type").getAsString();
+//        int defense = hexMap.get("defense").getAsInt();
 //        TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
-        String texture = hexMap.get("texturePath").getAsString();
+//        String texture = hexMap.get("texturePath").getAsString();
 
         return new HexMap(units, terrain, mapShape, textures);
     }
