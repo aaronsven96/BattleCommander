@@ -42,6 +42,7 @@ public class HexMap {
         JsonArray jsonArray1 = hexMap.get("units").getAsJsonArray();
         int row = 0;
         int column = 0;
+
         for (JsonElement j : jsonArray1) { // loop through outer Array
             List<Unit> unitsList = new ArrayList<>();
             JsonArray jsonArray2 = j.getAsJsonArray();
