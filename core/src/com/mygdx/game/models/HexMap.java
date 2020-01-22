@@ -26,7 +26,7 @@ public class HexMap {
         units = original.units;
         terrain = original.terrain;
         mapShape = original.mapShape;
-        this.textures = original.textures;
+        textures = original.textures;
     }
 
     public static HexMap getHexMapFromConfig(String content) {
