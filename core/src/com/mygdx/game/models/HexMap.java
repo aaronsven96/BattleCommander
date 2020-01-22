@@ -34,25 +34,20 @@ public class HexMap {
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
         HexBoard<List<Unit>> units = new HexBoard<>(null, 2, 2);
-        HexBoard<Terrain> terrain;
-        HexBoard<Boolean> mapShape;
-        List<HexBoard<String>> textures;
+        HexBoard<Terrain> terrain = null;
+        HexBoard<Boolean> mapShape = null;
+        List<HexBoard<String>> textures = null;
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
         JsonArray units1 = hexMap.get("units").getAsJsonArray();
-        int count1 = 0;
-        int count2 = 0;
         for (JsonElement j : units1) {
             JsonArray units2 = j.getAsJsonArray();
             for (JsonElement k : units2) {
                 String unit3 = k.getAsString();
                 Unit unit4 = cf.makeUnitFromConfig(unit3);
-                List<Unit> unitsList = new ArrayList<Unit>();
+                List<Unit> unitsList = new ArrayList<>();
                 unitsList.add(unit4);
-                units[count1][count2] = unitsList;
-                count1++;
             }
-            count2++;
         }
 
         String type = hexMap.get("type").getAsString();
