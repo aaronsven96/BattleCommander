@@ -39,20 +39,20 @@ public class HexMap {
         List<HexBoard<String>> textures = null;
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
-        JsonArray units1 = hexMap.get("units").getAsJsonArray();
-        int count1 = 0;
-        int count2 = 0;
-        for (JsonElement j : units1) {
+        JsonArray jsonArray1 = hexMap.get("units").getAsJsonArray();
+        int row = 0;
+        int column = 0;
+        for (JsonElement j : jsonArray1) {
             List<Unit> unitsList = new ArrayList<>();
-            JsonArray units2 = j.getAsJsonArray();
-            for (JsonElement k : units2) {
-                String unit3 = k.getAsString();
-                Unit unit4 = cf.makeUnitFromConfig(unit3);
-                unitsList.add(unit4);
-                units.setHex(new Position(count1, count2), unitsList);
-                count2++;
+            JsonArray jsonArray2 = j.getAsJsonArray();
+            for (JsonElement k : jsonArray2) {
+                String text = k.getAsString();
+                Unit unit = cf.makeUnitFromConfig(text);
+                unitsList.add(unit);
+                units.setHex(new Position(row, column), unitsList);
+                column++;
             }
-            count1++;
+            row++;
         }
 
 //        String type = hexMap.get("type").getAsString();
