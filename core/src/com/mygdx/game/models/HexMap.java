@@ -40,6 +40,8 @@ public class HexMap {
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
         JsonArray units1 = hexMap.get("units").getAsJsonArray();
+        int count1 = 0;
+        int count2 = 0;
         for (JsonElement j : units1) {
             JsonArray units2 = j.getAsJsonArray();
             for (JsonElement k : units2) {
@@ -47,7 +49,11 @@ public class HexMap {
                 Unit unit4 = cf.makeUnitFromConfig(unit3);
                 List<Unit> unitsList = new ArrayList<>();
                 unitsList.add(unit4);
+                Position p = new Position(count1, count2);
+                units.setHex(p, unitsList);
+                count1++;
             }
+            count2++;
         }
 
         String type = hexMap.get("type").getAsString();
