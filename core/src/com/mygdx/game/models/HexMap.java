@@ -42,10 +42,10 @@ public class HexMap {
         JsonArray jsonArray1 = hexMap.get("units").getAsJsonArray();
         int row = 0;
         int column = 0;
-        for (JsonElement j : jsonArray1) {
+        for (JsonElement j : jsonArray1) { // Loop through outer Array
             List<Unit> unitsList = new ArrayList<>();
             JsonArray jsonArray2 = j.getAsJsonArray();
-            for (JsonElement k : jsonArray2) {
+            for (JsonElement k : jsonArray2) { // Loop through inner Array
                 String text = k.getAsString(); // "archer.json", "soldier.json", "null", etc.
                 Unit unit = cf.makeUnitFromConfig(text);
                 unitsList.add(unit);
