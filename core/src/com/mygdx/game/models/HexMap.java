@@ -43,11 +43,11 @@ public class HexMap {
         int count1 = 0;
         int count2 = 0;
         for (JsonElement j : units1) {
+            List<Unit> unitsList = new ArrayList<>();
             JsonArray units2 = j.getAsJsonArray();
             for (JsonElement k : units2) {
                 String unit3 = k.getAsString();
                 Unit unit4 = cf.makeUnitFromConfig(unit3);
-                List<Unit> unitsList = new ArrayList<>();
                 unitsList.add(unit4);
                 units.setHex(new Position(count1, count2), unitsList);
                 count2++;
