@@ -34,24 +34,52 @@ public class HexMap {
         Gson gson = new Gson();
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
-        HexBoard<List<Unit>> units = new HexBoard<>(null, 2, 2); // TODO: hardcoded???
-        HexBoard<Terrain> terrain = null;
-        HexBoard<Boolean> mapShape = null;
+        // TODO: hardcoded???
+        HexBoard<List<Unit>> units = new HexBoard<>(null, 2, 2);
+        HexBoard<Terrain> terrain = new HexBoard<>(null, 2, 2);
+        HexBoard<Boolean> mapShape = new HexBoard<>(null, 2, 2);
         List<HexBoard<String>> textures = null;
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
-        JsonArray jsonArray1 = hexMap.get("units").getAsJsonArray();
+        JsonArray jsonArrayUnits1 = hexMap.get("units").getAsJsonArray();
+        JsonArray jsonArrayTerrain1 = hexMap.get("terrain").getAsJsonArray();
+        JsonArray jsonArrayMapShape1 = hexMap.get("mapShape").getAsJsonArray();
         int row = 0;
         int column = 0;
 
-        for (JsonElement j : jsonArray1) { // loop through outer Array
+        for (JsonElement j : jsonArrayUnits1) { // loop through outer Array
             List<Unit> unitsList = new ArrayList<>();
-            JsonArray jsonArray2 = j.getAsJsonArray();
-            for (JsonElement k : jsonArray2) { // loop through inner Array
+            JsonArray jsonArrayUnits2 = j.getAsJsonArray();
+            for (JsonElement k : jsonArrayUnits2) { // loop through inner Array
                 String text = k.getAsString(); // "archer.json", "soldier.json", "null", etc.
-                Unit unit = text.equals("null") ? null : cf.makeUnitFromConfig(text);
-                unitsList.add(unit);
+                Unit unit0 = text.equals("null") ? null : cf.makeUnitFromConfig(text);
+                unitsList.add(unit0);
                 units.setHex(new Position(row, column), unitsList); // set up the HexBoard
+                column++;
+            }
+            row++;
+        }
+
+        row = 0;
+        column = 0;
+        for (JsonElement j : jsonArrayTerrain1) {
+            JsonArray jsonArrayTerrain2 = j.getAsJsonArray();
+            for (JsonElement k : jsonArrayTerrain2) {
+                String text = k.getAsString(); // "swamp.json", "desert.json", "ocean.json", "snow.json", etc.
+                Terrain terrain0 = text.equals("null") ? null : cf.makeTerrainFromConfig(text);
+                terrain.setHex(new Position(row, column), terrain0); // set up the HexBoard
+                column++;
+            }
+            row++;
+        }
+
+        row = 0;
+        column = 0;
+        for (JsonElement j : jsonArrayMapShape1) {
+            JsonArray jsonArrayMapShape2 = j.getAsJsonArray();
+            for (JsonElement k : jsonArrayMapShape2) {
+                String text = k.getAsString();
+                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text));
                 column++;
             }
             row++;

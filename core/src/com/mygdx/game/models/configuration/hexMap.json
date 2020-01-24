@@ -12,11 +12,11 @@
   "terrain": [
     [
       "swamp.json",
-      "snow.json"
+      "desert.json"
     ],
     [
       "ocean.json",
-      "desert.json"
+      "snow.json"
     ]
   ],
   "mapShape": [

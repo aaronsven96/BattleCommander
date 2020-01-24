@@ -30,7 +30,7 @@ public class ConfigurationFactory {
      */
     public Terrain makeTerrainFromConfig(String config) {
         if (!terrainHashMap.containsKey(config)) {
-            terrainHashMap.put(config, Terrain.getTerrainFromConfig(config));
+            terrainHashMap.put(config, Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config)));
         }
         return terrainHashMap.get(config);
     }
