@@ -78,8 +78,8 @@ public class HexMap {
         for (JsonElement j : jsonArrayMapShape1) {
             JsonArray jsonArrayMapShape2 = j.getAsJsonArray();
             for (JsonElement k : jsonArrayMapShape2) {
-                String text = k.getAsString();
-                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text));
+                String text = k.getAsString(); // "true", "false"
+                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text)); // set up the HexBoard
                 column++;
             }
             row++;
