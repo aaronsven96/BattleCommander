@@ -22,6 +22,7 @@ allprojects {
 
     version = '1.0'
     ext {
+        visuiVersion = '1.4.2'
         appName = "my-gdx-game"
         gdxVersion = '1.9.10'
         roboVMVersion = '2.3.7'
@@ -116,6 +117,7 @@ project(":core") {
 
 
     dependencies {
+        implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         implementation "space.earlygrey:shapedrawer:$shapedrawerVersion"

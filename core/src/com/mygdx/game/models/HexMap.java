@@ -37,7 +37,8 @@ public class HexMap {
         TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
         Texture texture = new Texture(Gdx.files.internal(terrain.get("texture").getAsString()));
 
-        return new Terrain(type, defense, terrainState, texture);
+       // return new Terrain(type, defense, terrainState, texture);
+        return null;
     }
 
     /**

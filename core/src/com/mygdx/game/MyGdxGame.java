@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.input.GameListener;
 import com.mygdx.game.models.Position;
+import com.mygdx.game.screens.TitleScreen;
 
 import java.util.Arrays;
 
@@ -33,7 +34,8 @@ public class MyGdxGame extends Game {
 
     @Override
     public void create() {
-        camera = new OrthographicCamera();
+        this.setScreen(new TitleScreen());
+        /*camera = new OrthographicCamera(1000, 1000);
         batch = new SpriteBatch();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
@@ -48,11 +50,11 @@ public class MyGdxGame extends Game {
         drawer = new ShapeDrawer(batch, region);
         input = new GameListener(camera, view, boardDrawer.getCenterHexes(), drawer);
         System.out.println(boardDrawer.getCenterHexes());
-        Gdx.input.setInputProcessor(input);
+        Gdx.input.setInputProcessor(input);*/
 
-        for(boolean[] i: booleans) {
+        /*for(boolean[] i: booleans) {
             Arrays.fill(i, Boolean.TRUE);
-        }
+        }*/
 
 
        /* booleans[0][0] = Boolean.FALSE;
@@ -72,7 +74,8 @@ public class MyGdxGame extends Game {
 
     @Override
     public void render() {
-        for(boolean[] i: booleans) {
+       super.render();
+        /*for(boolean[] i: booleans) {
             Arrays.fill(i, Boolean.TRUE);
         }
         float time = Gdx.graphics.getDeltaTime();
@@ -103,7 +106,7 @@ public class MyGdxGame extends Game {
         boardDrawer.drawHexes(booleans);
         boardDrawer.drawTextures(booleans);
         //batch.draw(img, 0, 0);
-        batch.end();
+        batch.end();*/
 
     }
 
