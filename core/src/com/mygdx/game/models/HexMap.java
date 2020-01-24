@@ -44,10 +44,10 @@ public class HexMap {
         JsonArray jsonArrayUnits1 = hexMap.get("units").getAsJsonArray();
         JsonArray jsonArrayTerrain1 = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape1 = hexMap.get("mapShape").getAsJsonArray();
-        int row = 0;
-        int column = 0;
 
         // Set up units
+        int row = 0;
+        int column = 0;
         for (JsonElement j : jsonArrayUnits1) { // loop through outer Array
             List<Unit> unitsList = new ArrayList<>();
             JsonArray jsonArrayUnits2 = j.getAsJsonArray();
