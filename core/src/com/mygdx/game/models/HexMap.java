@@ -68,7 +68,7 @@ public class HexMap {
     /**
      * Get the units at a position P
      */
-    Optional<List<Unit>> getUnits(Position p) {
+    public Optional<List<Unit>> getUnits(Position p) {
         return units.getHex(p);
     }
 
@@ -81,7 +81,7 @@ public class HexMap {
     /**
      * Get the terrain at a position P
      */
-    Optional<Terrain> getTerrain(Position p) {
+    public Optional<Terrain> getTerrain(Position p) {
         return terrain.getHex(p);
     }
 
@@ -95,14 +95,14 @@ public class HexMap {
     /**
      * Returns a List of Strings which refer to the file location of the textures which relate to each layer of the map
      */
-    List<HexBoard<String>> getTextures() {
+    public List<HexBoard<String>> getTextures() {
         return textures;
     }
 
     /**
      * Returns a HexMap of Booleans which describes which tiles are in the map
      */
-    HexBoard<Boolean> getMapShape() {
+    public HexBoard<Boolean> getMapShape() {
         return mapShape;
     }
 
