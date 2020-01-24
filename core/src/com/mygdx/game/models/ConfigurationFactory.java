@@ -16,9 +16,9 @@ public class ConfigurationFactory {
     private ConfigurationFactory() {
     }
 
-    private HashMap<String, Terrain> terrainHashMap;
-    private HashMap<String, HexMap> hexMapHashMap;
-    private HashMap<String, Unit> unitsHashMap;
+    private static final HashMap<String, Terrain> terrainHashMap = new HashMap<>();
+    private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
+    private static final HashMap<String, Unit> unitsHashMap = new HashMap<>();
 
     private static final Gson GSON = new Gson();
 
@@ -43,7 +43,7 @@ public class ConfigurationFactory {
      */
     public Unit makeUnitFromConfig(String config) {
         if (!unitsHashMap.containsKey(config)) {
-            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(config);
+            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
         }
         return unitsHashMap.get(config);
     }
@@ -56,7 +56,7 @@ public class ConfigurationFactory {
      */
     public HexMap makeHexMapFromConfig(String config) {
         if (!hexMapHashMap.containsKey(config)) {
-            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(config));
+            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(ConfigurationGetter.getConfiguration(config)));
         }
         return hexMapHashMap.get(config);
     }

@@ -49,7 +49,7 @@ public class HexMap {
             JsonArray jsonArray2 = j.getAsJsonArray();
             for (JsonElement k : jsonArray2) { // loop through inner Array
                 String text = k.getAsString(); // "archer.json", "soldier.json", "null", etc.
-                Unit unit = cf.makeUnitFromConfig(text);
+                Unit unit = text.equals("null") ? null : cf.makeUnitFromConfig(text);
                 unitsList.add(unit);
                 units.setHex(new Position(row, column), unitsList); // set up the HexBoard
                 column++;

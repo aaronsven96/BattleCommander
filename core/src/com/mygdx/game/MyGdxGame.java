@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.input.GameListener;
+import com.mygdx.game.models.ConfigurationFactory;
+import com.mygdx.game.models.HexMap;
 import com.mygdx.game.models.Position;
 
 import java.util.Arrays;
@@ -53,9 +55,8 @@ public class MyGdxGame extends Game {
         for(boolean[] i: booleans) {
             Arrays.fill(i, Boolean.TRUE);
         }
-
-
-       /* booleans[0][0] = Boolean.FALSE;
+        HexMap map = ConfigurationFactory.instance.makeHexMapFromConfig("hexMap.json");
+    /* booleans[0][0] = Boolean.FALSE;
         booleans[1][1] = Boolean.FALSE;
         booleans[1][2] = Boolean.FALSE;
         booleans[2][3] = Boolean.FALSE;
