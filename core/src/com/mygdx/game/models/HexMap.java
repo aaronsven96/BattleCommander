@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class HexMap {
     HexBoard<List<Unit>> units;
@@ -67,8 +68,8 @@ public class HexMap {
     /**
      * Get the units at a position P
      */
-    List<Unit> getUnits(Position p) {
-        return null;
+    Optional<List<Unit>> getUnits(Position p) {
+        return units.getHex(p);
     }
 
     /**
@@ -80,8 +81,8 @@ public class HexMap {
     /**
      * Get the terrain at a position P
      */
-    Terrain getTerrain(Position p) {
-        return null;
+    Optional<Terrain> getTerrain(Position p) {
+        return terrain.getHex(p);
     }
 
     /**
@@ -95,14 +96,14 @@ public class HexMap {
      * Returns a List of Strings which refer to the file location of the textures which relate to each layer of the map
      */
     List<HexBoard<String>> getTextures() {
-        return null;
+        return textures;
     }
 
     /**
      * Returns a HexMap of Booleans which describes which tiles are in the map
      */
     HexBoard<Boolean> getMapShape() {
-        return null;
+        return mapShape;
     }
 
     /**
