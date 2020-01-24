@@ -47,6 +47,7 @@ public class HexMap {
         int row = 0;
         int column = 0;
 
+        // Set up units
         for (JsonElement j : jsonArrayUnits1) { // loop through outer Array
             List<Unit> unitsList = new ArrayList<>();
             JsonArray jsonArrayUnits2 = j.getAsJsonArray();
@@ -60,6 +61,7 @@ public class HexMap {
             row++;
         }
 
+        // Set up terrain
         row = 0;
         column = 0;
         for (JsonElement j : jsonArrayTerrain1) {
@@ -67,19 +69,20 @@ public class HexMap {
             for (JsonElement k : jsonArrayTerrain2) {
                 String text = k.getAsString(); // "swamp.json", "desert.json", "ocean.json", "snow.json", etc.
                 Terrain terrain0 = text.equals("null") ? null : cf.makeTerrainFromConfig(text);
-                terrain.setHex(new Position(row, column), terrain0); // set up the HexBoard
+                terrain.setHex(new Position(row, column), terrain0);
                 column++;
             }
             row++;
         }
 
+        // Set up mapShape
         row = 0;
         column = 0;
         for (JsonElement j : jsonArrayMapShape1) {
             JsonArray jsonArrayMapShape2 = j.getAsJsonArray();
             for (JsonElement k : jsonArrayMapShape2) {
                 String text = k.getAsString(); // "true", "false"
-                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text)); // set up the HexBoard
+                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text));
                 column++;
             }
             row++;
