@@ -34,7 +34,7 @@ public class HexMap {
         Gson gson = new Gson();
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
-        HexBoard<List<Unit>> units = new HexBoard<>(null, 2, 2);
+        HexBoard<List<Unit>> units = new HexBoard<>(null, 2, 2); // TODO: hardcoded???
         HexBoard<Terrain> terrain = null;
         HexBoard<Boolean> mapShape = null;
         List<HexBoard<String>> textures = null;
