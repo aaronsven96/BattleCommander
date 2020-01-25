@@ -7,20 +7,30 @@ import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-public class TitleScreen extends AbstractScreen{
+public class TitleScreen extends AbstractScreen {
     @Override
     public void buildStage() {
-        VisUI.load();
         VisTable table = new VisTable();
 
-        table.add(new VisTextButton("Start"));
-        VisTextButton button = new VisTextButton("Start");
-        button.addListener(new ChangeListener() {
+        VisTextButton selectMap = new VisTextButton("Selection");
+        selectMap.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                ScreenManager.instance.pushScreen(ScreenEnum.SELECTION_SCREEN);
             }
         });
+
+        VisTextButton multiplayer = new VisTextButton("Multiplayer");
+        multiplayer.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_SELECT_SCREEN);
+            }
+        });
+
+        table.add(selectMap);
+        table.row();
+        table.add(multiplayer);
         table.setDebug(true);
         table.setFillParent(true);
         super.addActor(table);
