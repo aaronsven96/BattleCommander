@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class ConfigurationGetter {
 
-    private ConfigurationGetter(){}
+    public ConfigurationGetter(){}
 
-    private static String getConfiguration(String path){
+    public static String getConfiguration(String path){
         return Gdx.files.internal(path).readString();
     }
 }

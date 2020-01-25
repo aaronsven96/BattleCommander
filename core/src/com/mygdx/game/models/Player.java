@@ -12,12 +12,12 @@ public interface Player {
     /**
      * All moves that the player has made
      */
-    List<Move> getPlayerMoves();
+    List<Orders> getPlayerMoves();
 
     /**
      * Adds a player move
      */
-    Move addPlayerMove();
+    Orders addPlayerMove();
 
     /**
      * returns a list of units ids for a player

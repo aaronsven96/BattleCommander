@@ -7,12 +7,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.models.HexBoard;
 import com.mygdx.game.models.Position;
-import com.mygdx.game.models.PositionClass;
 
 
-import java.io.OptionalDataException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -29,7 +26,7 @@ public class GameListener implements InputProcessor {
     private static final float MAP_DEPTH_UPPER_BOUND = 1000;
     private static final float MAP_DEPTH_LOWER_BOUND = 0;
     private Map<Integer, Boolean> isKeyPressed = new HashMap<>();
-    private Optional<PositionClass> selectedHex = Optional.empty();
+    private Optional<Position> selectedHex = Optional.empty();
     Vector3[][] centers;
     private Vector2 touchedDown;
     Map<Position, Position> moves = new HashMap<>();
@@ -84,7 +81,7 @@ public class GameListener implements InputProcessor {
 
         if(Input.Buttons.LEFT == button && touchedDown.dst(new Vector2(screenX,screenY)) < 5){
 
-            Optional<PositionClass> newSelectedHex = adapter.findClosestHex(currentPos);
+            Optional<Position> newSelectedHex = adapter.findClosestHex(currentPos);
             if(newSelectedHex.isPresent()) {
                 if(newSelectedHex.isPresent() && selectedHex.isPresent()) {
                         moves.put(selectedHex.get(), newSelectedHex.get());
@@ -164,7 +161,7 @@ public class GameListener implements InputProcessor {
         camera.position.y = MathUtils.clamp(camera.position.y, MAP_DEPTH_LOWER_BOUND + (viewport.getWorldHeight()/2), MAP_DEPTH_UPPER_BOUND - (viewport.getWorldHeight()/2));
     }
 
-    public Optional<PositionClass> getSelectedHex(){
+    public Optional<Position> getSelectedHex(){
         return selectedHex;
     }
 

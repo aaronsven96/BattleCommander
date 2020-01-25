@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,6 +42,25 @@ public class BoardDrawer implements Disposable {
                 }
                 drawer.polygon(center.x, center.y, 6, (float) (float)size, (float) size, 0, 3);
                 drawer.circle(center.x, center.y, 30);
+            }
+        }
+    }
+
+    public void drawTextures(boolean[][] whereToDraw) {
+        //Texture texture = new Texture(Gdx.files.internal("desktop/build/resources/main/badlogic.jpg"));
+        int width = 40;
+        int height = 40;
+        //TextureRegion region1 = new TextureRegion(texture, 0, 2, width, height);
+        //TextureRegion region2 = new TextureRegion(texture, 0, 0, width, height);
+
+        for (int i = 0; i < centerHexes.length; i++) {
+            Vector3[] centerHex = centerHexes[i];
+            for (int j = 0; j < centerHex.length; j++) {
+                Vector3 center = centerHex[j];
+                //batch.draw(region1, center.x - (float) width / 2, center.y - (float) height / 2);
+                if (!whereToDraw[i][j]) {
+                    //batch.draw(region2, center.x - (float) width / 2, center.y - (float) height / 2);
+                }
             }
         }
     }

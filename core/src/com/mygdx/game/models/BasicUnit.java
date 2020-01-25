@@ -2,62 +2,121 @@ package com.mygdx.game.models;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.List;
 
-public class BasicUnit {
-    String name; //unit name
-    String unitType; //the type of unit
-    String description; //unit description
-    int max_health; //unit maximum health
-    int health; //unit current health
-    int strength; //base strength
-    int ranged_strength; //base ranged strength
-    int range; //unit's range of attack (if ranged unit)
-    int speed; //movement speed
-    UnitState state; //unit's current state
+import static com.badlogic.gdx.Gdx.files;
 
-    public BasicUnit() {
-        max_health=0;
-        health=0;
-        strength=0;
-        ranged_strength=0;
-        range=1;
-        speed=1;
-        state=UnitState.normal;
+public class BasicUnit implements Unit {
+    private String type; //unit name
+    private String description; //unit description
+    private int max_health; //unit maximum health
+    private int health; //unit current health
+    private int strength; //base strength
+    private int ranged_strength; //base ranged strength
+    private int range; //unit's range of attack (if ranged unit)
+    private int speed; //movement speed
+    private UnitState state; //unit's current state
 
+    private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed) {
+        this.type=type;
+        this.description=description;
+        this.max_health=max_health;
+        this.strength=strength;
+        this.ranged_strength=ranged_strength;
+        this.range=range;
+        this.speed=speed;
+
+        this.health=max_health; //set the unit's health to its max health
+        this.state=UnitState.normal; //set the unit's state to normal
     }
 
-    public BasicUnit(String configuration) {
-        String content = null;
-        try {
-            content = new Scanner(new File("filename")).useDelimiter("\\Z").next();
-        } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("No configuration file found for the Unit.");
-        }
-        Gson gson = new Gson();
-        JsonObject unit;
-        unit = gson.fromJson(content, JsonObject.class);
-        unit.get("Speed").getAsInt();
+    //File name constructor
+   public BasicUnit(String filename){
+       FileHandle file = Gdx.files.internal(filename);
+       String content = file.readString();
 
-        health=max_health; //set the unit's health to its max health
+       Gson gson = new Gson();
+       JsonObject unit = gson.fromJson(content, JsonObject.class);
 
+       this.type = unit.get("Type").getAsString();
+       this.description = unit.get("Description").getAsString();
+       this.max_health = unit.get("Max Health").getAsInt();
+       this.strength = unit.get("Strength").getAsInt();
+       this.ranged_strength = unit.get("Ranged Strength").getAsInt();
+       this.range = unit.get("Range").getAsInt();
+       this.speed = unit.get("Speed").getAsInt();
+
+       this.health=max_health; //set the unit's health to its max health
+       this.state=UnitState.normal; //set the unit's state to normal
+   }
+
+    //Copy constructor
+    public BasicUnit(BasicUnit original) {
+        type=original.type;
+        description=original.description;
+        max_health=original.max_health;
+        strength=original.strength;
+        ranged_strength=original.ranged_strength;
+        range=original.range;
+        speed=original.speed;
+        health=original.health;
+        state=original.state;
     }
 
     /**
-     * Returns unit's name
+     * Returns the Unit from the configuration file.
+     *
+     * @param config the file path
+     * @return the Unit from the configuration file
      */
-    public String getName() {
-        return name;
+    public static BasicUnit getUnitFromConfig(String config) {
+
+        Gson gson = new Gson();
+        JsonObject unit = gson.fromJson(config, JsonObject.class);
+
+        String type = unit.get("Type").getAsString();
+        String description = unit.get("Description").getAsString();
+        int max_health = unit.get("Max Health").getAsInt();
+        int strength = unit.get("Strength").getAsInt();
+        int ranged_strength = unit.get("Ranged Strength").getAsInt();
+        int range = unit.get("Range").getAsInt();
+        int speed = unit.get("Speed").getAsInt();
+
+        return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed);
     }
+
+    public List<UnitAction> getActions(){
+        return null;
+    }
+
+    public boolean isCommandValid(Command command){
+        return true;
+    }
+
+
+
+    /**
+     * Returns the state of the unit
+     */
+    public UnitState getUnitState(){
+        return state;
+    };
+
+    /**
+     * Sets the state of the unit to desired state
+     */
+    public void setUnitState(UnitState unitState){
+        state = unitState;
+    };
 
     /**
      * Returns unit's type
      */
-    public String getUnitType() {
-        return unitType;
+    public String getType() {
+        return type;
     }
 
     /**
@@ -112,8 +171,8 @@ public class BasicUnit {
     /**
      * Returns unit's state
      */
-    public UnitState getState() {
-        return state;
+    public UnitState getState () {
+        return this.state;
     }
 
     /**
@@ -164,4 +223,6 @@ public class BasicUnit {
     public void setState ( UnitState new_state ) {
         state = new_state;
     }
+
+
 }
