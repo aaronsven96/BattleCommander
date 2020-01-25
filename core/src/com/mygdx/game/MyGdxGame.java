@@ -31,9 +31,9 @@ public class MyGdxGame extends Game {
 
     @Override
     public void create() {
-        VisUI.load();
+        VisUI.load(VisUI.SkinScale.X2);
         ScreenManager.init(this);
-        ScreenManager.instance.pushScreen(TITLE_SCREEN);
+        ScreenManager.instance.pushScreen(TITLE_SCREEN, null);
     }
 
     @Override

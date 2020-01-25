@@ -19,7 +19,7 @@ public abstract class AbstractScreen extends Stage implements Screen {
 
     @Override
     public void render(float delta) {
-        System.out.println("hi");
+
         // Clear screen
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -27,7 +27,6 @@ public abstract class AbstractScreen extends Stage implements Screen {
         // Calling to Stage methods
         super.act(delta);
         super.draw();
-        System.out.println(super.getActors().size);
     }
 
     @Override

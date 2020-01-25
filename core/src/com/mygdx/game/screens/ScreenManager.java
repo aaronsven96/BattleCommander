@@ -19,14 +19,16 @@ public class ScreenManager {
     }
 
     public void popScreen(){
-        screens.pop();
+        if(!screens.isEmpty()) {
+            screens.pop().dispose();
+        }
         if(!screens.isEmpty()) {
             game.setScreen(screens.peek());
         }
     }
 
-    public void pushScreen(ScreenEnum screen){
-        AbstractScreen screenInst = screen.getScreen();
+    public void pushScreen(ScreenEnum screen, Object[] args){
+        AbstractScreen screenInst = screen.getScreen(args);
         game.setScreen(screenInst);
         screens.push(screenInst);
     }
