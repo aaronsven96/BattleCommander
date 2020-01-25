@@ -14,17 +14,17 @@ public interface GameState {
     /**
      * If the move is possible
      */
-    boolean isValidMove(Move move);
+    boolean isValidMove(Orders move);
 
     /**
      * Adds a move for a specific player if possible
      */
-    boolean setMove(int playerId, Move move);
+    boolean setMove(int playerId, Orders move);
 
     /**
      * Returns whether a move is possibly blocked
      */
-    boolean isMoveBlocked(int playerId, Move move);
+    boolean isMoveBlocked(int playerId, Orders move);
 
     /**
      * Advances turn if possible

@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +16,7 @@ public class HexBoardTest {
     static Position tl, tr, m, bl, br, oob;
 
     @BeforeClass
-    public static void setUpBeforeAll() {
+    public static void setUpBeforeClass() {
         h1 = new HexBoard<>(null, 10, 10);
         h2 = new HexBoard<>(null, 7, 9);
 
@@ -37,13 +38,13 @@ public class HexBoardTest {
 
     @Test
     public void getHex() {
-        assertEquals("should be 00", "00", h1.getHex(tl));
-        assertEquals("should be 00", "09", h1.getHex(tr));
-        assertEquals("should be 55", "55", h1.getHex(m));
-        assertEquals("should be 90", "90", h1.getHex(bl));
-        assertEquals("should be 99", "99", h1.getHex(br));
+        assertEquals("should be Optional[00]", Optional.of("00"), h1.getHex(tl));
+        assertEquals("should be Optional[09]", Optional.of("09"), h1.getHex(tr));
+        assertEquals("should be Optional[55]", Optional.of("55"), h1.getHex(m));
+        assertEquals("should be Optional[90]", Optional.of("90"), h1.getHex(bl));
+        assertEquals("should be Optional[99]", Optional.of("99"), h1.getHex(br));
 
-        assertNull("should be null", h1.getHex(oob));
+        assertEquals("should be Optional.empty", Optional.empty(), h1.getHex(oob));
     }
 
     @Test
@@ -86,21 +87,21 @@ public class HexBoardTest {
     public void setHex() {
         // Valid positions
         assertTrue("should be true", h1.setHex(tl, "TL"));
-        assertEquals("should be TL", "TL", h1.getHex(tl));
+        assertEquals("should be Optional[TL]", Optional.of("TL"), h1.getHex(tl));
         assertTrue("should be true", h1.setHex(tr, "TR"));
-        assertEquals("should be TR", "TR", h1.getHex(tr));
+        assertEquals("should be Optional[TR]", Optional.of("TR"), h1.getHex(tr));
         assertTrue("should be true", h1.setHex(m, "MI"));
-        assertEquals("should be MI", "MI", h1.getHex(m));
+        assertEquals("should be Optional[MI]", Optional.of("MI"), h1.getHex(m));
         assertTrue("should be true", h1.setHex(bl, "BL"));
-        assertEquals("should be BL", "BL", h1.getHex(bl));
+        assertEquals("should be Optional[BL]", Optional.of("BL"), h1.getHex(bl));
         assertTrue("should be true", h1.setHex(br, "BR"));
-        assertEquals("should be BR", "BR", h1.getHex(br));
+        assertEquals("should be Optional[BR]", Optional.of("BR"), h1.getHex(br));
 
         // Valid positions with a null hex Object
         assertTrue("should be true", h1.setHex(tl, null));
-        assertNull("should be null", h1.getHex(tl));
+        assertEquals("should be Optional.empty()", Optional.empty(), h1.getHex(tl));
         assertTrue("should be true", h1.setHex(br, null));
-        assertNull("should be null", h1.getHex(br));
+        assertEquals("should be Optional.empty()", Optional.empty(), h1.getHex(br));
 
         // Invalid positions
         assertFalse("should be false", h1.setHex(oob, "OB"));

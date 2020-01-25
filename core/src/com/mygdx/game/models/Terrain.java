@@ -1,7 +1,5 @@
 package com.mygdx.game.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -12,11 +10,13 @@ public class Terrain {
     private String type;
     private int defense;
     private TerrainState terrainState;
+    private String texture;
 
-    private Terrain(String type, int defense, TerrainState terrainState) {
+    private Terrain(String type, int defense, TerrainState terrainState, String texture) {
         this.type = type;
         this.defense = defense;
         this.terrainState = terrainState;
+        this.texture = texture;
     }
 
     // Copy constructor
@@ -24,26 +24,25 @@ public class Terrain {
         type = original.type;
         defense = original.defense;
         terrainState = original.terrainState;
+        texture = original.texture;
     }
 
     /**
      * Returns the Terrain from the configuration file.
      *
-     * @param filename the filename
+     * @param content the content
      * @return the Terrain from the configuration file
      */
-    public static Terrain getTerrainFromConfig(String filename) {
-        FileHandle file = Gdx.files.internal(filename);
-        String content = file.readString();
-
+    public static Terrain getTerrainFromConfig(String content) {
         Gson gson = new Gson();
         JsonObject terrain = gson.fromJson(content, JsonObject.class);
 
         String type = terrain.get("type").getAsString();
         int defense = terrain.get("defense").getAsInt();
         TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
+        String texture = terrain.get("texture").getAsString();
 
-        return new Terrain(type, defense, terrainState);
+        return new Terrain(type, defense, terrainState, texture);
     }
 
     /**
@@ -71,6 +70,16 @@ public class Terrain {
      */
     public TerrainState getTerrainState() {
         return terrainState;
+    }
+
+
+    /**
+     * Returns the Texture of the Terrain.
+     *
+     * @return the the Texture of the Terrain
+     */
+    public String getTexture() {
+        return texture;
     }
 
 }

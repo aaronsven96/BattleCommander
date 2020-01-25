@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.input.GameListener;
+import com.mygdx.game.models.ConfigurationFactory;
+import com.mygdx.game.models.HexMap;
 import com.mygdx.game.models.Position;
 import com.mygdx.game.screens.ScreenManager;
 import com.mygdx.game.screens.TitleScreen;
