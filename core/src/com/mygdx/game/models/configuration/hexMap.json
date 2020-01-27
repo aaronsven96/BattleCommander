@@ -3,11 +3,11 @@
   "columns": 2,
   "units": [
     [
-      "null",
-      "soldier.json"
+      "soldier.json",
+      "archer.json"
     ],
     [
-      "soldier.json",
+      "null",
       "archer.json"
     ]
   ],
