@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kotcrab.vis.ui.VisUI;
 import com.mygdx.game.input.GameListener;
 import com.mygdx.game.models.ConfigurationFactory;
 import com.mygdx.game.models.HexMap;
@@ -30,6 +31,7 @@ public class MyGdxGame extends Game {
 
     @Override
     public void create() {
+        VisUI.load();
         ScreenManager.init(this);
         ScreenManager.instance.pushScreen(TITLE_SCREEN);
     }

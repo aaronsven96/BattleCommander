@@ -15,6 +15,11 @@ public enum ScreenEnum {
         public AbstractScreen getScreen(){
             return new GameScreen();
         }
+    },
+    MULTIPLAYER_SELECT_SCREEN{
+        public AbstractScreen getScreen(){
+            return new MultiplayerSelect();
+        }
     };
 
 

@@ -12,7 +12,7 @@ public class ScreenManager {
 
     private static Game game;
 
-    private static Deque<AbstractScreen> screens = new ArrayDeque<AbstractScreen>();
+    private static Deque<AbstractScreen> screens = new ArrayDeque<>();
 
     public static void init(Game gameRunning){
         game = gameRunning;
