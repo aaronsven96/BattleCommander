@@ -35,9 +35,12 @@ public class HexMap {
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
         // TODO: hardcoded???
-        HexBoard<List<Unit>> units = new HexBoard<>(null, 2, 2);
-        HexBoard<Terrain> terrain = new HexBoard<>(null, 2, 2);
-        HexBoard<Boolean> mapShape = new HexBoard<>(null, 2, 2);
+        int rows = Integer.parseInt(hexMap.get("rows").getAsString());
+        int columns = Integer.parseInt(hexMap.get("columns").getAsString());
+
+        HexBoard<List<Unit>> units = new HexBoard<>(null, rows, columns);
+        HexBoard<Terrain> terrain = new HexBoard<>(null, rows, columns);
+        HexBoard<Boolean> mapShape = new HexBoard<>(null, rows, columns);
         List<HexBoard<String>> textures = null;
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
