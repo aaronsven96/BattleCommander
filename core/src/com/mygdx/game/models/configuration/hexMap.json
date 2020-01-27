@@ -2,34 +2,46 @@
   "rows": 2,
   "columns": 2,
   "units": [
-    [
-      "soldier.json",
-      "archer.json"
-    ],
-    [
-      "null",
-      "soldier.json"
-    ]
+    {
+      "config": "soldier.json",
+      "id": 10000,
+      "texture": "soldier_texture.json"
+    },
+    {
+      "config": "null",
+      "id": 10001,
+      "texture": "null_texture.json"
+    },
+    {
+      "config": "archer.json",
+      "id": 10002,
+      "texture": "archer_texture.json"
+    },
+    {
+      "config": "knight.json",
+      "id": 10003,
+      "texture": "knight_texture.json"
+    }
   ],
   "terrain": [
     {
       "config": "swamp.json",
-      "id": 10000,
+      "id": 20000,
       "texture": "swamp_texture.json"
     },
     {
       "config": "swamp.json",
-      "id": 10001,
+      "id": 20001,
       "texture": "swamp_texture.json"
     },
     {
       "config": "ocean.json",
-      "id": 10010,
+      "id": 20010,
       "texture": "ocean_texture.json"
     },
     {
       "config": "desert.json",
-      "id": 10011,
+      "id": 20011,
       "texture": "desert_texture.json"
     }
   ],
