@@ -34,7 +34,6 @@ public class HexMap {
         Gson gson = new Gson();
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
-        // TODO: hardcoded???
         int rows = Integer.parseInt(hexMap.get("rows").getAsString());
         int columns = Integer.parseInt(hexMap.get("columns").getAsString());
 
