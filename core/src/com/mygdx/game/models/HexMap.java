@@ -137,15 +137,5 @@ public class HexMap {
     /**
      * Get possible moves
      */
-    /*List<Position> getPossibleMoves(Action action, int unitId){
-        return null;
-    }*/
-
-    /**
-     * returns a list of potentially blocked commands
-     */
-    /*List<Command> getBlockedCommands(){
-        return null;
-    }*/
 
 }

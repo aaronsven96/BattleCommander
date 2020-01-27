@@ -1,6 +1,15 @@
 {
   "rows": 2,
   "columns": 2,
+  "config": [
+    "swamp.json",
+    "id"
+    :
+    198,
+    "texture"
+    :
+    "swamp_texture.json]
+
   "units": [
     [
       "null",

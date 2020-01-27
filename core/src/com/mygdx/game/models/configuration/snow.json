@@ -3,5 +3,4 @@
   "description": "An example configuration file for a snow terrain",
   "defense": 20,
   "terrainState": "IMPASSABLE",
-  "texture": "snowTexture.jpg"
 }
