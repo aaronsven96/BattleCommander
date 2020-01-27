@@ -1,15 +1,6 @@
 {
   "rows": 2,
   "columns": 2,
-  "config": [
-    "swamp.json",
-    "id"
-    :
-    198,
-    "texture"
-    :
-    "swamp_texture.json]
-
   "units": [
     [
       "null",
@@ -21,23 +12,35 @@
     ]
   ],
   "terrain": [
-    [
-      "swamp.json",
-      "desert.json"
-    ],
-    [
-      "ocean.json",
-      "snow.json"
-    ]
+    {
+      "config": "swamp.json",
+      "id": 10000,
+      "texture": "swamp_texture.json"
+    },
+    {
+      "config": "swamp.json",
+      "id": 10001,
+      "texture": "swamp_texture.json"
+    },
+    {
+      "config": "ocean.json",
+      "id": 10010,
+      "texture": "ocean_texture.json"
+    },
+    {
+      "config": "desert.json",
+      "id": 10011,
+      "texture": "desert_texture.json"
+    }
   ],
   "mapShape": [
     [
-      false,
+      true,
       true
     ],
     [
       false,
-      false
+      true
     ]
   ]
 }
