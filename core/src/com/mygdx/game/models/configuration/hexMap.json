@@ -5,21 +5,25 @@
     {
       "config": "soldier.json",
       "id": 10000,
+      "pid": 100,
       "texture": "soldier_texture.json"
     },
     {
       "config": "null",
       "id": 10001,
+      "pid": 100,
       "texture": "null_texture.json"
     },
     {
       "config": "archer.json",
       "id": 10002,
+      "pid": 100,
       "texture": "archer_texture.json"
     },
     {
       "config": "knight.json",
       "id": 10003,
+      "pid": 100,
       "texture": "knight_texture.json"
     }
   ],
@@ -35,14 +39,14 @@
       "texture": "swamp_texture.json"
     },
     {
-      "config": "ocean.json",
+      "config": "swamp.json",
       "id": 20010,
-      "texture": "ocean_texture.json"
+      "texture": "swamp_texture.json"
     },
     {
-      "config": "desert.json",
+      "config": "swamp.json",
       "id": 20011,
-      "texture": "desert_texture.json"
+      "texture": "swamp_texture.json"
     }
   ],
   "mapShape": [

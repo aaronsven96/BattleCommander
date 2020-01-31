@@ -50,31 +50,33 @@ public class HexMap {
         // Set up units
         int row = 0;
         int column = 0;
-        for (JsonElement j : jsonArrayUnits1) { // loop through outer Array
+        for (JsonElement j : jsonArrayUnits1) {
+            String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "soldier.json", "null", etc.
+            String texture = j.getAsJsonObject().get("texture").getAsString(); // TODO
+            Unit unit0 = config.equals("null") ? null : cf.makeUnitFromConfig(config);
             List<Unit> unitsList = new ArrayList<>();
-            JsonArray jsonArrayUnits2 = j.getAsJsonArray();
-            for (JsonElement k : jsonArrayUnits2) { // loop through inner Array
-                String text = k.getAsString(); // "archer.json", "soldier.json", "null", etc.
-                Unit unit0 = text.equals("null") ? null : cf.makeUnitFromConfig(text);
-                unitsList.add(unit0);
-                units.setHex(new Position(row, column), unitsList); // set up the HexBoard
-                column++;
+            unitsList.add(unit0);
+            units.setHex(new Position(row, column), unitsList); // set up the HexBoard
+            column++;
+            if (column == columns) {
+                column = 0;
+                row++;
             }
-            row++;
         }
 
         // Set up terrain
         row = 0;
         column = 0;
         for (JsonElement j : jsonArrayTerrain1) {
-            JsonArray jsonArrayTerrain2 = j.getAsJsonArray();
-            for (JsonElement k : jsonArrayTerrain2) {
-                String text = k.getAsString(); // "swamp.json", "desert.json", "ocean.json", "snow.json", etc.
-                Terrain terrain0 = text.equals("null") ? null : cf.makeTerrainFromConfig(text);
-                terrain.setHex(new Position(row, column), terrain0);
-                column++;
+            String config = j.getAsJsonObject().get("config").getAsString(); // "swamp.json", "desert.json", "ocean.json", "snow.json", etc.
+            String texture = j.getAsJsonObject().get("texture").getAsString(); // TODO
+            Terrain terrain0 = config.equals("null") ? null : cf.makeTerrainFromConfig(config);
+            terrain.setHex(new Position(row, column), terrain0);
+            column++;
+            if (column == columns) {
+                column = 0;
+                row++;
             }
-            row++;
         }
 
         // Set up mapShape
@@ -90,7 +92,8 @@ public class HexMap {
             row++;
         }
 
-        return new HexMap(units, terrain, mapShape, textures);
+//        return new HexMap(units, terrain, mapShape, textures);
+        return new HexMap(null, terrain, mapShape, null);
     }
 
     /**
