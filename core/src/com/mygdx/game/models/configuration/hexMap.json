@@ -21,10 +21,10 @@
       "texture": "archer_texture.json"
     },
     {
-      "config": "knight.json",
+      "config": "archer.json",
       "id": 10003,
       "pid": 100,
-      "texture": "knight_texture.json"
+      "texture": "archer_texture.json"
     }
   ],
   "terrain": [
