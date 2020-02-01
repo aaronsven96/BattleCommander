@@ -19,7 +19,6 @@ public class BasicUnit implements Unit {
     private int range; //unit's range of attack (if ranged unit)
     private int speed; //movement speed
     private UnitState state; //unit's current state
-
     private int id; // ID
     private int pid; // player ID
 
