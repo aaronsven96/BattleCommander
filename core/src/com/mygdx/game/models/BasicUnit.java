@@ -20,8 +20,8 @@ public class BasicUnit implements Unit {
     private int speed; //movement speed
     private UnitState state; //unit's current state
 
-    private int id;
-    private int pid;
+    private int id; // ID
+    private int pid; // player ID
 
     private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed, int id, int pid) {
         this.type=type;
@@ -70,7 +70,6 @@ public class BasicUnit implements Unit {
         speed=original.speed;
         health=original.health;
         state=original.state;
-
         id = original.id;
         pid = original.pid;
     }
