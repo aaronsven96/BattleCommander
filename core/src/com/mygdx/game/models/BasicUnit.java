@@ -20,7 +20,10 @@ public class BasicUnit implements Unit {
     private int speed; //movement speed
     private UnitState state; //unit's current state
 
-    private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed) {
+    private int id;
+    private int pid;
+
+    private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed, int id, int pid) {
         this.type=type;
         this.description=description;
         this.max_health=max_health;
@@ -31,6 +34,9 @@ public class BasicUnit implements Unit {
 
         this.health=max_health; //set the unit's health to its max health
         this.state=UnitState.normal; //set the unit's state to normal
+
+        this.id = id;
+        this.pid = pid;
     }
 
     //File name constructor
@@ -64,6 +70,9 @@ public class BasicUnit implements Unit {
         speed=original.speed;
         health=original.health;
         state=original.state;
+
+        id = original.id;
+        pid = original.pid;
     }
 
     /**
@@ -72,7 +81,7 @@ public class BasicUnit implements Unit {
      * @param config the file path
      * @return the Unit from the configuration file
      */
-    public static BasicUnit getUnitFromConfig(String config) {
+    public static BasicUnit getUnitFromConfig(String config, int id, int pid) {
 
         Gson gson = new Gson();
         JsonObject unit = gson.fromJson(config, JsonObject.class);
@@ -85,7 +94,7 @@ public class BasicUnit implements Unit {
         int range = unit.get("Range").getAsInt();
         int speed = unit.get("Speed").getAsInt();
 
-        return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed);
+        return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed, id, pid);
     }
 
     public List<UnitAction> getActions(){

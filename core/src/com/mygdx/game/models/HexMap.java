@@ -51,9 +51,10 @@ public class HexMap {
         int row = 0;
         int column = 0;
         for (JsonElement j : jsonArrayUnits1) {
-            String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "soldier.json", "null", etc.
-            String texture = j.getAsJsonObject().get("texture").getAsString(); // TODO
-            Unit unit0 = config.equals("null") ? null : cf.makeUnitFromConfig(config);
+            String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "null", etc.
+            int id = j.getAsJsonObject().get("id").getAsInt();
+            int pid = j.getAsJsonObject().get("pid").getAsInt();
+            Unit unit0 = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid);
             List<Unit> unitsList = new ArrayList<>();
             unitsList.add(unit0);
             units.setHex(new Position(row, column), unitsList); // set up the HexBoard
@@ -68,9 +69,10 @@ public class HexMap {
         row = 0;
         column = 0;
         for (JsonElement j : jsonArrayTerrain1) {
-            String config = j.getAsJsonObject().get("config").getAsString(); // "swamp.json", "desert.json", "ocean.json", "snow.json", etc.
-            String texture = j.getAsJsonObject().get("texture").getAsString(); // TODO
-            Terrain terrain0 = config.equals("null") ? null : cf.makeTerrainFromConfig(config);
+            String config = j.getAsJsonObject().get("config").getAsString(); // "swamp.json", "desert.json", etc.
+            String texture = j.getAsJsonObject().get("texture").getAsString();
+            int id = j.getAsJsonObject().get("id").getAsInt();
+            Terrain terrain0 = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id);
             terrain.setHex(new Position(row, column), terrain0);
             column++;
             if (column == columns) {

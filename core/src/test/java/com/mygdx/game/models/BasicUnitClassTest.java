@@ -13,7 +13,7 @@ public class BasicUnitClassTest {
 
     @BeforeClass
     public static void UnitSetup() {
-        soldier = BasicUnit.getUnitFromConfig(test);
+        soldier = BasicUnit.getUnitFromConfig(test, 0, 0);
 
         //archer = new BasicUnit("archer.json");
     }

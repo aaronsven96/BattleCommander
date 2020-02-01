@@ -28,11 +28,12 @@ public class ConfigurationFactory {
      * @param config the pathname to the config file to create the Terrain from
      * @return the Terrain Object from the config file
      */
-    public Terrain makeTerrainFromConfig(String config) {
-        if (!terrainHashMap.containsKey(config)) {
-            terrainHashMap.put(config, Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config)));
-        }
-        return terrainHashMap.get(config);
+    public Terrain makeTerrainFromConfig(String config, String texture, int id) {
+//        if (!terrainHashMap.containsKey(config)) {
+//            terrainHashMap.put(config, Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config)));
+//        }
+//        return terrainHashMap.get(config);
+        return Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config), texture, id);
     }
 
     /**
@@ -41,11 +42,12 @@ public class ConfigurationFactory {
      * @param config the pathname to the config file to create the Unit from
      * @return the Unit Object from the config file
      */
-    public Unit makeUnitFromConfig(String config) {
-        if (!unitsHashMap.containsKey(config)) {
-            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
-        }
-        return unitsHashMap.get(config);
+    public Unit makeUnitFromConfig(String config, int id, int pid) {
+//        if (!unitsHashMap.containsKey(config)) {
+//            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
+//        }
+//        return unitsHashMap.get(config);
+        return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config), id, pid);
     }
 
     /**
