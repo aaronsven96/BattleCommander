@@ -2,6 +2,5 @@
   "type": "swamp",
   "description": "An example configuration file for a swamp terrain",
   "defense": 10,
-  "terrainState": "IMPASSABLE",
-  "texture": "swamp.png"
+  "terrainState": "IMPASSABLE"
 }

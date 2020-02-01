@@ -2,5 +2,5 @@
   "type": "ocean",
   "description": "An example configuration file for a ocean terrain",
   "defense": 5,
-  "terrainState": "IMPASSABLE",
+  "terrainState": "IMPASSABLE"
 }

@@ -94,8 +94,7 @@ public class HexMap {
             row++;
         }
 
-//        return new HexMap(units, terrain, mapShape, textures);
-        return new HexMap(null, terrain, mapShape, null);
+        return new HexMap(units, terrain, mapShape, textures);
     }
 
     /**

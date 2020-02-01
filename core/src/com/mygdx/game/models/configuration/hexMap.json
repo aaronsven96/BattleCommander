@@ -17,13 +17,13 @@
     {
       "config": "archer.json",
       "id": 10002,
-      "pid": 100,
+      "pid": 101,
       "texture": "archer_texture.json"
     },
     {
       "config": "archer.json",
       "id": 10003,
-      "pid": 100,
+      "pid": 101,
       "texture": "archer_texture.json"
     }
   ],
@@ -34,19 +34,19 @@
       "texture": "swamp_texture.json"
     },
     {
-      "config": "swamp.json",
+      "config": "snow.json",
       "id": 20001,
-      "texture": "swamp_texture.json"
+      "texture": "snow_texture.json"
     },
     {
-      "config": "swamp.json",
+      "config": "desert.json",
       "id": 20010,
-      "texture": "swamp_texture.json"
+      "texture": "desert_texture.json"
     },
     {
-      "config": "swamp.json",
+      "config": "ocean.json",
       "id": 20011,
-      "texture": "swamp_texture.json"
+      "texture": "ocean_texture.json"
     }
   ],
   "mapShape": [
