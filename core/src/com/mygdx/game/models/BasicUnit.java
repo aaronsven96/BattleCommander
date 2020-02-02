@@ -234,6 +234,9 @@ public class BasicUnit implements Unit {
         state = new_state;
     }
 
+    /**
+     * Returns the unit's player ID
+     */
     public int getPid() {
         return pid;
     }
