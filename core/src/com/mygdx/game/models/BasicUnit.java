@@ -19,10 +19,11 @@ public class BasicUnit implements Unit {
     private int range; //unit's range of attack (if ranged unit)
     private int speed; //movement speed
     private UnitState state; //unit's current state
-    private int id; // ID
-    private int pid; // player ID
+    private int id; //ID
+    private int pid; //player ID
+    private String texture; //unit texture
 
-    private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed, int id, int pid) {
+    private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed, int id, int pid, String texture) {
         this.type=type;
         this.description=description;
         this.max_health=max_health;
@@ -36,6 +37,7 @@ public class BasicUnit implements Unit {
 
         this.id = id;
         this.pid = pid;
+        this.texture = texture;
     }
 
     //File name constructor
@@ -71,6 +73,7 @@ public class BasicUnit implements Unit {
         state=original.state;
         id = original.id;
         pid = original.pid;
+        texture = original.texture;
     }
 
     /**
@@ -79,7 +82,7 @@ public class BasicUnit implements Unit {
      * @param config the file path
      * @return the Unit from the configuration file
      */
-    public static BasicUnit getUnitFromConfig(String config, int id, int pid) {
+    public static BasicUnit getUnitFromConfig(String config, int id, int pid, String texture) {
 
         Gson gson = new Gson();
         JsonObject unit = gson.fromJson(config, JsonObject.class);
@@ -92,7 +95,7 @@ public class BasicUnit implements Unit {
         int range = unit.get("Range").getAsInt();
         int speed = unit.get("Speed").getAsInt();
 
-        return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed, id, pid);
+        return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed, id, pid, texture);
     }
 
     public List<UnitAction> getActions(){

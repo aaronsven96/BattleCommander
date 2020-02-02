@@ -47,7 +47,7 @@ public class HexMap {
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape1 = hexMap.get("mapShape").getAsJsonArray();
 
-        // TODO: convert loops from for-each to for
+        // TODO: convert loops from for-each to for?
         // Set up units
         int row = 0;
         int column = 0;
@@ -55,9 +55,10 @@ public class HexMap {
             String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "null", etc.
             int id = j.getAsJsonObject().get("id").getAsInt();
             int pid = j.getAsJsonObject().get("pid").getAsInt();
-            BasicUnit unit0 = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid);
+            String texture = j.getAsJsonObject().get("texture").getAsString();
+            BasicUnit unit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture);
             List<BasicUnit> unitsList = new ArrayList<>();
-            unitsList.add(unit0);
+            unitsList.add(unit);
             units.setHex(new Position(row, column), unitsList); // set up the HexBoard
             column++;
             if (column == columns) {
@@ -121,7 +122,7 @@ public class HexMap {
     /**
      * Gets all units for a player with id
      */
-    public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: Testing!
+    public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing!
         List<BasicUnit> unitsAtHex;
         List<BasicUnit> unitsForPlayer = new ArrayList<>();
 

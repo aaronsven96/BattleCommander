@@ -42,12 +42,12 @@ public class ConfigurationFactory {
      * @param config the pathname to the config file to create the Unit from
      * @return the Unit Object from the config file
      */
-    public BasicUnit makeUnitFromConfig(String config, int id, int pid) {
+    public BasicUnit makeUnitFromConfig(String config, int id, int pid, String texture) {
 //        if (!unitsHashMap.containsKey(config)) {
 //            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
 //        }
 //        return unitsHashMap.get(config);
-        return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config), id, pid);
+        return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config), id, pid, texture);
     }
 
     /**
