@@ -56,10 +56,13 @@ public class HexMap {
             int id = j.getAsJsonObject().get("id").getAsInt();
             int pid = j.getAsJsonObject().get("pid").getAsInt();
             String texture = j.getAsJsonObject().get("texture").getAsString();
-            BasicUnit unit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture);
+
+            BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture);
             List<BasicUnit> unitsList = new ArrayList<>();
-            unitsList.add(unit);
+            unitsList.add(newUnit);
+
             units.setHex(new Position(row, column), unitsList); // set up the HexBoard
+
             column++;
             if (column == columns) {
                 column = 0;
@@ -74,8 +77,11 @@ public class HexMap {
             String config = j.getAsJsonObject().get("config").getAsString(); // "swamp.json", "desert.json", etc.
             String texture = j.getAsJsonObject().get("texture").getAsString();
             int id = j.getAsJsonObject().get("id").getAsInt();
-            Terrain terrain0 = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id);
-            terrain.setHex(new Position(row, column), terrain0);
+
+            Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id);
+
+            terrain.setHex(new Position(row, column), newTerrain); // set up the HexBoard
+
             column++;
             if (column == columns) {
                 column = 0;
@@ -90,7 +96,9 @@ public class HexMap {
             JsonArray jsonArrayMapShape2 = j.getAsJsonArray();
             for (JsonElement k : jsonArrayMapShape2) {
                 String text = k.getAsString(); // "true", "false"
-                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text));
+
+                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text)); // set up the HexBoard
+
                 column++;
             }
             row++;
