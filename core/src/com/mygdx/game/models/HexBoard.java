@@ -11,7 +11,6 @@ public class HexBoard<T> {
     private T[][] board;
     private int numRows, numColumns;
 
-    // TODO: Use T obj? Remove?
     public HexBoard(int numRows, int numColumns) {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
 
