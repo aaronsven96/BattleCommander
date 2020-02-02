@@ -122,7 +122,7 @@ public class HexMap {
      * Gets all units for a player with id
      */
     public List<BasicUnit> getUnitsForPlayer(int pid) {
-        List<BasicUnit> unitsAtHex = new ArrayList<>();
+        List<BasicUnit> unitsAtHex = new ArrayList<>(); // TODO: Testing
         List<BasicUnit> unitsForPlayer = new ArrayList<>();
 
         for (int i = 0; i < units.getNumRows(); i++) {
