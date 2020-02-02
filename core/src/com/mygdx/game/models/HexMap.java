@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class HexMap {
-    HexBoard<List<BasicUnit>> units;
-    HexBoard<Terrain> terrain;
-    HexBoard<Boolean> mapShape;
-    List<HexBoard<String>> textures;
+    private HexBoard<List<BasicUnit>> units;
+    private HexBoard<Terrain> terrain;
+    private HexBoard<Boolean> mapShape;
+    private List<HexBoard<String>> textures;
 
     private HexMap(HexBoard<List<BasicUnit>> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures) {
         this.units = units;
