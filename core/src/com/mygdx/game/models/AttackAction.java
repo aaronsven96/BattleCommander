@@ -1,6 +1,7 @@
 package com.mygdx.game.models;
 
 public class AttackAction implements UnitAction {
+
     @Override
     public String getActionName() {
         return null;

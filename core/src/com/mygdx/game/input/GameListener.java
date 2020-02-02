@@ -2,19 +2,19 @@ package com.mygdx.game.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.models.Position;
 
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameListener implements InputProcessor {
 
@@ -33,19 +33,20 @@ public class GameListener implements InputProcessor {
     Boolean touchUp = true;
     Vector3 currentPos;
     HexBoardAdapter adapter;
-    private final ScreenViewport viewport;
+    private final Viewport viewport;
     private final OrthographicCamera camera;
     private float currentZoom = 0;
     private float elapsedTime = 0;
-    ShapeDrawer drawer;
 
     /**
      * Constructor should take in values that the class will manipulate, camera, move ,etc
      */
-    public GameListener(OrthographicCamera camera, ScreenViewport viewport, Vector3[][] centers, ShapeDrawer drawer) {
-        this.camera = camera;
+    public GameListener(Viewport viewport, Vector3[][] centers) {
+        this.camera = (OrthographicCamera) viewport.getCamera();
         this.viewport = viewport;
-        this.drawer = drawer;
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.drawPixel(0, 0);
         this.centers = centers;
         adapter = new HexBoardAdapter(centers, 30);
     }

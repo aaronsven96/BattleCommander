@@ -3,6 +3,7 @@ package com.mygdx.game.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -13,18 +14,20 @@ public class Orders {
     /* The acting unit's ID */
     private int unitId;
 
-    /* The number of Commands in the Orders */
-    private int length;
+    private Position startPosition;
 
     /* The Commands the Orders contain */
     private Iterator<Command> commands;
 
+    private List<Command> commandList;
+
     /* The current Command*/
     private Command currentCommand;
 
-    public Orders(int unitId, int length, ArrayList<Command> commands) {
+    public Orders(int unitId, List<Command> commands, Position startPosition) {
         this.unitId = unitId;
-        this.length = length;
+        this.startPosition = startPosition;
+        this.commandList = commands;
         this.commands = commands.iterator();
     }
 
@@ -32,14 +35,23 @@ public class Orders {
      * there is a next command.
      */
     public boolean nextCommand() {
-        if (commands.hasNext()) {
+        boolean hasNext = commands.hasNext();
+        if (hasNext) {
             currentCommand = commands.next();
         }
-        return commands.hasNext();
+        return hasNext;
+    }
+
+    public void goToFirstCommand(){
+        commands = commandList.iterator();
     }
 
     public int getUnitId() {
         return unitId;
+    }
+
+    public Position getStartPosition(){
+        return startPosition;
     }
 
     public void setUnitId(int unitId) {
@@ -47,7 +59,7 @@ public class Orders {
     }
 
     public int getLength() {
-        return length;
+        return commandList.size();
     }
 
     public Command getCurrentCommand() {

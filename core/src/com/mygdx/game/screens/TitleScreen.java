@@ -11,6 +11,7 @@ public class TitleScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         VisTable table = new VisTable();
+        table.setFillParent(true);
 
         VisTextButton selectMap = new VisTextButton("Selection");
         selectMap.addListener(new ChangeListener() {
@@ -27,5 +28,9 @@ public class TitleScreen extends AbstractScreen {
                 ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_SELECT_SCREEN, null);
             }
         });
+        table.add(selectMap);
+        table.row();
+        table.add(multiplayer);
+        super.addActor(table);
     }
 }
