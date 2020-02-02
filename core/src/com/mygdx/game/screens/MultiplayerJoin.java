@@ -4,25 +4,34 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.kotcrab.vis.ui.widget.VisTextField;
 
-public class MultiplayerSelect extends AbstractScreen {
+public class MultiplayerJoin extends AbstractScreen {
     @Override
     public void buildStage() {
         VisTable table = new VisTable();
         table.setFillParent(true);
 
-        VisTextButton create = new VisTextButton("Create");
-        create.addListener(new ChangeListener() {
+        VisTextField name = new VisTextField("IP Address");
+      /*  name.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
             }
-        });
-        table.add(create);
+        });*/
+        table.add(name);
+
+        VisTextField password = new VisTextField("Password");
+   /*     password.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
+            }
+        });*/
+        table.add(password);
 
         VisTextButton join = new VisTextButton("Join");
         join.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_JOIN_SCREEN);
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
             }
         });
         table.add(join);
