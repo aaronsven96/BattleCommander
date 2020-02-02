@@ -11,8 +11,7 @@ public class HexBoard<T> {
     private T[][] board;
     private int numRows, numColumns;
 
-    // TODO: Use T obj? Remove?
-    public HexBoard(T obj, int numRows, int numColumns) {
+    public HexBoard(int numRows, int numColumns) {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
 
         board = (T[][]) new Object[numRows][numColumns];
@@ -92,7 +91,7 @@ public class HexBoard<T> {
      *
      * @return the number of rows in the board
      */
-    int getNumRows() {
+    public int getNumRows() {
         return numRows;
     }
 
@@ -101,7 +100,7 @@ public class HexBoard<T> {
      *
      * @return the number of columns in the board
      */
-    int getNumColumns() {
+    public int getNumColumns() {
         return numColumns;
     }
 

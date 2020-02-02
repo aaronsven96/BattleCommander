@@ -7,20 +7,38 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.input.GameListener;
+import com.mygdx.game.models.Command;
+import com.mygdx.game.models.Orders;
+import com.mygdx.game.models.Position;
+
+import java.util.Arrays;
+
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class BoardDrawer implements Disposable {
-    private Batch batch;
+import static com.mygdx.game.GameUtils.getVector2;
+
+public class BoardDrawer extends Actor implements Disposable {
     private ShapeDrawer drawer;
     Texture texture;
     Vector3[][] centerHexes;
+    GameListener gameListener;
+    Command command;
+    Orders orders = new Orders(1,1, Arrays.asList(new Command("attack", 1, new Position(1,1))), new Position(2,2));
     int size;
 
-    BoardDrawer(Batch batch, int size) {
+    public BoardDrawer(int size, Viewport viewport) {
         centerHexes = calculateCenterHexes(size);
+        gameListener = new GameListener(viewport, centerHexes);
+        Gdx.input.setInputProcessor(gameListener);
         this.size = size;
-        this.batch = batch;
+
+    }
+
+    private void initDrawer(Batch batch){
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
         pixmap.drawPixel(0, 0);
@@ -30,6 +48,24 @@ public class BoardDrawer implements Disposable {
         drawer = new ShapeDrawer(batch, region);
     }
 
+    public void drawOrders(){
+        orders.goToFirstCommand();
+        Position start = orders.getStartPosition();
+        gameListener.updateCamera(Gdx.graphics.getDeltaTime());
+        while(orders.nextCommand()){
+            drawer.line(getVector2(centerHexes[start.getX()][start.getY()]), getVector2(centerHexes[orders.getCurrentCommand().getTargetPosition().getX()][orders.getCurrentCommand().getTargetPosition().getY()]), 4);
+            start = orders.getCurrentCommand().getTargetPosition();
+        }
+    }
+
+    @Override
+    public void draw (Batch batch, float parentAlpha) {
+        if(drawer == null){
+            initDrawer(batch);
+        }
+        drawOrders();
+        drawHexes(null);
+    }
     // Draws an array of hexes based on a boolean array
 
     public void drawHexes(boolean[][] whereToDraw) {
@@ -37,9 +73,9 @@ public class BoardDrawer implements Disposable {
             Vector3[] centerHex = centerHexes[i];
             for (int i1 = 0; i1 < centerHex.length; i1++) {
                 Vector3 center = centerHex[i1];
-                if(!whereToDraw[i][i1]) {
-                    drawer.filledPolygon(center.x, center.y, 6, (float) (float)size, (float) size, 0, Color.RED, Color.WHITE);
-                }
+                //if(!whereToDraw[i][i1]) {
+                    //drawer.filledPolygon(center.x, center.y, 6, (float) (float)size, (float) size, 0, Color.RED, Color.WHITE);
+                //}
                 drawer.polygon(center.x, center.y, 6, (float) (float)size, (float) size, 0, 3);
                 drawer.circle(center.x, center.y, 30);
             }

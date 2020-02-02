@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class BasicUnitClassTest {
+public class BasicUnitTest {
     static BasicUnit soldier, archer;
 
     private static String test ="{\"Type\": \"Soldier\",\"Description\": \"An example configuration file for a soldier\",\"Max Health\": 25,\"Strength\": 10,\"Ranged Strength\":" +
@@ -13,7 +13,7 @@ public class BasicUnitClassTest {
 
     @BeforeClass
     public static void UnitSetup() {
-        soldier = BasicUnit.getUnitFromConfig(test);
+        soldier = BasicUnit.getUnitFromConfig(test, 0, 0, "");
 
         //archer = new BasicUnit("archer.json");
     }

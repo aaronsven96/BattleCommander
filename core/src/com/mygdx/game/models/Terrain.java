@@ -11,12 +11,14 @@ public class Terrain {
     private int defense;
     private TerrainState terrainState;
     private String texture;
+    private int id;
 
-    private Terrain(String type, int defense, TerrainState terrainState, String texture) {
+    private Terrain(String type, int defense, TerrainState terrainState, String texture, int id) {
         this.type = type;
         this.defense = defense;
         this.terrainState = terrainState;
         this.texture = texture;
+        this.id = id;
     }
 
     // Copy constructor
@@ -25,6 +27,7 @@ public class Terrain {
         defense = original.defense;
         terrainState = original.terrainState;
         texture = original.texture;
+        id = original.id;
     }
 
     /**
@@ -33,16 +36,15 @@ public class Terrain {
      * @param content the content
      * @return the Terrain from the configuration file
      */
-    public static Terrain getTerrainFromConfig(String content) {
+    public static Terrain getTerrainFromConfig(String content, String texture, int id) {
         Gson gson = new Gson();
         JsonObject terrain = gson.fromJson(content, JsonObject.class);
 
         String type = terrain.get("type").getAsString();
         int defense = terrain.get("defense").getAsInt();
         TerrainState terrainState = TerrainState.valueOf(terrain.get("terrainState").getAsString());
-        String texture = terrain.get("texture").getAsString();
 
-        return new Terrain(type, defense, terrainState, texture);
+        return new Terrain(type, defense, terrainState, texture, id);
     }
 
     /**

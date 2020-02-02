@@ -7,9 +7,9 @@ import java.util.List;
  */
 public interface GameState {
 
-    boolean isGameOver();
+    //boolean isGameOver();
 
-    int winningPlayer();
+    //int winningPlayer();
 
     /**
      * If the move is possible

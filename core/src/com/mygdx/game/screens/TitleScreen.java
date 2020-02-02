@@ -11,12 +11,13 @@ public class TitleScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         VisTable table = new VisTable();
+        table.setFillParent(true);
 
         VisTextButton selectMap = new VisTextButton("Selection");
         selectMap.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.SELECTION_SCREEN);
+                ScreenManager.instance.pushScreen(ScreenEnum.SELECTION_SCREEN, null);
             }
         });
 
@@ -24,15 +25,12 @@ public class TitleScreen extends AbstractScreen {
         multiplayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_SELECT_SCREEN);
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_SELECT_SCREEN, null);
             }
         });
-
         table.add(selectMap);
         table.row();
         table.add(multiplayer);
-        table.setDebug(true);
-        table.setFillParent(true);
         super.addActor(table);
     }
 }
