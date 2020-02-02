@@ -101,6 +101,9 @@ public class HexMap {
 
                 column++;
             }
+            if (column == columns) {
+                column = 0;
+            }
             row++;
         }
 
