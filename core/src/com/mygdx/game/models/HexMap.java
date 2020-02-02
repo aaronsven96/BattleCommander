@@ -154,9 +154,4 @@ public class HexMap {
     public HexBoard<Boolean> getMapShape() {
         return mapShape;
     }
-
-    /**
-     * Get possible moves
-     */
-
 }
