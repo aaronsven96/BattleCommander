@@ -17,8 +17,8 @@ public class HexBoardTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        h1 = new HexBoard<>(null, 10, 10);
-        h2 = new HexBoard<>(null, 7, 9);
+        h1 = new HexBoard<>(10, 10);
+        h2 = new HexBoard<>(7, 9);
 
         tl = new Position(0, 0); // top left
         tr = new Position(0, 9); // top right

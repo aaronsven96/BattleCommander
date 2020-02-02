@@ -11,7 +11,7 @@ public class TerrainTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        swamp = Terrain.getTerrainFromConfig(test);
+        swamp = Terrain.getTerrainFromConfig(test, "texture", 0);
     }
 
     @Test

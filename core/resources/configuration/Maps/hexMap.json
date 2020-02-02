@@ -1,32 +1,62 @@
 {
+  "rows": 2,
+  "columns": 2,
   "units": [
-    [
-      "null",
-      "soldier.json"
-    ],
-    [
-      "soldier.json",
-      "archer.json"
-    ]
+    {
+      "config": "soldier.json",
+      "id": 10000,
+      "pid": 100,
+      "texture": "soldier_texture.json"
+    },
+    {
+      "config": "null",
+      "id": 10001,
+      "pid": 100,
+      "texture": "null_texture.json"
+    },
+    {
+      "config": "archer.json",
+      "id": 10002,
+      "pid": 101,
+      "texture": "archer_texture.json"
+    },
+    {
+      "config": "archer.json",
+      "id": 10003,
+      "pid": 101,
+      "texture": "archer_texture.json"
+    }
   ],
   "terrain": [
-    [
-      "swamp.json",
-      "desert.json"
-    ],
-    [
-      "ocean.json",
-      "snow.json"
-    ]
+    {
+      "config": "swamp.json",
+      "id": 20000,
+      "texture": "swamp_texture.json"
+    },
+    {
+      "config": "snow.json",
+      "id": 20001,
+      "texture": "snow_texture.json"
+    },
+    {
+      "config": "desert.json",
+      "id": 20010,
+      "texture": "desert_texture.json"
+    },
+    {
+      "config": "ocean.json",
+      "id": 20011,
+      "texture": "ocean_texture.json"
+    }
   ],
   "mapShape": [
     [
-      false,
+      true,
       true
     ],
     [
       false,
-      false
+      true
     ]
   ]
 }
