@@ -92,8 +92,8 @@ public class HexMap {
         // Set up mapShape
         row = 0;
         column = 0;
-        for (JsonElement j : jsonArrayMapShape1) {
-            JsonArray jsonArrayMapShape2 = j.getAsJsonArray();
+        for (JsonElement j : jsonArrayMapShape1) { // outer Array
+            JsonArray jsonArrayMapShape2 = j.getAsJsonArray(); // inner Array
             for (JsonElement k : jsonArrayMapShape2) {
                 String text = k.getAsString(); // "true", "false"
 
