@@ -43,14 +43,15 @@ public class HexMap {
         List<HexBoard<String>> textures = null;
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
-        JsonArray jsonArrayUnits1 = hexMap.get("units").getAsJsonArray();
-        JsonArray jsonArrayTerrain1 = hexMap.get("terrain").getAsJsonArray();
+        JsonArray jsonArrayUnits = hexMap.get("units").getAsJsonArray();
+        JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape1 = hexMap.get("mapShape").getAsJsonArray();
 
+        // TODO: convert loops from for-each to for
         // Set up units
         int row = 0;
         int column = 0;
-        for (JsonElement j : jsonArrayUnits1) {
+        for (JsonElement j : jsonArrayUnits) {
             String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "null", etc.
             int id = j.getAsJsonObject().get("id").getAsInt();
             int pid = j.getAsJsonObject().get("pid").getAsInt();
@@ -68,7 +69,7 @@ public class HexMap {
         // Set up terrain
         row = 0;
         column = 0;
-        for (JsonElement j : jsonArrayTerrain1) {
+        for (JsonElement j : jsonArrayTerrain) {
             String config = j.getAsJsonObject().get("config").getAsString(); // "swamp.json", "desert.json", etc.
             String texture = j.getAsJsonObject().get("texture").getAsString();
             int id = j.getAsJsonObject().get("id").getAsInt();
