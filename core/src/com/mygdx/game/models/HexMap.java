@@ -8,14 +8,15 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class HexMap {
-    HexBoard<List<Unit>> units;
+    HexBoard<List<BasicUnit>> units;
     HexBoard<Terrain> terrain;
     HexBoard<Boolean> mapShape;
     List<HexBoard<String>> textures;
 
-    private HexMap(HexBoard<List<Unit>> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures) {
+    private HexMap(HexBoard<List<BasicUnit>> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures) {
         this.units = units;
         this.terrain = terrain;
         this.mapShape = mapShape;
@@ -37,7 +38,7 @@ public class HexMap {
         int rows = Integer.parseInt(hexMap.get("rows").getAsString());
         int columns = Integer.parseInt(hexMap.get("columns").getAsString());
 
-        HexBoard<List<Unit>> units = new HexBoard<>(null, rows, columns);
+        HexBoard<List<BasicUnit>> units = new HexBoard<>(null, rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(null, rows, columns);
         HexBoard<Boolean> mapShape = new HexBoard<>(null, rows, columns);
         List<HexBoard<String>> textures = null;
@@ -54,8 +55,8 @@ public class HexMap {
             String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "null", etc.
             int id = j.getAsJsonObject().get("id").getAsInt();
             int pid = j.getAsJsonObject().get("pid").getAsInt();
-            Unit unit0 = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid);
-            List<Unit> unitsList = new ArrayList<>();
+            BasicUnit unit0 = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid);
+            List<BasicUnit> unitsList = new ArrayList<>();
             unitsList.add(unit0);
             units.setHex(new Position(row, column), unitsList); // set up the HexBoard
             column++;
@@ -100,7 +101,7 @@ public class HexMap {
     /**
      * Get the units at a position P
      */
-    public Optional<List<Unit>> getUnits(Position p) {
+    public Optional<List<BasicUnit>> getUnits(Position p) {
         return units.getHex(p);
     }
 
@@ -120,8 +121,25 @@ public class HexMap {
     /**
      * Gets all units for a player with id
      */
-    public List<Unit> getUnitsForPlayer(int playerNum) {
-        return null; // TODO
+    public List<BasicUnit> getUnitsForPlayer(int pid) {
+        List<BasicUnit> unitsAtHex = new ArrayList<>();
+        List<BasicUnit> unitsForPlayer = new ArrayList<>();
+
+        for (int i = 0; i < units.getNumRows(); i++) {
+            for (int j = 0; j < units.getNumColumns(); j++) {
+                Optional<List<BasicUnit>> optional = units.getHex(new Position(i, j));
+                if (optional.isPresent()) {
+                    unitsAtHex = optional.get();
+                    for (BasicUnit bu : unitsAtHex) {
+                        if (bu.getPid() == pid) {
+                            unitsForPlayer.add(bu);
+                        }
+                    }
+                }
+            }
+        }
+
+        return unitsForPlayer;
     }
 
     /**

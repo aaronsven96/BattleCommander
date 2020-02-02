@@ -18,7 +18,7 @@ public class ConfigurationFactory {
 
     private static final HashMap<String, Terrain> terrainHashMap = new HashMap<>();
     private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
-    private static final HashMap<String, Unit> unitsHashMap = new HashMap<>();
+    private static final HashMap<String, BasicUnit> unitsHashMap = new HashMap<>();
 
     private static final Gson GSON = new Gson();
 
@@ -42,7 +42,7 @@ public class ConfigurationFactory {
      * @param config the pathname to the config file to create the Unit from
      * @return the Unit Object from the config file
      */
-    public Unit makeUnitFromConfig(String config, int id, int pid) {
+    public BasicUnit makeUnitFromConfig(String config, int id, int pid) {
 //        if (!unitsHashMap.containsKey(config)) {
 //            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
 //        }
