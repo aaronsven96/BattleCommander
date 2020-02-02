@@ -31,7 +31,7 @@ public class MultiplayerJoin extends AbstractScreen {
         VisTextButton join = new VisTextButton("Join");
         join.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN, null);
             }
         });
         table.add(join);

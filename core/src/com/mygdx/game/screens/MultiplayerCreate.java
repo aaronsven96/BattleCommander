@@ -31,7 +31,7 @@ public class MultiplayerCreate extends AbstractScreen {
         VisTextButton create = new VisTextButton("Create");
         create.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN, null);
             }
         });
         table.add(create);

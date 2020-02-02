@@ -17,15 +17,13 @@ public enum ScreenEnum {
         }
     },
     MULTIPLAYER_SELECT_SCREEN{
-
-        public AbstractScreen getScreen(Object[] args){ return new MultiplayerSelect();
-        }
+        public AbstractScreen getScreen(Object[] args){ return new MultiplayerSelect(); }
     },
     MULTIPLAYER_CREATE_SCREEN{
-        public AbstractScreen getScreen() { return new MultiplayerCreate(); }
+        public AbstractScreen getScreen(Object[] args) { return new MultiplayerCreate(); }
     },
     MULTIPLAYER_JOIN_SCREEN{
-        public AbstractScreen getScreen(){
+        public AbstractScreen getScreen(Object[] args){
             return new MultiplayerJoin();
         }
     }

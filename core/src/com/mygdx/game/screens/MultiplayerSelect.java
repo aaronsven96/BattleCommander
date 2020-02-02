@@ -14,7 +14,7 @@ public class MultiplayerSelect extends AbstractScreen {
         VisTextButton create = new VisTextButton("Create");
         create.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN, null);
             }
         });
         table.add(create);
@@ -22,7 +22,7 @@ public class MultiplayerSelect extends AbstractScreen {
         VisTextButton join = new VisTextButton("Join");
         join.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_JOIN_SCREEN);
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_JOIN_SCREEN, null);
             }
         });
         table.add(join);
