@@ -37,9 +37,9 @@ public class HexMap {
         int rows = Integer.parseInt(hexMap.get("rows").getAsString());
         int columns = Integer.parseInt(hexMap.get("columns").getAsString());
 
-        HexBoard<List<BasicUnit>> units = new HexBoard<>(null, rows, columns);
-        HexBoard<Terrain> terrain = new HexBoard<>(null, rows, columns);
-        HexBoard<Boolean> mapShape = new HexBoard<>(null, rows, columns);
+        HexBoard<List<BasicUnit>> units = new HexBoard<>(rows, columns);
+        HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
+        HexBoard<Boolean> mapShape = new HexBoard<>(rows, columns);
         List<HexBoard<String>> textures = null;
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
