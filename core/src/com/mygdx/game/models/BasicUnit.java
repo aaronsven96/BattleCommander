@@ -231,5 +231,7 @@ public class BasicUnit implements Unit {
         state = new_state;
     }
 
-
+    public int getPid() {
+        return pid;
+    }
 }
