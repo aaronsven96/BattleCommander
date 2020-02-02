@@ -57,7 +57,7 @@ public class HexMap {
             int pid = j.getAsJsonObject().get("pid").getAsInt();
             String texture = j.getAsJsonObject().get("texture").getAsString();
 
-            BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture);
+            BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
             List<BasicUnit> unitsList = new ArrayList<>();
             unitsList.add(newUnit);
 
@@ -78,7 +78,7 @@ public class HexMap {
             String texture = j.getAsJsonObject().get("texture").getAsString();
             int id = j.getAsJsonObject().get("id").getAsInt();
 
-            Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id);
+            Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
 
             terrain.setHex(new Position(row, column), newTerrain); // set up the HexBoard
 
