@@ -12,6 +12,7 @@ public class MultiplayerJoin extends AbstractScreen {
     public void buildStage() {
         VisTable table = new VisTable();
         table.setFillParent(true);
+        table.debugAll();
 
         VisLabel nameLabel = new VisLabel("Room IP");
         VisTextField nameInput = new VisTextField("Room IP");
@@ -48,9 +49,9 @@ public class MultiplayerJoin extends AbstractScreen {
         table.row();
         table.add(passwordLabel);
         table.add(passwordInput);
-        table.row();
-        table.add(back);
-        table.row();
+        table.row().colspan(2).expand().center();
+        table.add(back).bottom().left();
+        table.add(join).bottom().right();
 
         super.addActor(table);
     }

@@ -10,6 +10,7 @@ public class MultiplayerSelect extends AbstractScreen {
     public void buildStage() {
         VisTable table = new VisTable();
         table.setFillParent(true);
+        table.debugAll();
 
         VisTextButton create = new VisTextButton("Create");
         create.addListener(new ChangeListener() {
@@ -32,12 +33,12 @@ public class MultiplayerSelect extends AbstractScreen {
             }
         });
 
-        table.add(create);
         table.row();
-        table.add(join);
+        table.add(create).center();
         table.row();
-        table.add(back);
-        table.row();
+        table.add(join).center();
+        table.row().colspan(2).expand().center();
+        table.add(back).bottom().left();
 
         super.addActor(table);
     }
