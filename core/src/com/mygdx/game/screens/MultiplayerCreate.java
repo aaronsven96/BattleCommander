@@ -18,7 +18,6 @@ public class MultiplayerCreate extends AbstractScreen {
                 ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
             }
         });*/
-        table.add(name);
 
         VisTextField password = new VisTextField("Password");
    /*     password.addListener(new ChangeListener() {
@@ -26,7 +25,6 @@ public class MultiplayerCreate extends AbstractScreen {
                 ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
             }
         });*/
-        table.add(password);
 
         VisTextButton create = new VisTextButton("Create");
         create.addListener(new ChangeListener() {
@@ -34,7 +32,6 @@ public class MultiplayerCreate extends AbstractScreen {
                 ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN, null);
             }
         });
-        table.add(create);
 
         VisTextButton back = new VisTextButton("Back");
         back.addListener(new ChangeListener() {
@@ -42,9 +39,13 @@ public class MultiplayerCreate extends AbstractScreen {
                 ScreenManager.instance.popScreen();
             }
         });
+
+        table.add(name);
+        table.row();
+        table.add(password);
+        table.row();
         table.add(back);
-
-
+        table.row();
 
         super.addActor(table);
     }
