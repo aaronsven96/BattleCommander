@@ -30,7 +30,6 @@ public class GameListener implements InputProcessor {
     Vector3[][] centers;
     private Vector2 touchedDown;
     Map<Position, Position> moves = new HashMap<>();
-    Boolean touchUp = true;
     Vector3 currentPos;
     HexBoardAdapter adapter;
     private Position leftClick;
@@ -85,6 +84,7 @@ public class GameListener implements InputProcessor {
             Optional<Position> newSelectedHex = adapter.findClosestHex(currentPos);
             if (newSelectedHex.isPresent()) {
                 System.out.println("x: " + newSelectedHex.get().getX() + " y: " + newSelectedHex.get().getY());
+                System.out.println(button);
                 if (Input.Buttons.LEFT == button){
                     leftClick = newSelectedHex.get();
                 }
@@ -93,7 +93,6 @@ public class GameListener implements InputProcessor {
                 }
             }
         }
-        touchUp = true;
         return true;
     }
 
@@ -171,6 +170,7 @@ public class GameListener implements InputProcessor {
 
     public Optional<Position> getRightClickedHexPosition(){
         Optional<Position> hex = Optional.ofNullable(rightClick);
+        if(hex.isPresent()){System.out.println("right");}
         rightClick = null;
         return hex;
     }
