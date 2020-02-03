@@ -33,6 +33,8 @@ public class GameListener implements InputProcessor {
     Boolean touchUp = true;
     Vector3 currentPos;
     HexBoardAdapter adapter;
+    private Position leftClick;
+    private Position rightClick;
     private final Viewport viewport;
     private final OrthographicCamera camera;
     private float currentZoom = 0;
@@ -79,22 +81,17 @@ public class GameListener implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         //Vector3 pos = camera.unproject(new Vector3(screenX, screenY,0));
-
-        if(Input.Buttons.LEFT == button && touchedDown.dst(new Vector2(screenX,screenY)) < 5){
-
+        if(touchedDown.dst(new Vector2(screenX,screenY)) < 5) {
             Optional<Position> newSelectedHex = adapter.findClosestHex(currentPos);
-            if(newSelectedHex.isPresent()) {
-                if(newSelectedHex.isPresent() && selectedHex.isPresent()) {
-                        moves.put(selectedHex.get(), newSelectedHex.get());
-                        selectedHex = Optional.empty();
+            if (newSelectedHex.isPresent()) {
+                System.out.println("x: " + newSelectedHex.get().getX() + " y: " + newSelectedHex.get().getY());
+                if (Input.Buttons.LEFT == button){
+                    leftClick = newSelectedHex.get();
                 }
-                else {
-                    selectedHex = newSelectedHex;
+                else if(Input.Buttons.RIGHT == button){
+                    rightClick = newSelectedHex.get();
                 }
             }
-        }
-        else{
-            selectedHex = Optional.empty();
         }
         touchUp = true;
         return true;
@@ -172,6 +169,17 @@ public class GameListener implements InputProcessor {
         //return new Vector2(((currentPos.x *currentZoom)- viewport.getWorldWidth()/2)  , (-currentPos.y * currentZoom) + viewport.getWorldHeight()/2);
     }
 
+    public Optional<Position> getRightClickedHexPosition(){
+        Optional<Position> hex = Optional.ofNullable(rightClick);
+        rightClick = null;
+        return hex;
+    }
+
+    public Optional<Position> getLeftClickedHexPosition(){
+        Optional<Position> hex = Optional.ofNullable(leftClick);
+        leftClick = null;
+        return hex;
+    }
 
     public Map<Position, Position>getMoves(){
         return moves;

@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class HexMap {
-    private HexBoard<List<BasicUnit>> units;
+    private HexBoard<BasicUnit> units;
     private HexBoard<Terrain> terrain;
     private HexBoard<Boolean> mapShape;
     private List<HexBoard<String>> textures;
 
-    private HexMap(HexBoard<List<BasicUnit>> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures) {
         this.units = units;
         this.terrain = terrain;
         this.mapShape = mapShape;
@@ -38,7 +38,7 @@ public class HexMap {
         int rows = Integer.parseInt(hexMap.get("rows").getAsString());
         int columns = Integer.parseInt(hexMap.get("columns").getAsString());
 
-        HexBoard<List<BasicUnit>> units = new HexBoard<>(rows, columns);
+        HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
         HexBoard<Boolean> mapShape = new HexBoard<>(rows, columns);
         List<HexBoard<String>> textures = null;
@@ -59,10 +59,8 @@ public class HexMap {
             String texture = j.getAsJsonObject().get("texture").getAsString();
 
             BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
-            List<BasicUnit> unitsList = new ArrayList<>();
-            unitsList.add(newUnit);
 
-            units.setHex(new Position(row, column), unitsList); // set up the HexBoard
+            units.setHex(new Position(row, column), newUnit); // set up the HexBoard
 
             column++;
             if (column == columns) {
@@ -114,7 +112,7 @@ public class HexMap {
     /**
      * Get the units at a position P
      */
-    public Optional<List<BasicUnit>> getUnits(Position p) {
+    public Optional<BasicUnit> getUnit(Position p) {
         return units.getHex(p);
     }
 
@@ -135,18 +133,16 @@ public class HexMap {
      * Gets all units for a player with id
      */
     public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing!
-        List<BasicUnit> unitsAtHex;
+        BasicUnit unitsAtHex;
         List<BasicUnit> unitsForPlayer = new ArrayList<>();
 
         for (int i = 0; i < units.getNumRows(); i++) {
             for (int j = 0; j < units.getNumColumns(); j++) {
-                Optional<List<BasicUnit>> optional = units.getHex(new Position(i, j));
+                Optional<BasicUnit> optional = units.getHex(new Position(i, j));
                 if (optional.isPresent()) {
                     unitsAtHex = optional.get();
-                    for (BasicUnit bu : unitsAtHex) {
-                        if (bu.getPid() == pid) {
-                            unitsForPlayer.add(bu);
-                        }
+                    if (unitsAtHex.getPid() == pid) {
+                        unitsForPlayer.add(unitsAtHex);
                     }
                 }
             }

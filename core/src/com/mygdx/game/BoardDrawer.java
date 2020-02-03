@@ -13,9 +13,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.input.GameListener;
 import com.mygdx.game.models.Command;
 import com.mygdx.game.models.Orders;
+import com.mygdx.game.models.PlayerOrders;
 import com.mygdx.game.models.Position;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -26,14 +28,15 @@ public class BoardDrawer extends Actor implements Disposable {
     Texture texture;
     Vector3[][] centerHexes;
     GameListener gameListener;
+    MoveAdapter moveAdapter;
     Command command;
-    Orders orders = new Orders(1,1, Arrays.asList(new Command("attack", 1, new Position(1,1))), new Position(2,2));
     int size;
 
     public BoardDrawer(int size, Viewport viewport) {
         centerHexes = calculateCenterHexes(size);
         gameListener = new GameListener(viewport, centerHexes);
         Gdx.input.setInputProcessor(gameListener);
+        moveAdapter = new MoveAdapter(1, null);
         this.size = size;
 
     }
@@ -48,23 +51,32 @@ public class BoardDrawer extends Actor implements Disposable {
         drawer = new ShapeDrawer(batch, region);
     }
 
-    public void drawOrders(){
-        orders.goToFirstCommand();
-        Position start = orders.getStartPosition();
-        gameListener.updateCamera(Gdx.graphics.getDeltaTime());
-        while(orders.nextCommand()){
-            drawer.line(getVector2(centerHexes[start.getX()][start.getY()]), getVector2(centerHexes[orders.getCurrentCommand().getTargetPosition().getX()][orders.getCurrentCommand().getTargetPosition().getY()]), 4);
-            start = orders.getCurrentCommand().getTargetPosition();
+    public void drawPlayerOrders(PlayerOrders playerOrders){
+        for(Integer unitId : playerOrders.getUnitOrders().keySet()) {
+            Orders orders = playerOrders.getUnitOrders().get(unitId);
+            orders.goToFirstCommand();
+            Position start = orders.getStartPosition();
+            gameListener.updateCamera(Gdx.graphics.getDeltaTime());
+            while (orders.nextCommand()) {
+                drawer.line(getVector2(centerHexes[start.getX()][start.getY()]), getVector2(centerHexes[orders.getCurrentCommand().getTargetPosition().getX()][orders.getCurrentCommand().getTargetPosition().getY()]), 4);
+                start = orders.getCurrentCommand().getTargetPosition();
+            }
         }
     }
 
     @Override
     public void draw (Batch batch, float parentAlpha) {
+        Optional<Position> leftClick = gameListener.getLeftClickedHexPosition();
+        Optional<Position> rightClick = gameListener.getRightClickedHexPosition();
+        leftClick.ifPresent(position -> moveAdapter.leftClickHex(position));
+        rightClick.ifPresent(position -> moveAdapter.rightClickHex(position));
+
         if(drawer == null){
             initDrawer(batch);
         }
-        drawOrders();
         drawHexes(null);
+        drawPlayerOrders(moveAdapter.getCurrentOrders());
+        gameListener.updateCamera(Gdx.graphics.getDeltaTime());
     }
     // Draws an array of hexes based on a boolean array
 
