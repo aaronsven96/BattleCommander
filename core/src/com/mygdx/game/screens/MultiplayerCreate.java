@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
@@ -12,14 +13,16 @@ public class MultiplayerCreate extends AbstractScreen {
         VisTable table = new VisTable();
         table.setFillParent(true);
 
-        VisTextField name = new VisTextField("Room Name");
+        VisLabel nameLabel = new VisLabel("Room Name");
+        VisTextField nameInput = new VisTextField("Room Name");
       /*  name.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
             }
         });*/
 
-        VisTextField password = new VisTextField("Password");
+        VisLabel passwordLabel = new VisLabel("Room Password");
+        VisTextField passwordInput = new VisTextField("Room Password");
    /*     password.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
@@ -40,9 +43,11 @@ public class MultiplayerCreate extends AbstractScreen {
             }
         });
 
-        table.add(name);
+        table.add(nameLabel);
+        table.add(nameInput);
         table.row();
-        table.add(password);
+        table.add(passwordLabel);
+        table.add(passwordInput);
         table.row();
         table.add(back);
         table.row();
