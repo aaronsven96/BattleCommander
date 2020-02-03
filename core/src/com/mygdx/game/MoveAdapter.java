@@ -32,6 +32,11 @@ public class MoveAdapter {
     }
 
     public void rightClickHex(Position p){
+        selectedUnit = null;
+    }
+
+    public void leftClickHex(Position p){
+        System.out.println("left");
         // If theres no selected unit then select a unit if possible
         if(selectedUnit == null){
             //Todo add hexmap support
@@ -41,6 +46,7 @@ public class MoveAdapter {
             }*/
             if(p.getY() == 1 && p.getX() == 1){
                 selectedUnit = 1;
+                System.out.println("selected Unit");
             }
         }
         else{
@@ -59,10 +65,6 @@ public class MoveAdapter {
                 tempOrders.get(selectedUnit).add(new Command("move", selectedUnit, p));
             }*/
         }
-    }
-
-    public void leftClickHex(Position p){
-        selectedUnit = null;
     }
 
     public void cancelOrder() {
