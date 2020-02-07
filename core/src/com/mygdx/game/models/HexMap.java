@@ -48,7 +48,7 @@ public class HexMap {
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
 
-        // Set up units
+        // Set up HexBoard<BasicUnit> units
         for (int i = 0; i < jsonArrayUnits.size(); i++) {
             JsonArray row = jsonArrayUnits.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
