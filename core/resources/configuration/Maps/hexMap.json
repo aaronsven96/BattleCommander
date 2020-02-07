@@ -4,7 +4,7 @@
   "units": [
     [
       {
-        "config": "soldier.json",
+        "config": "configuration/Units/soldier.json",
         "id": 10000,
         "pid": 100,
         "texture": "soldier_texture.json"
@@ -18,13 +18,13 @@
     ],
     [
       {
-        "config": "archer.json",
+        "config": "configuration/Units/archer.json",
         "id": 10002,
         "pid": 101,
         "texture": "archer_texture.json"
       },
       {
-        "config": "archer.json",
+        "config": "configuration/Units/soldier.json",
         "id": 10003,
         "pid": 101,
         "texture": "archer_texture.json"
@@ -34,24 +34,24 @@
   "terrain": [
     [
       {
-        "config": "swamp.json",
+        "config": "configuration/Terrain/swamp.json",
         "id": 20000,
         "texture": "swamp_texture.json"
       },
       {
-        "config": "snow.json",
+        "config": "configuration/Terrain/snow.json",
         "id": 20001,
         "texture": "snow_texture.json"
       }
     ],
     [
       {
-        "config": "desert.json",
+        "config": "configuration/Terrain/desert.json",
         "id": 20010,
         "texture": "desert_texture.json"
       },
       {
-        "config": "ocean.json",
+        "config": "configuration/Terrain/ocean.json",
         "id": 20011,
         "texture": "ocean_texture.json"
       }
