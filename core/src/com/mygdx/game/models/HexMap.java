@@ -50,60 +50,53 @@ public class HexMap {
 
         // TODO: convert loops from for-each to for?
         // Set up units
-        int row = 0;
-        int column = 0;
-        for (JsonElement j : jsonArrayUnits) {
-            String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "null", etc.
-            int id = j.getAsJsonObject().get("id").getAsInt();
-            int pid = j.getAsJsonObject().get("pid").getAsInt();
-            String texture = j.getAsJsonObject().get("texture").getAsString();
-
-            BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
-
-            units.setHex(new Position(row, column), newUnit); // set up the HexBoard
-
-            column++;
-            if (column == columns) {
-                column = 0;
-                row++;
-            }
-        }
+//        int row = 0;
+//        int column = 0;
+//        for (JsonElement j : jsonArrayUnits) {
+//            String config = j.getAsJsonObject().get("config").getAsString(); // "archer.json", "null", etc.
+//            int id = j.getAsJsonObject().get("id").getAsInt();
+//            int pid = j.getAsJsonObject().get("pid").getAsInt();
+//            String texture = j.getAsJsonObject().get("texture").getAsString();
+//
+//            BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
+//
+//            units.setHex(new Position(row, column), newUnit); // set up the HexBoard
+//
+//            column++;
+//            if (column == columns) {
+//                column = 0;
+//                row++;
+//            }
+//        }
 
         // Set up terrain
-        row = 0;
-        column = 0;
-        for (JsonElement j : jsonArrayTerrain) {
-            String config = j.getAsJsonObject().get("config").getAsString(); // "swamp.json", "desert.json", etc.
-            String texture = j.getAsJsonObject().get("texture").getAsString();
-            int id = j.getAsJsonObject().get("id").getAsInt();
-
-            Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
-
-            terrain.setHex(new Position(row, column), newTerrain); // set up the HexBoard
-
-            column++;
-            if (column == columns) {
-                column = 0;
-                row++;
-            }
-        }
+//        row = 0;
+//        column = 0;
+//        for (JsonElement j : jsonArrayTerrain) {
+//            String config = j.getAsJsonObject().get("config").getAsString(); // "swamp.json", "desert.json", etc.
+//            String texture = j.getAsJsonObject().get("texture").getAsString();
+//            int id = j.getAsJsonObject().get("id").getAsInt();
+//
+//            Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
+//
+//            terrain.setHex(new Position(row, column), newTerrain); // set up the HexBoard
+//
+//            column++;
+//            if (column == columns) {
+//                column = 0;
+//                row++;
+//            }
+//        }
 
         // Set up mapShape
-        row = 0;
-        column = 0;
-        for (JsonElement j : jsonArrayMapShape1) { // outer Array
-            JsonArray jsonArrayMapShape2 = j.getAsJsonArray(); // inner Array
-            for (JsonElement k : jsonArrayMapShape2) {
-                String text = k.getAsString(); // "true", "false"
+        for (int i = 0; i < jsonArrayMapShape1.size(); i++) { // outer Array
+            JsonArray row = jsonArrayMapShape1.getAsJsonArray(); // inner Array
+            for (int j = 0; j < row.size(); j++) {
+                JsonObject object = row.get(j).getAsJsonObject();
+                String text = object.getAsString(); // "true", "false"
 
-                mapShape.setHex(new Position(row, column), Boolean.parseBoolean(text)); // set up the HexBoard
-
-                column++;
+                mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // set up the HexBoard
             }
-            if (column == columns) {
-                column = 0;
-            }
-            row++;
         }
 
         return new HexMap(units, terrain, mapShape, textures);
