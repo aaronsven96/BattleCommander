@@ -61,7 +61,7 @@ public class HexMap {
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
 
-                units.setHex(new Position(i, j), newUnit); // add BasicUnit to each position on the HexBoard
+                units.setHex(new Position(i, j), newUnit); // add BasicUnit to position on the HexBoard
             }
         }
 
@@ -77,7 +77,7 @@ public class HexMap {
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
 
-                terrain.setHex(new Position(i, j), newTerrain); // add Terrain to each position on the HexBoard
+                terrain.setHex(new Position(i, j), newTerrain); // add Terrain to position on the HexBoard
             }
         }
 
@@ -86,7 +86,7 @@ public class HexMap {
             JsonArray row = jsonArrayMapShape.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
                 String text = row.get(j).getAsString(); // "true", "false"
-                mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // add Boolean to each position on the HexBoard
+                mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // add Boolean to position on the HexBoard
             }
         }
 
