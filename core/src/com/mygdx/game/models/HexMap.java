@@ -48,8 +48,9 @@ public class HexMap {
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
 
-        for (int i = 0; i < jsonArrayUnits.size(); i++) { // outer Array
-            JsonArray row = jsonArrayUnits.get(i).getAsJsonArray(); // inner Array
+        // Set up units
+        for (int i = 0; i < jsonArrayUnits.size(); i++) {
+            JsonArray row = jsonArrayUnits.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
                 JsonObject object = row.get(j).getAsJsonObject();
 
@@ -60,12 +61,13 @@ public class HexMap {
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
 
-                units.setHex(new Position(i, j), newUnit); // set up the HexBoard
+                units.setHex(new Position(i, j), newUnit); // HexBoard<BasicUnit>
             }
         }
 
-        for (int i = 0; i < jsonArrayTerrain.size(); i++) { // outer Array
-            JsonArray row = jsonArrayTerrain.get(i).getAsJsonArray(); // inner Array
+        // Set up terrain
+        for (int i = 0; i < jsonArrayTerrain.size(); i++) {
+            JsonArray row = jsonArrayTerrain.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
                 JsonObject object = row.get(j).getAsJsonObject();
 
@@ -75,16 +77,16 @@ public class HexMap {
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
 
-                terrain.setHex(new Position(i, j), newTerrain); // set up the HexBoard
+                terrain.setHex(new Position(i, j), newTerrain); // HexBoard<Terrain>
             }
         }
 
         // Set up mapShape
-        for (int i = 0; i < jsonArrayMapShape.size(); i++) { // outer Array
-            JsonArray row = jsonArrayMapShape.get(i).getAsJsonArray(); // inner Array
+        for (int i = 0; i < jsonArrayMapShape.size(); i++) {
+            JsonArray row = jsonArrayMapShape.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
                 String text = row.get(j).getAsString(); // "true", "false"
-                mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // set up the HexBoard
+                mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // HexBoard<Boolean>
             }
         }
 
