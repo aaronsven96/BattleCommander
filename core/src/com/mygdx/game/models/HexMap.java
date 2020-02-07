@@ -61,11 +61,11 @@ public class HexMap {
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
 
-                units.setHex(new Position(i, j), newUnit); // HexBoard<BasicUnit>
+                units.setHex(new Position(i, j), newUnit); // Add BasicUnit to each position on the HexBoard
             }
         }
 
-        // Set up terrain
+        // Set up HexBoard<Terrain> terrain
         for (int i = 0; i < jsonArrayTerrain.size(); i++) {
             JsonArray row = jsonArrayTerrain.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
@@ -77,16 +77,16 @@ public class HexMap {
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
 
-                terrain.setHex(new Position(i, j), newTerrain); // HexBoard<Terrain>
+                terrain.setHex(new Position(i, j), newTerrain); // add Terrain to each position on the HexBoard
             }
         }
 
-        // Set up mapShape
+        // Set up HexBoard<Boolean> mapShape
         for (int i = 0; i < jsonArrayMapShape.size(); i++) {
             JsonArray row = jsonArrayMapShape.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
                 String text = row.get(j).getAsString(); // "true", "false"
-                mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // HexBoard<Boolean>
+                mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // Add Boolean to each position on the HexBoard
             }
         }
 
