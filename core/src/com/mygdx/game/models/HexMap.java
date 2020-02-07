@@ -41,7 +41,10 @@ public class HexMap {
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
         HexBoard<Boolean> mapShape = new HexBoard<>(rows, columns);
-        List<HexBoard<String>> textures = null;
+
+        List<HexBoard<String>> textures = new ArrayList<>();
+        HexBoard<String> unitTextures = new HexBoard<>(rows, columns);
+        HexBoard<String> terrainTextures = new HexBoard<>(rows, columns);
 
         ConfigurationFactory cf = ConfigurationFactory.instance;
         JsonArray jsonArrayUnits = hexMap.get("units").getAsJsonArray();
@@ -59,11 +62,16 @@ public class HexMap {
                 int pid = object.get("pid").getAsInt();
                 String texture = object.get("texture").getAsString();
 
+                Position p = new Position(i, j);
+                unitTextures.setHex(p, texture);
+
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
 
-                units.setHex(new Position(i, j), newUnit); // add BasicUnit to position on the HexBoard
+                units.setHex(p, newUnit); // add BasicUnit to position on the HexBoard
             }
         }
+
+        textures.add(unitTextures);
 
         // Set up HexBoard<Terrain> terrain
         for (int i = 0; i < jsonArrayTerrain.size(); i++) {
@@ -72,14 +80,19 @@ public class HexMap {
                 JsonObject object = row.get(j).getAsJsonObject();
 
                 String config = object.get("config").getAsString(); // "swamp.json", "desert.json", etc.
-                String texture = object.get("texture").getAsString();
                 int id = object.get("id").getAsInt();
+                String texture = object.get("texture").getAsString();
+
+                Position p = new Position(i, j);
+                terrainTextures.setHex(p, texture);
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
 
-                terrain.setHex(new Position(i, j), newTerrain); // add Terrain to position on the HexBoard
+                terrain.setHex(p, newTerrain); // add Terrain to position on the HexBoard
             }
         }
+
+        textures.add(terrainTextures);
 
         // Set up HexBoard<Boolean> mapShape
         for (int i = 0; i < jsonArrayMapShape.size(); i++) {
