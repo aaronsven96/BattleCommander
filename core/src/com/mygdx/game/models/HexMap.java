@@ -41,8 +41,8 @@ public class HexMap {
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
         HexBoard<Boolean> mapShape = new HexBoard<>(rows, columns);
-        List<HexBoard<String>> textures = new ArrayList<>();
 
+        List<HexBoard<String>> textures = new ArrayList<>();
         HexBoard<String> unitTextures = new HexBoard<>(rows, columns);
         HexBoard<String> terrainTextures = new HexBoard<>(rows, columns);
 
@@ -65,7 +65,7 @@ public class HexMap {
                 Position p = new Position(i, j);
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
-                units.setHex(p, newUnit); // add BasicUnit to position on the HexBoard
+                units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
                 terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
             }
