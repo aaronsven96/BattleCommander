@@ -41,8 +41,8 @@ public class HexMap {
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
         HexBoard<Boolean> mapShape = new HexBoard<>(rows, columns);
-
         List<HexBoard<String>> textures = new ArrayList<>();
+
         HexBoard<String> unitTextures = new HexBoard<>(rows, columns);
         HexBoard<String> terrainTextures = new HexBoard<>(rows, columns);
 
@@ -51,7 +51,7 @@ public class HexMap {
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
 
-        // Set up HexBoard<BasicUnit> units
+        // Set up units
         for (int i = 0; i < jsonArrayUnits.size(); i++) {
             JsonArray row = jsonArrayUnits.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
@@ -63,17 +63,15 @@ public class HexMap {
                 String texture = object.get("texture").getAsString();
 
                 Position p = new Position(i, j);
-                unitTextures.setHex(p, texture);
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
-
                 units.setHex(p, newUnit); // add BasicUnit to position on the HexBoard
+
+                terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
             }
         }
 
-        textures.add(unitTextures);
-
-        // Set up HexBoard<Terrain> terrain
+        // Set up terrain
         for (int i = 0; i < jsonArrayTerrain.size(); i++) {
             JsonArray row = jsonArrayTerrain.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
@@ -84,17 +82,15 @@ public class HexMap {
                 String texture = object.get("texture").getAsString();
 
                 Position p = new Position(i, j);
-                terrainTextures.setHex(p, texture);
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
+                terrain.setHex(p, newTerrain); // add Terrain to HexBoard<Terrain>
 
-                terrain.setHex(p, newTerrain); // add Terrain to position on the HexBoard
+                terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
             }
         }
 
-        textures.add(terrainTextures);
-
-        // Set up HexBoard<Boolean> mapShape
+        // Set up mapShape
         for (int i = 0; i < jsonArrayMapShape.size(); i++) {
             JsonArray row = jsonArrayMapShape.get(i).getAsJsonArray();
             for (int j = 0; j < row.size(); j++) {
@@ -102,6 +98,10 @@ public class HexMap {
                 mapShape.setHex(new Position(i, j), Boolean.parseBoolean(text)); // add Boolean to position on the HexBoard
             }
         }
+
+        // Set up textures
+        textures.add(unitTextures);
+        textures.add(terrainTextures);
 
         return new HexMap(units, terrain, mapShape, textures);
     }
