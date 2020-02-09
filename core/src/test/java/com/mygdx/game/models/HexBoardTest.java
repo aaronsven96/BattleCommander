@@ -66,17 +66,6 @@ public class HexBoardTest {
     }
 
     @Test
-    public void testIsInProximity() {
-        assertFalse(h1.isInProximity(oob, tl, 999));
-        assertFalse(h1.isInProximity(oob, oob, 999));
-
-        assertTrue(h1.isInProximity(tl, tl, 0));
-
-        assertFalse(h1.isInProximity(m, br, 7));
-        assertTrue(h1.isInProximity(m, br, 8));
-    }
-
-    @Test
     public void testGetHex() {
         assertEquals("should be Optional[00]", Optional.of("00"), h1.getHex(tl));
         assertEquals("should be Optional[09]", Optional.of("09"), h1.getHex(tr));
@@ -121,6 +110,17 @@ public class HexBoardTest {
         assertEquals("should be 98", "98", n5.get(1));
 
         assertEquals("should be 0", 0, h1.getHexNeighbors(oob).size());
+    }
+
+    @Test
+    public void testIsInProximity() {
+        assertFalse(h1.isInProximity(oob, tl, 999));
+        assertFalse(h1.isInProximity(oob, oob, 999));
+
+        assertTrue(h1.isInProximity(tl, tl, 0));
+
+        assertFalse(h1.isInProximity(m, br, 7));
+        assertTrue(h1.isInProximity(m, br, 8));
     }
 
     @Test
