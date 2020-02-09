@@ -112,7 +112,7 @@ public class HexBoard<T> {
      */
     public boolean isInProximity(Position p1, Position p2, int maxDistance) {
         if (maxDistance < 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("distance must be non-negative");
         }
 
         int actualDistance = getDistanceBetweenTwoPositions(p1, p2);
