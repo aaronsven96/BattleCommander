@@ -1,6 +1,6 @@
 package com.mygdx.game.models;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class HexBoardTest {
     static HexBoard<String> h1, h2;
     static Position tl, tr, m, bl, br, oob;
 
-    @BeforeClass
-    public static void setUpBeforeClass() {
+    @Before
+    public void setUpBefore() {
         h1 = new HexBoard<>(10, 10);
         h2 = new HexBoard<>(7, 9);
 
@@ -37,7 +37,35 @@ public class HexBoardTest {
     }
 
     @Test
-    public void getHex() {
+    public void testGetBoardDimensions() {
+        assertEquals("should be 10", 10, h1.getNumRows());
+        assertEquals("should be 10", 10, h1.getNumColumns());
+
+        assertEquals("should be 7", 7, h2.getNumRows());
+        assertEquals("should be 9", 9, h2.getNumColumns());
+    }
+
+    @Test
+    public void testGetDistanceBetweenTwoPositions() {
+        // Invalid positions
+        assertEquals("should be -1", -1, h1.getDistanceBetweenTwoPositions(oob, tl));
+        assertEquals("should be -1", -1, h1.getDistanceBetweenTwoPositions(oob, oob));
+
+        // Valid positions
+        assertEquals("should be 8", 8, h1.getDistanceBetweenTwoPositions(m, br));
+        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tl, tr));
+        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tl, bl));
+        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tr, m));
+        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tr, br));
+        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(m, bl));
+        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(bl, br));
+        assertEquals("should be 10", 10, h1.getDistanceBetweenTwoPositions(tl, m));
+        assertEquals("should be 18", 18, h1.getDistanceBetweenTwoPositions(tl, br));
+        assertEquals("should be 18", 18, h1.getDistanceBetweenTwoPositions(tr, bl));
+    }
+
+    @Test
+    public void testGetHex() {
         assertEquals("should be Optional[00]", Optional.of("00"), h1.getHex(tl));
         assertEquals("should be Optional[09]", Optional.of("09"), h1.getHex(tr));
         assertEquals("should be Optional[55]", Optional.of("55"), h1.getHex(m));
@@ -48,7 +76,7 @@ public class HexBoardTest {
     }
 
     @Test
-    public void getHexNeighbors() {
+    public void testGetHexNeighbors() {
         List n1 = h1.getHexNeighbors(tl);
         assertEquals("should be 2", 2, n1.size());
         assertEquals("should be 01", "01", n1.get(0));
@@ -84,7 +112,21 @@ public class HexBoardTest {
     }
 
     @Test
-    public void setHex() {
+    public void testIsInProximity() {
+        // Invalid positions
+        assertFalse(h1.isInProximity(oob, tl, 999));
+        assertFalse(h1.isInProximity(oob, oob, 999));
+
+        // Same position
+        assertTrue(h1.isInProximity(tl, tl, 0));
+
+        // Different positions
+        assertFalse(h1.isInProximity(m, br, 7));
+        assertTrue(h1.isInProximity(m, br, 8));
+    }
+
+    @Test
+    public void testSetHex() {
         // Valid positions
         assertTrue("should be true", h1.setHex(tl, "TL"));
         assertEquals("should be Optional[TL]", Optional.of("TL"), h1.getHex(tl));
@@ -107,14 +149,4 @@ public class HexBoardTest {
         assertFalse("should be false", h1.setHex(oob, "OB"));
         assertFalse("should be false", h1.setHex(oob, null));
     }
-
-    @Test
-    public void getBoardDimensions() {
-        assertEquals("should be 10", 10, h1.getNumRows());
-        assertEquals("should be 10", 10, h1.getNumColumns());
-
-        assertEquals("should be 7", 7, h2.getNumRows());
-        assertEquals("should be 9", 9, h2.getNumColumns());
-    }
-
 }
