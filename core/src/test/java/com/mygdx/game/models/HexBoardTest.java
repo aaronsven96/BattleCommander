@@ -68,7 +68,12 @@ public class HexBoardTest {
     @Test
     public void testIsInProximity() {
         assertFalse(h1.isInProximity(oob, tl, 999));
+        assertFalse(h1.isInProximity(oob, oob, 999));
+
         assertTrue(h1.isInProximity(tl, tl, 0));
+
+        assertFalse(h1.isInProximity(m, br, 7));
+        assertTrue(h1.isInProximity(m, br, 8));
     }
 
     @Test
