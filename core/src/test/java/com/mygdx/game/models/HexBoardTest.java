@@ -47,20 +47,19 @@ public class HexBoardTest {
 
     @Test
     public void testGetDistanceBetweenTwoPositions() {
+        // Invalid positions
         assertEquals("should be -1", -1, h1.getDistanceBetweenTwoPositions(oob, tl));
         assertEquals("should be -1", -1, h1.getDistanceBetweenTwoPositions(oob, oob));
 
+        // Valid positions
         assertEquals("should be 8", 8, h1.getDistanceBetweenTwoPositions(m, br));
-
         assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tl, tr));
         assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tl, bl));
         assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tr, m));
         assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tr, br));
         assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(m, bl));
         assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(bl, br));
-
         assertEquals("should be 10", 10, h1.getDistanceBetweenTwoPositions(tl, m));
-
         assertEquals("should be 18", 18, h1.getDistanceBetweenTwoPositions(tl, br));
         assertEquals("should be 18", 18, h1.getDistanceBetweenTwoPositions(tr, bl));
     }
@@ -114,11 +113,14 @@ public class HexBoardTest {
 
     @Test
     public void testIsInProximity() {
+        // Invalid positions
         assertFalse(h1.isInProximity(oob, tl, 999));
         assertFalse(h1.isInProximity(oob, oob, 999));
 
+        // Same position
         assertTrue(h1.isInProximity(tl, tl, 0));
 
+        // Different positions
         assertFalse(h1.isInProximity(m, br, 7));
         assertTrue(h1.isInProximity(m, br, 8));
     }
