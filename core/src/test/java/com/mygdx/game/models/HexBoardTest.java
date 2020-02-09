@@ -48,20 +48,20 @@ public class HexBoardTest {
     @Test
     public void testGetDistanceBetweenTwoPositions() {
         // Invalid positions
-        assertEquals("should be -1", -1, h1.getDistanceBetweenTwoPositions(oob, tl));
-        assertEquals("should be -1", -1, h1.getDistanceBetweenTwoPositions(oob, oob));
+        assertEquals("should be Optional.empty", Optional.empty(), h1.getDistanceBetweenTwoPositions(oob, tl));
+        assertEquals("should be Optional.empty", Optional.empty(), h1.getDistanceBetweenTwoPositions(oob, oob));
 
         // Valid positions
-        assertEquals("should be 8", 8, h1.getDistanceBetweenTwoPositions(m, br));
-        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tl, tr));
-        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tl, bl));
-        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tr, m));
-        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(tr, br));
-        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(m, bl));
-        assertEquals("should be 9", 9, h1.getDistanceBetweenTwoPositions(bl, br));
-        assertEquals("should be 10", 10, h1.getDistanceBetweenTwoPositions(tl, m));
-        assertEquals("should be 18", 18, h1.getDistanceBetweenTwoPositions(tl, br));
-        assertEquals("should be 18", 18, h1.getDistanceBetweenTwoPositions(tr, bl));
+        assertEquals("should be Optional[8]", Optional.of(8), h1.getDistanceBetweenTwoPositions(m, br));
+        assertEquals("should be Optional[9]", Optional.of(9), h1.getDistanceBetweenTwoPositions(tl, tr));
+        assertEquals("should be Optional[9]", Optional.of(9), h1.getDistanceBetweenTwoPositions(tl, bl));
+        assertEquals("should be Optional[9]", Optional.of(9), h1.getDistanceBetweenTwoPositions(tr, m));
+        assertEquals("should be Optional[9]", Optional.of(9), h1.getDistanceBetweenTwoPositions(tr, br));
+        assertEquals("should be Optional[9]", Optional.of(9), h1.getDistanceBetweenTwoPositions(m, bl));
+        assertEquals("should be Optional[9]", Optional.of(9), h1.getDistanceBetweenTwoPositions(bl, br));
+        assertEquals("should be Optional[10]", Optional.of(10), h1.getDistanceBetweenTwoPositions(tl, m));
+        assertEquals("should be Optional[18]", Optional.of(18), h1.getDistanceBetweenTwoPositions(tl, br));
+        assertEquals("should be Optional[18]", Optional.of(18), h1.getDistanceBetweenTwoPositions(tr, bl));
     }
 
     @Test
