@@ -113,13 +113,12 @@ public class HexMap {
     // Interaction getInteraction(Position p);
 
     /**
-     * Returns the BasicUnits at a position.
+     * Returns a HexMap of Booleans which describes which tiles are in the map.
      *
-     * @param p the position
-     * @return the units at a position
+     * @return a HexMap of Booleans which describes which tiles are in the map.
      */
-    public Optional<BasicUnit> getUnit(Position p) {
-        return units.getHex(p);
+    public HexBoard<Boolean> getMapShape() {
+        return mapShape;
     }
 
     /**
@@ -130,6 +129,25 @@ public class HexMap {
      */
     public Optional<Terrain> getTerrain(Position p) {
         return terrain.getHex(p);
+    }
+
+    /**
+     * Returns a List of Strings which refer to the file location of the textures in each layer of the HexMap
+     *
+     * @return a List of Strings which refer to the file location of the textures in each layer of the HexMap
+     */
+    public List<HexBoard<String>> getTextures() {
+        return textures;
+    }
+
+    /**
+     * Returns the BasicUnits at a position.
+     *
+     * @param p the position
+     * @return the units at a position
+     */
+    public Optional<BasicUnit> getUnit(Position p) {
+        return units.getHex(p);
     }
 
     /**
@@ -155,23 +173,5 @@ public class HexMap {
         }
 
         return unitsForPlayer;
-    }
-
-    /**
-     * Returns a List of Strings which refer to the file location of the textures in each layer of the HexMap
-     *
-     * @return a List of Strings which refer to the file location of the textures in each layer of the HexMap
-     */
-    public List<HexBoard<String>> getTextures() {
-        return textures;
-    }
-
-    /**
-     * Returns a HexMap of Booleans which describes which tiles are in the map.
-     *
-     * @return a HexMap of Booleans which describes which tiles are in the map.
-     */
-    public HexBoard<Boolean> getMapShape() {
-        return mapShape;
     }
 }
