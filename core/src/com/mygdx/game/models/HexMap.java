@@ -144,7 +144,7 @@ public class HexMap {
      * Returns the BasicUnits at a position.
      *
      * @param p the position
-     * @return the units at a position
+     * @return the BasicUnits at a position
      */
     public Optional<BasicUnit> getUnit(Position p) {
         return units.getHex(p);
