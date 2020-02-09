@@ -13,6 +13,5 @@ public class DesktopLauncher {
 		//config.width = 1000;
 		//config.height = 1000;
 		new LwjglApplication(new MyGdxGame(), config);
-		HexMap map = ConfigurationFactory.instance.makeHexMapFromConfig("configuration/Maps/HexMap.json");
 	}
 }
