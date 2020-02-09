@@ -30,7 +30,7 @@ public class HexBoard<T> {
         if (isValidPosition(p1) && isValidPosition(p2)) {
             return Optional.of(Math.abs(p1.getY() - p2.getY()) + Math.abs(p1.getX() - p2.getX()));
         }
-        return Optional.empty();
+        return Optional.empty(); // returns Optional.empty() if either position is invalid
     }
 
     /**
