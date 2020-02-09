@@ -111,10 +111,13 @@ public class HexBoard<T> {
      * @return true if the positions are in proximity to each other, or false otherwise.
      */
     public boolean isInProximity(Position p1, Position p2, int distance) {
-        if (getDistanceBetweenTwoPositions(p1, p2) <= distance) {
-            return true;
+        if (distance < 0) {
+            throw new IllegalArgumentException();
         }
-        return false;
+
+        int actualDistance = getDistanceBetweenTwoPositions(p1, p2);
+
+        return actualDistance >= 0 && actualDistance <= distance;
     }
 
     /**
