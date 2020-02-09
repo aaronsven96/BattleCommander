@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A class that represents the hex board of Type T that we will use as the map of the game. T will be a terrain.
+ * A class that represents the HexBoard of Type T that we will use as the map of the game.
  */
 public class HexBoard<T> {
     private T[][] board;

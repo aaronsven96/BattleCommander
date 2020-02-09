@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A class that represents all the HexBoard layers.
+ */
 public class HexMap {
     private HexBoard<BasicUnit> units;
     private HexBoard<Terrain> terrain;
@@ -106,28 +109,34 @@ public class HexMap {
         return new HexMap(units, terrain, mapShape, textures);
     }
 
+    // TODO: add interactions to the game
+    // Interaction getInteraction(Position p);
+
     /**
-     * Get the units at a position P
+     * Returns the BasicUnits at a position.
+     *
+     * @param p the position
+     * @return the units at a position
      */
     public Optional<BasicUnit> getUnit(Position p) {
         return units.getHex(p);
     }
 
     /**
+     * Returns the Terrain at a position.
      *
-     */
-    //Todo add interactions to the game
-    //Interaction getInteraction(Position p);
-
-    /**
-     * Get the terrain at a position P
+     * @param p the position
+     * @return the Terrain at a position
      */
     public Optional<Terrain> getTerrain(Position p) {
         return terrain.getHex(p);
     }
 
     /**
-     * Gets all units for a player with id
+     * Returns all units for a specific player id.
+     *
+     * @param pid the player id
+     * @return all units for a specific player id
      */
     public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing!
         BasicUnit unitsAtHex;
@@ -149,14 +158,18 @@ public class HexMap {
     }
 
     /**
-     * Returns a List of Strings which refer to the file location of the textures which relate to each layer of the map
+     * Returns a List of Strings which refer to the file location of the textures in each layer of the HexMap
+     *
+     * @return a List of Strings which refer to the file location of the textures in each layer of the HexMap
      */
     public List<HexBoard<String>> getTextures() {
         return textures;
     }
 
     /**
-     * Returns a HexMap of Booleans which describes which tiles are in the map
+     * Returns a HexMap of Booleans which describes which tiles are in the map.
+     *
+     * @return a HexMap of Booleans which describes which tiles are in the map.
      */
     public HexBoard<Boolean> getMapShape() {
         return mapShape;
