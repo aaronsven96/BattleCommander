@@ -107,17 +107,17 @@ public class HexBoard<T> {
      *
      * @param p1               the first position
      * @param p2               the second position
-     * @param expectedDistance the expected distance between two positions
+     * @param maxDistance the maximum allowed distance between two positions
      * @return true if the positions are in proximity to each other, or false otherwise.
      */
-    public boolean isInProximity(Position p1, Position p2, int expectedDistance) {
-        if (expectedDistance < 0) {
+    public boolean isInProximity(Position p1, Position p2, int maxDistance) {
+        if (maxDistance < 0) {
             throw new IllegalArgumentException();
         }
 
         int actualDistance = getDistanceBetweenTwoPositions(p1, p2);
 
-        return actualDistance >= 0 && actualDistance <= expectedDistance;
+        return actualDistance >= 0 && actualDistance <= maxDistance;
     }
 
     /**
