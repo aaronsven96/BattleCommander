@@ -6,7 +6,7 @@ public interface UnitAction {
 
     String getActionTexture();
 
-    boolean isValidAction();
+    boolean isValidAction(Command action);
 
     boolean applyAction();
 }

@@ -164,4 +164,8 @@ public class HexMap {
     public HexBoard<Boolean> getMapShape() {
         return mapShape;
     }
+
+    public HexBoard<BasicUnit> getUnits() {
+        return units;
+    }
 }
