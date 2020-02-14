@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A class that represents the hex board of Type T that we will use as the map of the game. T will be a terrain.
+ * A class that represents the HexBoard of Type T that we will use as the map of the game.
  */
 public class HexBoard<T> {
     private T[][] board;
@@ -20,6 +20,20 @@ public class HexBoard<T> {
     }
 
     /**
+     * Returns the distance (least number of moves) between two positions.
+     *
+     * @param p1 the first position
+     * @param p2 the second position
+     * @return the distance (least number of moves) between two positions
+     */
+    public int getDistanceBetweenTwoPositions(Position p1, Position p2) {
+        if (isValidPosition(p1) && isValidPosition(p2)) {
+            return (Math.abs(p1.getY() - p2.getY()) + Math.abs(p1.getX() - p2.getX()));
+        }
+        return -1;
+    }
+
+    /**
      * Returns the object at position x,y.
      *
      * @param p the position
@@ -27,7 +41,7 @@ public class HexBoard<T> {
      */
     public Optional<T> getHex(Position p) {
         // Returns Optional.empty() if the position is outside the Array bounds
-        if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
+        if (isValidPosition(p)) {
             if (board[p.getX()][p.getY()] == null) {
                 return Optional.empty();
             } else {
@@ -47,7 +61,7 @@ public class HexBoard<T> {
         List<T> neighbors = new ArrayList<>();
 
         // Invalid position check
-        if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) return neighbors;
+        if (!isValidPosition(p)) return neighbors;
 
         // Top left neighbor
         if (p.getX() >= 1) neighbors.add(board[p.getX() - 1][p.getY()]);
@@ -71,6 +85,55 @@ public class HexBoard<T> {
     }
 
     /**
+     * Returns the number of columns in the board.
+     *
+     * @return the number of columns in the board
+     */
+    public int getNumColumns() {
+        return numColumns;
+    }
+
+    /**
+     * Returns the number of rows in the board.
+     *
+     * @return the number of rows in the board
+     */
+    public int getNumRows() {
+        return numRows;
+    }
+
+    /**
+     * Returns true if the positions are in proximity to each other, or false otherwise.
+     *
+     * @param p1               the first position
+     * @param p2               the second position
+     * @param maxDistance the maximum allowed distance between two positions
+     * @return true if the positions are in proximity to each other, or false otherwise.
+     */
+    public boolean isInProximity(Position p1, Position p2, int maxDistance) {
+        if (maxDistance < 0) {
+            throw new IllegalArgumentException("distance must be non-negative");
+        }
+
+        int actualDistance = getDistanceBetweenTwoPositions(p1, p2);
+
+        return actualDistance >= 0 && actualDistance <= maxDistance;
+    }
+
+    /**
+     * Returns true if the position is valid, or false otherwise.
+     *
+     * @param p the position
+     * @return true if the position is valid, or false otherwise
+     */
+    private boolean isValidPosition(Position p) {
+        if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Sets a hex at position x,y.
      *
      * @param p   the position
@@ -85,23 +148,4 @@ public class HexBoard<T> {
         }
         return false; // returns false if the position is outside the Array bounds
     }
-
-    /**
-     * Returns the number of rows in the board.
-     *
-     * @return the number of rows in the board
-     */
-    public int getNumRows() {
-        return numRows;
-    }
-
-    /**
-     * Returns the number of columns in the board.
-     *
-     * @return the number of columns in the board
-     */
-    public int getNumColumns() {
-        return numColumns;
-    }
-
 }
