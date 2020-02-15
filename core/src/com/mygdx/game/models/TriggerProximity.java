@@ -49,9 +49,6 @@ public class TriggerProximity implements Trigger {
 
         loop1:
         for (int i = 0; i < map.getUnits().getNumRows()) {
-            if (positions.size() == 2) {
-                break;
-            }
             for (int j = 0; j < map.getUnits().getNumColumns()) {
                 if (positions.size() == 2) {
                     break loop1;
@@ -73,9 +70,6 @@ public class TriggerProximity implements Trigger {
 
         loop2:
         for (int i = 0; i < map.getTerrain().getNumRows()) {
-            if (positions.size() == 2) {
-                break;
-            }
             for (int j = 0; j < map.getTerrain().getNumColumns()) {
                 if (positions.size() == 2) {
                     break loop2;
