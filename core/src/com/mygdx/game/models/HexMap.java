@@ -125,9 +125,9 @@ public class HexMap {
     }
 
     /**
-     * Returns the HexBoard of Terrain.
+     * Returns the Terrain HexBoard.
      *
-     * @return the terrain HexBoard
+     * @return the Terrain HexBoard
      */
     public HexBoard<Terrain> getTerrain() {
         return terrain;
@@ -153,9 +153,9 @@ public class HexMap {
     }
 
     /**
-     * Returns the HexBoard of BasicUnits.
+     * Returns the BasicUnits HexBoard.
      *
-     * @return the units HexBoard
+     * @return the BasicUnits HexBoard
      */
     public HexBoard<BasicUnit> getUnits() {
         return units;
