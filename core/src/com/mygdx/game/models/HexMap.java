@@ -180,8 +180,6 @@ public class HexMap {
 
     /**
      * Saves the HexMap as a file on the disk.
-     *
-     * @param filename the filename
      */
     public void save() {
         Gson gson = new Gson();
