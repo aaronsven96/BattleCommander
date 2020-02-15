@@ -107,18 +107,18 @@ public class HexBoard<T> {
      *
      * @param p1          the first position
      * @param p2          the second position
-     * @param maxDistance the maximum allowed distance between two positions
+     * @param range the maximum allowed distance between two positions
      * @return true if the positions are in proximity to each other, or false otherwise.
      */
-    public boolean isInProximity(Position p1, Position p2, int maxDistance) {
-        if (maxDistance < 0) {
-            throw new IllegalArgumentException("distance must be non-negative");
+    public boolean isInProximity(Position p1, Position p2, int range) {
+        if (range < 0) {
+            throw new IllegalArgumentException("range must be non-negative");
         }
 
-        Optional<Integer> actualDistance = getDistanceBetweenTwoPositions(p1, p2);
+        Optional<Integer> distance = getDistanceBetweenTwoPositions(p1, p2);
 
-        if (actualDistance.isPresent()) {
-            return actualDistance.get() <= maxDistance;
+        if (distance.isPresent()) {
+            return distance.get() <= range;
         }
         return false;
     }
