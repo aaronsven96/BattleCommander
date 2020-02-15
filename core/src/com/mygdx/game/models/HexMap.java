@@ -125,7 +125,7 @@ public class HexMap {
     }
 
     /**
-     * Returns the terrain HexBoard.
+     * Returns the HexBoard of Terrain.
      *
      * @return the terrain HexBoard
      */
@@ -153,7 +153,7 @@ public class HexMap {
     }
 
     /**
-     * Returns the units HexBoard.
+     * Returns the HexBoard of BasicUnits.
      *
      * @return the units HexBoard
      */
@@ -162,7 +162,7 @@ public class HexMap {
     }
 
     /**
-     * Returns the BasicUnits at a position.
+     * Returns the BasicUnit at a position.
      *
      * @param p the position
      * @return the BasicUnits at a position
@@ -172,7 +172,7 @@ public class HexMap {
     }
 
     /**
-     * Returns all units for a specific player id.
+     * Returns all BasicUnits for a specific player id.
      *
      * @param pid the player id
      * @return all units for a specific player id
