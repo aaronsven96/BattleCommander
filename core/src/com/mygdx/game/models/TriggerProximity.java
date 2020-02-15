@@ -5,10 +5,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class TriggerProximity implements Trigger {
-    String type;
-    int pid1;
-    int pid2;
-    int range;
+    private String type;
+    private int pid1;
+    private int pid2;
+    private int range;
 
     private TriggerProximity(String type, int pid1, int pid2, int range) {
         this.type = type;
