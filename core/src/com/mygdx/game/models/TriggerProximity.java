@@ -67,6 +67,9 @@ public class TriggerProximity implements Trigger {
             }
         }
 
+        if (positions.size() == 2 && map.getUnits().isInProximity(positions.get(0), positions.get(1), range)) {
+            return true;
+        }
 
         for (int i = 0; i < map.getTerrain().getNumRows()) {
             if (positions.size() == 2) {
@@ -87,7 +90,7 @@ public class TriggerProximity implements Trigger {
             }
         }
 
-        if (positions.size() == 2 && map.getUnits().isInProximity(positions.get(0), positions.get(1), range)) {
+        if (positions.size() == 2 && map.getTerrain().isInProximity(positions.get(0), positions.get(1), range)) {
             return true;
         }
 
