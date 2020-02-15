@@ -52,7 +52,7 @@ public class ConfigurationFactory {
 
     public TriggerProximity makeTriggerFromConfig(String config) {
         if (!triggerHashMap.containsKey(config)) {
-            triggerHashMap.put(config, TriggerProximity.makeTriggerFromConfig(ConfigurationGetter.getConfiguration(config)));
+            triggerHashMap.put(config, TriggerProximity.getTriggerFromConfig(ConfigurationGetter.getConfiguration(config)));
         }
         return triggerHashMap.get(config);
     }
