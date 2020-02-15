@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.Optional;
+import java.util.TreeSet;
+
 public class TriggerProximity implements Trigger {
     private String type;
     private int id1;
@@ -41,7 +44,55 @@ public class TriggerProximity implements Trigger {
 
     @Override
     public boolean isTriggered(HexMap map) {
-//        if ()
+        TreeSet<Position> unitsPositions = new TreeSet<>();
+        TreeSet<Position> terrainPositions = new TreeSet<>();
+
+        for (int i = 0; i < map.getUnits().getNumRows()) {
+            if (unitsPositions.size() == 2) {
+                break;
+            }
+            for (int j = 0; j < map.getUnits().getNumColumns()) {
+                if (unitsPositions.size() == 2) {
+                    break;
+                }
+                Position p = new Position(i, j);
+                Optional<BasicUnit> optional = map.getUnits().getHex(p);
+                if (optional.isPresent()) {
+                    BasicUnit bu = optional.get();
+                    if (bu.getId() == id1 || bu.getId() == id2) {
+                        unitsPositions.add(p);
+                    }
+                }
+            }
+        }
+
+        if (map.getUnits().isInProximity(unitsPositions.first(), unitsPositions.last())) {
+            return true;
+        }
+
+        for (int i = 0; i < map.getTerrain().getNumRows()) {
+            if (terrainPositions.size() == 2) {
+                break;
+            }
+            for (int j = 0; j < map.getTerrain().getNumColumns()) {
+                if (terrainPositions.size() == 2) {
+                    break;
+                }
+                Position p = new Position(i, j);
+                Optional<Terrain> optional = map.getTerrain().getHex(p);
+                if (optional.isPresent()) {
+                    Terrain t = optional.get();
+                    if (t.getID() == id1 || t.getID() == id2) {
+                        terrainPositions.add(p);
+                    }
+                }
+            }
+        }
+
+        if (map.getTerrain().isInProximity(terrainPositions.first(), terrainPositions.last())) {
+            return true;
+        }
+
         return false;
     }
 }
