@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,7 +73,7 @@ public class HexMap {
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
                 units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
-                terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
+                unitTextures.setHex(p, texture); // add texture to HexBoard<String>
             }
         }
 
@@ -177,6 +178,11 @@ public class HexMap {
         return unitsForPlayer;
     }
 
+    /**
+     * Saves the HexMap as a file on the disk.
+     *
+     * @param filename the filename
+     */
     public void save(String filename) {
         Gson gson = new Gson();
 
