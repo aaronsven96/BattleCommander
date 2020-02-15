@@ -46,52 +46,48 @@ public class TriggerProximity implements Trigger {
 
     @Override
     public boolean isTriggered(HexMap map) {
-        List<Position> unitsPositions = new ArrayList<>();
-        List<Position> terrainPositions = new ArrayList<>();
+        List<Position> positions = new ArrayList<>();
 
         for (int i = 0; i < map.getUnits().getNumRows()) {
-            if (unitsPositions.size() == 2) {
+            if (positions.size() == 2) {
                 break;
             }
             for (int j = 0; j < map.getUnits().getNumColumns()) {
-                if (unitsPositions.size() == 2) {
+                if (positions.size() == 2) {
                     break;
                 }
                 Position p = new Position(i, j);
                 Optional<BasicUnit> optional = map.getUnits().getHex(p);
                 if (optional.isPresent()) {
                     BasicUnit bu = optional.get();
-                    if (bu.getId() == id1 || bu.getId() == id2) {
-                        unitsPositions.add(p);
+                    if (bu.getId() == id1 || bu.getId() == id2) { // One unit per hex???
+                        positions.add(p);
                     }
                 }
             }
         }
 
-        if (map.getUnits().isInProximity(unitsPositions.get(0), unitsPositions.get(1), range)) {
-            return true;
-        }
 
         for (int i = 0; i < map.getTerrain().getNumRows()) {
-            if (terrainPositions.size() == 2) {
+            if (positions.size() == 2) {
                 break;
             }
             for (int j = 0; j < map.getTerrain().getNumColumns()) {
-                if (terrainPositions.size() == 2) {
+                if (positions.size() == 2) {
                     break;
                 }
                 Position p = new Position(i, j);
                 Optional<Terrain> optional = map.getTerrain().getHex(p);
                 if (optional.isPresent()) {
                     Terrain t = optional.get();
-                    if (t.getID() == id1 || t.getID() == id2) {
-                        terrainPositions.add(p);
+                    if (t.getID() == id1 || t.getID() == id2) { // One terrain per hex???
+                        positions.add(p);
                     }
                 }
             }
         }
 
-        if (map.getTerrain().isInProximity(terrainPositions.get(0), terrainPositions.get(1), range)) {
+        if (positions.size() == 2 && map.getUnits().isInProximity(positions.get(0), positions.get(1), range)) {
             return true;
         }
 
