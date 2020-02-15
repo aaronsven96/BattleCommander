@@ -1,5 +1,5 @@
 {
-  "type": "desert",
+  "type": "Desert",
   "description": "An example configuration file for a desert terrain",
   "defense": 0,
   "terrainState": "IMPASSABLE"
