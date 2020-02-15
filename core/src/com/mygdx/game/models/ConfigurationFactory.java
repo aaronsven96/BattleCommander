@@ -16,11 +16,25 @@ public class ConfigurationFactory {
     private ConfigurationFactory() {
     }
 
-    private static final HashMap<String, Terrain> terrainHashMap = new HashMap<>();
     private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
+    private static final HashMap<String, Terrain> terrainHashMap = new HashMap<>();
+    private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
     private static final HashMap<String, BasicUnit> unitsHashMap = new HashMap<>();
 
     private static final Gson GSON = new Gson();
+
+    /**
+     * Returns the Hex Map Object from the config file.
+     *
+     * @param config the pathname to the config file to create the Hex Map from
+     * @return the Hex Map Object from the config file
+     */
+    public HexMap makeHexMapFromConfig(String config) {
+        if (!hexMapHashMap.containsKey(config)) {
+            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(ConfigurationGetter.getConfiguration(config)));
+        }
+        return hexMapHashMap.get(config);
+    }
 
     /**
      * Returns the Terrain Object from the config file.
@@ -36,6 +50,13 @@ public class ConfigurationFactory {
         return Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config), texture, id);
     }
 
+    public TriggerProximity makeTriggerFromConfig(String config) {
+        if (!triggerHashMap.containsKey(config)) {
+            triggerHashMap.put(config, TriggerProximity.getTriggerFromConfig(ConfigurationGetter.getConfiguration(config)));
+        }
+        return triggerHashMap.get(config);
+    }
+
     /**
      * Returns the Unit Object from the config file.
      *
@@ -48,19 +69,6 @@ public class ConfigurationFactory {
 //        }
 //        return unitsHashMap.get(config);
         return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config), id, pid, texture);
-    }
-
-    /**
-     * Returns the Hex Map Object from the config file.
-     *
-     * @param config the pathname to the config file to create the Hex Map from
-     * @return the Hex Map Object from the config file
-     */
-    public HexMap makeHexMapFromConfig(String config) {
-        if (!hexMapHashMap.containsKey(config)) {
-            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(ConfigurationGetter.getConfiguration(config)));
-        }
-        return hexMapHashMap.get(config);
     }
 
     public UnitAction getActionFromConfig(String configFile) {
