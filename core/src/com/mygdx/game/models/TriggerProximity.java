@@ -47,13 +47,14 @@ public class TriggerProximity implements Trigger {
     public boolean isTriggered(HexMap map) {
         List<Position> positions = new ArrayList<>();
 
+        loop1:
         for (int i = 0; i < map.getUnits().getNumRows()) {
             if (positions.size() == 2) {
                 break;
             }
             for (int j = 0; j < map.getUnits().getNumColumns()) {
                 if (positions.size() == 2) {
-                    break;
+                    break loop1;
                 }
                 Position p = new Position(i, j);
                 Optional<BasicUnit> optional = map.getUnits().getHex(p);
@@ -70,13 +71,14 @@ public class TriggerProximity implements Trigger {
             return true;
         }
 
+        loop2:
         for (int i = 0; i < map.getTerrain().getNumRows()) {
             if (positions.size() == 2) {
                 break;
             }
             for (int j = 0; j < map.getTerrain().getNumColumns()) {
                 if (positions.size() == 2) {
-                    break;
+                    break loop2;
                 }
                 Position p = new Position(i, j);
                 Optional<Terrain> optional = map.getTerrain().getHex(p);
