@@ -66,7 +66,7 @@ public class TriggerProximity implements Trigger {
             }
         }
 
-        if (map.getUnits().isInProximity(unitsPositions.first(), unitsPositions.last())) {
+        if (map.getUnits().isInProximity(unitsPositions.first(), unitsPositions.last(), range)) {
             return true;
         }
 
@@ -89,7 +89,7 @@ public class TriggerProximity implements Trigger {
             }
         }
 
-        if (map.getTerrain().isInProximity(terrainPositions.first(), terrainPositions.last())) {
+        if (map.getTerrain().isInProximity(terrainPositions.first(), terrainPositions.last(), range)) {
             return true;
         }
 
