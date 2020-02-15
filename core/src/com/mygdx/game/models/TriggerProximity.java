@@ -23,7 +23,7 @@ public class TriggerProximity implements Trigger {
      * @param config the file path
      * @return the Trigger from the configuration file
      */
-    public static TriggerProximity makeTriggerFromConfig(String config) {
+    public static TriggerProximity getTriggerFromConfig(String config) {
         Gson gson = new Gson();
         JsonObject event = gson.fromJson(config, JsonObject.class);
         JsonArray trigger1 = event.get("events").getAsJsonArray();
@@ -31,7 +31,7 @@ public class TriggerProximity implements Trigger {
         JsonObject trigger3 = trigger2.get("trigger").getAsJsonObject();
         JsonObject trigger4 = trigger3.get("details").getAsJsonObject();
 
-        String type = trigger4.get("type").getAsString();
+        String type = trigger3.get("type").getAsString();
         int id1 = trigger4.get("id1").getAsInt();
         int id2 = trigger4.get("id2").getAsInt();
         int range = trigger4.get("range").getAsInt();
