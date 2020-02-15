@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 
@@ -44,8 +46,8 @@ public class TriggerProximity implements Trigger {
 
     @Override
     public boolean isTriggered(HexMap map) {
-        TreeSet<Position> unitsPositions = new TreeSet<>();
-        TreeSet<Position> terrainPositions = new TreeSet<>();
+        List<Position> unitsPositions = new ArrayList<>();
+        List<Position> terrainPositions = new ArrayList<>();
 
         for (int i = 0; i < map.getUnits().getNumRows()) {
             if (unitsPositions.size() == 2) {
@@ -66,7 +68,7 @@ public class TriggerProximity implements Trigger {
             }
         }
 
-        if (map.getUnits().isInProximity(unitsPositions.first(), unitsPositions.last(), range)) {
+        if (map.getUnits().isInProximity(unitsPositions.get(0), unitsPositions.get(1), range)) {
             return true;
         }
 
@@ -89,7 +91,7 @@ public class TriggerProximity implements Trigger {
             }
         }
 
-        if (map.getTerrain().isInProximity(terrainPositions.first(), terrainPositions.last(), range)) {
+        if (map.getTerrain().isInProximity(terrainPositions.get(0), terrainPositions.get(1), range)) {
             return true;
         }
 
