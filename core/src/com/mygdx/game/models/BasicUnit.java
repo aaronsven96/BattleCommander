@@ -214,6 +214,13 @@ public class BasicUnit implements Unit {
     }
 
     /**
+     * Returns the unit's ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * Returns the unit's player ID
      */
     public int getPid() {
