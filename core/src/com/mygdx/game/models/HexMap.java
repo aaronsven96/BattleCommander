@@ -1,5 +1,7 @@
 package com.mygdx.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -173,5 +175,15 @@ public class HexMap {
         }
 
         return unitsForPlayer;
+    }
+
+    public void save(String filename) {
+        Gson gson = new Gson();
+
+        FileHandle file = Gdx.files.local(filename);
+
+        String json = gson.toJson(this);
+
+        file.writeString(json, false);
     }
 }
