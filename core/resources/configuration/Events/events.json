@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "trigger": {
+        "type": "proximity",
+        "details": {
+          "id1": 10001,
+          "id2": 10002,
+          "range": 1
+        }
+      }
+    }
+  ]
+}
