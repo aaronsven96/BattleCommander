@@ -8,8 +8,8 @@ import static org.junit.Assert.assertEquals;
 public class BasicUnitTest {
     static BasicUnit soldier, archer;
 
-    private static String test ="{\"Type\": \"Soldier\",\"Description\": \"An example configuration file for a soldier\",\"Max Health\": 25,\"Strength\": 10,\"Ranged Strength\":" +
-            "0,\"Range\": 1,\"Speed\": 1,\"Area of Effect\": \"Skewer\",\"Attributes\": []}";
+    private static String test ="{\"type\": \"Soldier\",\"description\": \"An example configuration file for a soldier\",\"maxHealth\": 25,\"strength\": 10,\"rangedStrength\":" +
+            "0,\"range\": 1,\"speed\": 1,\"areaOfEffect\": \"Skewer\",\"attributes\": []}";
 
     @BeforeClass
     public static void UnitSetup() {
