@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -183,20 +183,32 @@ public class HexMap {
      *
      * @param filename the filename
      */
-    public void save(String filename) {
+    public void save() {
         Gson gson = new Gson();
 
-        FileHandle file = Gdx.files.local(filename);
+        String location = "configuration/Saves/";
+        String filename = new SimpleDateFormat("yyyyMMddHHmmssSS'.json'").format(new Date());
+        FileHandle file = Gdx.files.local(location + filename);
 
         String json = gson.toJson(this);
 
         file.writeString(json, false);
     }
 
+    /**
+     * Returns the units HexBoard.
+     *
+     * @return the units HexBoard
+     */
     public HexBoard<BasicUnit> getUnits() {
         return units;
     }
 
+    /**
+     * Returns the terrain HexBoard.
+     *
+     * @return the terrain HexBoard
+     */
     public HexBoard<Terrain> getTerrain() {
         return terrain;
     }
