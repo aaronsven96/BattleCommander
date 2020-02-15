@@ -47,12 +47,8 @@ public class TriggerProximity implements Trigger {
     public boolean isTriggered(HexMap map) { // TODO: one unit/terrain per hex???
         List<Position> positions = new ArrayList<>();
 
-        loop1:
         for (int i = 0; i < map.getUnits().getNumRows()) {
             for (int j = 0; j < map.getUnits().getNumColumns()) {
-                if (positions.size() == 2) {
-                    break loop1;
-                }
                 Position p = new Position(i, j);
                 Optional<BasicUnit> optional = map.getUnits().getHex(p);
                 if (optional.isPresent()) {
@@ -62,18 +58,13 @@ public class TriggerProximity implements Trigger {
                     }
                 }
             }
+            if (positions.size() == 2) {
+                return map.getUnits().isInProximity(positions.get(0), positions.get(1), range);
+            }
         }
 
-        if (positions.size() == 2 && map.getUnits().isInProximity(positions.get(0), positions.get(1), range)) {
-            return true;
-        }
-
-        loop2:
         for (int i = 0; i < map.getTerrain().getNumRows()) {
             for (int j = 0; j < map.getTerrain().getNumColumns()) {
-                if (positions.size() == 2) {
-                    break loop2;
-                }
                 Position p = new Position(i, j);
                 Optional<Terrain> optional = map.getTerrain().getHex(p);
                 if (optional.isPresent()) {
@@ -83,10 +74,9 @@ public class TriggerProximity implements Trigger {
                     }
                 }
             }
-        }
-
-        if (positions.size() == 2 && map.getTerrain().isInProximity(positions.get(0), positions.get(1), range)) {
-            return true;
+            if (positions.size() == 2) {
+                return map.getTerrain().isInProximity(positions.get(0), positions.get(1), range);
+            }
         }
 
         return false;
