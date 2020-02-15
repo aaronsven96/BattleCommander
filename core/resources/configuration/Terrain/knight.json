@@ -1,11 +1,11 @@
 {
-  "Type": "Knight",
-  "Description": "An example configuration file for a knight",
-  "Max Health": 35,
-  "Strength": 15,
-  "Ranged Strength": 0,
-  "Speed": 1,
-  "Range": 1,
-  "Area of Effect": "Skewer",
-  "Attributes": []
+  "type": "Knight",
+  "description": "An example configuration file for a knight",
+  "maxHealth": 35,
+  "strength": 15,
+  "rangedStrength": 0,
+  "speed": 1,
+  "range": 1,
+  "areaOfEffect": "Skewer",
+  "attributes": []
 }
