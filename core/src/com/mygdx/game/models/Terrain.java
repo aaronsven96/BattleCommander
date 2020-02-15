@@ -78,7 +78,7 @@ public class Terrain {
     /**
      * Returns the Texture of the Terrain.
      *
-     * @return the the Texture of the Terrain
+     * @return the Texture of the Terrain
      */
     public String getTexture() {
         return texture;
@@ -87,7 +87,7 @@ public class Terrain {
     /**
      * Returns the ID of the Terrain.
      *
-     * @return the the ID of the Terrain
+     * @return the ID of the Terrain
      */
     public int getID() {
         return id;
