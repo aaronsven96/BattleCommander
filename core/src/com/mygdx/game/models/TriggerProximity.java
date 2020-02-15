@@ -6,14 +6,14 @@ import com.google.gson.JsonObject;
 
 public class TriggerProximity implements Trigger {
     private String type;
-    private int pid1;
-    private int pid2;
+    private int id1;
+    private int id2;
     private int range;
 
-    private TriggerProximity(String type, int pid1, int pid2, int range) {
+    private TriggerProximity(String type, int id1, int id2, int range) {
         this.type = type;
-        this.pid1 = pid1;
-        this.pid1 = pid2;
+        this.id1 = id1;
+        this.id1 = id2;
         this.range = range;
     }
 
@@ -40,6 +40,7 @@ public class TriggerProximity implements Trigger {
 
     @Override
     public boolean isTriggered(HexMap map) {
+        if
         return false;
     }
 }
