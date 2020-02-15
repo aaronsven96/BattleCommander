@@ -60,7 +60,7 @@ public class TriggerProximity implements Trigger {
                 Optional<BasicUnit> optional = map.getUnits().getHex(p);
                 if (optional.isPresent()) {
                     BasicUnit bu = optional.get();
-                    if (bu.getId() == id1 || bu.getId() == id2) { // One unit per hex???
+                    if (bu.getId() == id1 || bu.getId() == id2) { // one unit per hex???
                         positions.add(p);
                     }
                 }
@@ -83,7 +83,7 @@ public class TriggerProximity implements Trigger {
                 Optional<Terrain> optional = map.getTerrain().getHex(p);
                 if (optional.isPresent()) {
                     Terrain t = optional.get();
-                    if (t.getID() == id1 || t.getID() == id2) { // One terrain per hex???
+                    if (t.getID() == id1 || t.getID() == id2) { // one terrain per hex???
                         positions.add(p);
                     }
                 }
