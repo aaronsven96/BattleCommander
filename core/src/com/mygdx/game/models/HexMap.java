@@ -192,4 +192,12 @@ public class HexMap {
 
         file.writeString(json, false);
     }
+
+    public HexBoard<BasicUnit> getUnits() {
+        return units;
+    }
+
+    public HexBoard<Terrain> getTerrain() {
+        return terrain;
+    }
 }
