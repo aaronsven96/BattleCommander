@@ -23,24 +23,25 @@ public class TriggerProximity implements Trigger {
      * @param config the file path
      * @return the Trigger from the configuration file
      */
-    public static TriggerProximity getTriggerFromConfig(String config) {
+    public static TriggerProximity makeTriggerFromConfig(String config) {
         Gson gson = new Gson();
         JsonObject event = gson.fromJson(config, JsonObject.class);
         JsonArray trigger1 = event.get("events").getAsJsonArray();
         JsonObject trigger2 = trigger1.get(0).getAsJsonObject();
         JsonObject trigger3 = trigger2.get("trigger").getAsJsonObject();
+        JsonObject trigger4 = trigger3.get("details").getAsJsonObject();
 
-        String type = trigger3.get("type").getAsString();
-        int pid1 = trigger3.get("pid1").getAsInt();
-        int pid2 = trigger3.get("pid2").getAsInt();
-        int range = trigger3.get("range").getAsInt();
+        String type = trigger4.get("type").getAsString();
+        int id1 = trigger4.get("id1").getAsInt();
+        int id2 = trigger4.get("id2").getAsInt();
+        int range = trigger4.get("range").getAsInt();
 
-        return new TriggerProximity(type, pid1, pid2, range);
+        return new TriggerProximity(type, id1, id2, range);
     }
 
     @Override
     public boolean isTriggered(HexMap map) {
-        if
+//        if ()
         return false;
     }
 }
