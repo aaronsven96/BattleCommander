@@ -125,6 +125,15 @@ public class HexMap {
     }
 
     /**
+     * Returns the terrain HexBoard.
+     *
+     * @return the terrain HexBoard
+     */
+    public HexBoard<Terrain> getTerrain() {
+        return terrain;
+    }
+
+    /**
      * Returns the Terrain at a position.
      *
      * @param p the position
@@ -141,6 +150,15 @@ public class HexMap {
      */
     public List<HexBoard<String>> getTextures() {
         return textures;
+    }
+
+    /**
+     * Returns the units HexBoard.
+     *
+     * @return the units HexBoard
+     */
+    public HexBoard<BasicUnit> getUnits() {
+        return units;
     }
 
     /**
@@ -191,23 +209,5 @@ public class HexMap {
         String json = gson.toJson(this);
 
         file.writeString(json, false);
-    }
-
-    /**
-     * Returns the units HexBoard.
-     *
-     * @return the units HexBoard
-     */
-    public HexBoard<BasicUnit> getUnits() {
-        return units;
-    }
-
-    /**
-     * Returns the terrain HexBoard.
-     *
-     * @return the terrain HexBoard
-     */
-    public HexBoard<Terrain> getTerrain() {
-        return terrain;
     }
 }
