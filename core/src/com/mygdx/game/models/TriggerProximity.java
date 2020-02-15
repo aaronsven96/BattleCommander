@@ -43,6 +43,12 @@ public class TriggerProximity implements Trigger {
         return new TriggerProximity(type, id1, id2, range);
     }
 
+    /**
+     * Returns true if triggered, false otherwise.
+     *
+     * @param map the HexMap
+     * @return true if triggered, false otherwise
+     */
     @Override
     public boolean isTriggered(HexMap map) { // TODO: one unit/terrain per hex???
         List<Position> positions = new ArrayList<>();
