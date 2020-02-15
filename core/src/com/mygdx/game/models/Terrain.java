@@ -84,4 +84,13 @@ public class Terrain {
         return texture;
     }
 
+    /**
+     * Returns the ID of the Terrain.
+     *
+     * @return the the ID of the Terrain
+     */
+    public int getID() {
+        return id;
+    }
+
 }
