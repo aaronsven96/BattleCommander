@@ -50,7 +50,7 @@ public class TriggerProximity implements Trigger {
      * @return true if triggered, false otherwise
      */
     @Override
-    public boolean isTriggered(HexMap map) { // TODO: one unit/terrain per hex???
+    public boolean isTriggered(HexMap map) {
         List<Position> positions = new ArrayList<>();
 
         for (int i = 0; i < map.getUnits().getNumRows(); i++) {
@@ -59,7 +59,10 @@ public class TriggerProximity implements Trigger {
                 Optional<BasicUnit> optional = map.getUnits().getHex(p);
                 if (optional.isPresent()) {
                     BasicUnit bu = optional.get();
-                    if (bu.getId() == id1 || bu.getId() == id2) {
+                    if (bu.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (bu.getId() == id2) {
                         positions.add(p);
                     }
                 }
@@ -75,7 +78,10 @@ public class TriggerProximity implements Trigger {
                 Optional<Terrain> optional = map.getTerrain().getHex(p);
                 if (optional.isPresent()) {
                     Terrain t = optional.get();
-                    if (t.getID() == id1 || t.getID() == id2) {
+                    if (t.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (t.getId() == id2) {
                         positions.add(p);
                     }
                 }
