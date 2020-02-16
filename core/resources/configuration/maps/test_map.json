@@ -1,0 +1,70 @@
+{
+  "rows": 2,
+  "columns": 2,
+  "units": [
+    [
+      {
+        "config": "soldier.json",
+        "id": 10000,
+        "pid": 100,
+        "texture": "soldier_small.png"
+      },
+      {
+        "config": "null",
+        "id": 10001,
+        "pid": 100,
+        "texture": "null_texture.json"
+      }
+    ],
+    [
+      {
+        "config": "soldier.json",
+        "id": 10002,
+        "pid": 101,
+        "texture": "soldier_small.png"
+      },
+      {
+        "config": "soldier.json",
+        "id": 10003,
+        "pid": 101,
+        "texture": "soldier_small.png"
+      }
+    ]
+  ],
+  "terrain": [
+    [
+      {
+        "config": "swamp.json",
+        "id": 20000,
+        "texture": "desert_hex_small.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20001,
+        "texture": "desert_hex_small.png"
+      }
+    ],
+    [
+      {
+        "config": "desert.json",
+        "id": 20010,
+        "texture": "desert_hex_small.png"
+      },
+      {
+        "config": "ocean.json",
+        "id": 20011,
+        "texture": "desert_hex_small.png"
+      }
+    ]
+  ],
+  "mapShape": [
+    [
+      true,
+      true
+    ],
+    [
+      false,
+      true
+    ]
+  ]
+}

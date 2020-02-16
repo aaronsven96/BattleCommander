@@ -12,6 +12,12 @@ public class ConfigurationFactory {
 
     //Singleton instance
     public static ConfigurationFactory instance = new ConfigurationFactory();
+    private static final String PATH_TO_UNIT_CONFIGURATION = "configuration/units/";
+    private static final String PATH_TO_TERRAIN_CONFIGURATION = "configuration/terrain/";
+    private static final String PATH_TO_MAP_CONFIGURATION = "configuration/maps/";
+    private static final String PATH_TO_UNIT_TEXTURE = "assets/units/";
+    private static final String PATH_TO_TERRAIN_TEXTURE = "assets/terrain/";
+
 
     private ConfigurationFactory() {
     }
@@ -24,19 +30,6 @@ public class ConfigurationFactory {
     private static final Gson GSON = new Gson();
 
     /**
-     * Returns the Hex Map Object from the config file.
-     *
-     * @param config the pathname to the config file to create the Hex Map from
-     * @return the Hex Map Object from the config file
-     */
-    public HexMap makeHexMapFromConfig(String config) {
-        if (!hexMapHashMap.containsKey(config)) {
-            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(ConfigurationGetter.getConfiguration(config)));
-        }
-        return hexMapHashMap.get(config);
-    }
-
-    /**
      * Returns the Terrain Object from the config file.
      *
      * @param config the pathname to the config file to create the Terrain from
@@ -47,7 +40,7 @@ public class ConfigurationFactory {
 //            terrainHashMap.put(config, Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config)));
 //        }
 //        return terrainHashMap.get(config);
-        return Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config), texture, id);
+        return Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_TERRAIN_CONFIGURATION + config), PATH_TO_TERRAIN_TEXTURE + texture, id);
     }
 
     public TriggerProximity makeTriggerFromConfig(String config) {
@@ -68,7 +61,20 @@ public class ConfigurationFactory {
 //            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
 //        }
 //        return unitsHashMap.get(config);
-        return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config), id, pid, texture);
+        return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_UNIT_CONFIGURATION + config), id, pid, PATH_TO_UNIT_TEXTURE + texture);
+    }
+
+    /**
+     * Returns the Hex Map Object from the config file.
+     *
+     * @param config the pathname to the config file to create the Hex Map from
+     * @return the Hex Map Object from the config file
+     */
+    public HexMap makeHexMapFromConfig(String config) {
+        if (!hexMapHashMap.containsKey(config)) {
+            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_MAP_CONFIGURATION + config)));
+        }
+        return hexMapHashMap.get(config);
     }
 
     public UnitAction getActionFromConfig(String configFile) {

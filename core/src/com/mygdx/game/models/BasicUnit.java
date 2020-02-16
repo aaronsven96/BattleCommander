@@ -157,6 +157,10 @@ public class BasicUnit implements Unit {
         return speed;
     }
 
+    public int getId(){
+        return id;
+    }
+
     /**
      * Returns unit's state
      */
@@ -214,16 +218,15 @@ public class BasicUnit implements Unit {
     }
 
     /**
-     * Returns the unit's ID
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
      * Returns the unit's player ID
      */
     public int getPid() {
         return pid;
     }
+
+    public String getTexture(){
+        return texture;
+    }
+
+
 }

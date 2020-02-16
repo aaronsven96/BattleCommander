@@ -20,9 +20,13 @@ public class HexMap {
     private HexBoard<Terrain> terrain;
     private HexBoard<Boolean> mapShape;
     private List<HexBoard<String>> textures;
+    private final int rows;
+    private final int cols;
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int cols) {
         this.units = units;
+        this.rows = rows;
+        this.cols = cols;
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
@@ -30,11 +34,22 @@ public class HexMap {
 
     // Copy constructor
     public HexMap(HexMap original) {
+        this.rows = original.rows;
+        this.cols = original.cols;
         units = original.units;
         terrain = original.terrain;
         mapShape = original.mapShape;
         textures = original.textures;
     }
+
+    public int getCols(){
+        return cols;
+    }
+
+    public int getRows(){
+        return rows;
+    }
+
 
     public static HexMap getHexMapFromConfig(String content) {
         Gson gson = new Gson();
@@ -71,9 +86,11 @@ public class HexMap {
                 Position p = new Position(i, j);
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
+                String unitTexture = newUnit == null ? null : newUnit.getTexture(); // make the Basic Unit
+
                 units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
-                unitTextures.setHex(p, texture); // add texture to HexBoard<String>
+                unitTextures.setHex(p, unitTexture); // add texture to HexBoard<String>
             }
         }
 
@@ -90,9 +107,11 @@ public class HexMap {
                 Position p = new Position(i, j);
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
+                String unitTexture = newTerrain == null ? null : newTerrain.getTexture(); // make the Basic Unit
+
                 terrain.setHex(p, newTerrain); // add Terrain to HexBoard<Terrain>
 
-                terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
+                terrainTextures.setHex(p, unitTexture); // add texture to HexBoard<String>
             }
         }
 
@@ -106,10 +125,11 @@ public class HexMap {
         }
 
         // Set up textures
-        textures.add(unitTextures);
         textures.add(terrainTextures);
+        textures.add(unitTextures);
 
-        return new HexMap(units, terrain, mapShape, textures);
+
+        return new HexMap(units, terrain, mapShape, textures, rows, columns);
     }
 
     // TODO: add interactions to the game
@@ -192,7 +212,6 @@ public class HexMap {
                 }
             }
         }
-
         return unitsForPlayer;
     }
 
