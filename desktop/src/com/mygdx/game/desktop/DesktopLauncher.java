@@ -18,5 +18,6 @@ public class DesktopLauncher {
 //		HexMap map = ConfigurationFactory.instance.makeHexMapFromConfig("configuration/Maps/HexMap.json");
 //		map.save();
 //        TriggerProximity trigger = ConfigurationFactory.instance.makeTriggerFromConfig("configuration/Events/events.json");
+//        System.out.println(trigger.isTriggered(map));
     }
 }
