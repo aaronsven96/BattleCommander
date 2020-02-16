@@ -197,7 +197,7 @@ public class HexMap {
     }
 
     /**
-     * Saves the HexMap as a file on the disk.
+     * Saves the HexMap as a JSON file on the disk.
      */
     public void save() {
         Gson gson = new Gson();
