@@ -55,7 +55,6 @@ public class GameListener implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         isKeyPressed.put(keycode, true);
-
         return false;
     }
 
@@ -179,6 +178,10 @@ public class GameListener implements InputProcessor {
         Optional<Position> hex = Optional.ofNullable(leftClick);
         leftClick = null;
         return hex;
+    }
+
+    public boolean cancelOrders(){
+        return isKeyPressed.getOrDefault(Input.Keys.C,false);
     }
 
     public Map<Position, Position>getMoves(){
