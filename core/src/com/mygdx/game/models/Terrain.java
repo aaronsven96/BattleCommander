@@ -33,12 +33,12 @@ public class Terrain {
     /**
      * Returns the Terrain from the configuration file.
      *
-     * @param content the content
+     * @param config the content
      * @return the Terrain from the configuration file
      */
-    public static Terrain getTerrainFromConfig(String content, String texture, int id) {
+    public static Terrain getTerrainFromConfig(String config, String texture, int id) {
         Gson gson = new Gson();
-        JsonObject terrain = gson.fromJson(content, JsonObject.class);
+        JsonObject terrain = gson.fromJson(config, JsonObject.class);
 
         String type = terrain.get("type").getAsString();
         int defense = terrain.get("defense").getAsInt();
@@ -78,10 +78,19 @@ public class Terrain {
     /**
      * Returns the Texture of the Terrain.
      *
-     * @return the the Texture of the Terrain
+     * @return the Texture of the Terrain
      */
     public String getTexture() {
         return texture;
+    }
+
+    /**
+     * Returns the ID of the Terrain.
+     *
+     * @return the ID of the Terrain
+     */
+    public int getId() {
+        return id;
     }
 
 }

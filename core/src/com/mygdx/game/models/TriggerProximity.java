@@ -1,9 +1,96 @@
 package com.mygdx.game.models;
 
-public class TriggerProximity implements Trigger {
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class TriggerProximity implements Trigger {
+    private String type;
+    private int id1;
+    private int id2;
+    private int range;
+
+    private TriggerProximity(String type, int id1, int id2, int range) {
+        this.type = type;
+        this.id1 = id1;
+        this.id2 = id2;
+        this.range = range;
+    }
+
+    /**
+     * Returns the Trigger from the configuration file.
+     *
+     * @param config the file path
+     * @return the Trigger from the configuration file
+     */
+    public static TriggerProximity getTriggerFromConfig(String config) {
+        Gson gson = new Gson();
+        JsonObject event = gson.fromJson(config, JsonObject.class);
+        JsonArray trigger1 = event.get("events").getAsJsonArray();
+        JsonObject trigger2 = trigger1.get(0).getAsJsonObject();
+        JsonObject trigger3 = trigger2.get("trigger").getAsJsonObject();
+        JsonObject trigger4 = trigger3.get("details").getAsJsonObject();
+
+        String type = trigger3.get("type").getAsString();
+        int id1 = trigger4.get("id1").getAsInt();
+        int id2 = trigger4.get("id2").getAsInt();
+        int range = trigger4.get("range").getAsInt();
+
+        return new TriggerProximity(type, id1, id2, range);
+    }
+
+    /**
+     * Returns true if triggered, false otherwise.
+     *
+     * @param map the HexMap
+     * @return true if triggered, false otherwise
+     */
     @Override
     public boolean isTriggered(HexMap map) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int i = 0; i < map.getUnits().getNumRows(); i++) {
+            for (int j = 0; j < map.getUnits().getNumColumns(); j++) {
+                Position p = new Position(i, j);
+                Optional<BasicUnit> optional = map.getUnits().getHex(p);
+                if (optional.isPresent()) {
+                    BasicUnit bu = optional.get();
+                    if (bu.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (bu.getId() == id2) {
+                        positions.add(p);
+                    }
+                }
+            }
+            if (positions.size() == 2) {
+                return map.getUnits().isInProximity(positions.get(0), positions.get(1), range);
+            }
+        }
+
+        for (int i = 0; i < map.getTerrain().getNumRows(); i++) {
+            for (int j = 0; j < map.getTerrain().getNumColumns(); j++) {
+                Position p = new Position(i, j);
+                Optional<Terrain> optional = map.getTerrain().getHex(p);
+                if (optional.isPresent()) {
+                    Terrain t = optional.get();
+                    if (t.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (t.getId() == id2) {
+                        positions.add(p);
+                    }
+                }
+            }
+            if (positions.size() == 2) {
+                return map.getTerrain().isInProximity(positions.get(0), positions.get(1), range);
+            }
+        }
+
         return false;
     }
 }

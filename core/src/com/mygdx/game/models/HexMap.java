@@ -1,11 +1,14 @@
 package com.mygdx.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +73,7 @@ public class HexMap {
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
                 units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
-                terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
+                unitTextures.setHex(p, texture); // add texture to HexBoard<String>
             }
         }
 
@@ -122,6 +125,15 @@ public class HexMap {
     }
 
     /**
+     * Returns the Terrain HexBoard.
+     *
+     * @return the Terrain HexBoard
+     */
+    public HexBoard<Terrain> getTerrain() {
+        return terrain;
+    }
+
+    /**
      * Returns the Terrain at a position.
      *
      * @param p the position
@@ -141,7 +153,16 @@ public class HexMap {
     }
 
     /**
-     * Returns the BasicUnits at a position.
+     * Returns the BasicUnits HexBoard.
+     *
+     * @return the BasicUnits HexBoard
+     */
+    public HexBoard<BasicUnit> getUnits() {
+        return units;
+    }
+
+    /**
+     * Returns the BasicUnit at a position.
      *
      * @param p the position
      * @return the BasicUnits at a position
@@ -151,7 +172,7 @@ public class HexMap {
     }
 
     /**
-     * Returns all units for a specific player id.
+     * Returns all BasicUnits for a specific player id.
      *
      * @param pid the player id
      * @return all units for a specific player id
@@ -173,5 +194,20 @@ public class HexMap {
         }
 
         return unitsForPlayer;
+    }
+
+    /**
+     * Saves the HexMap as a JSON file on the disk.
+     */
+    public void save() {
+        Gson gson = new Gson();
+
+        String location = "configuration/Saves/";
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
+        FileHandle file = Gdx.files.local(location + filename);
+
+        String json = gson.toJson(this);
+
+        file.writeString(json, false);
     }
 }
