@@ -89,7 +89,7 @@ public class Terrain {
      *
      * @return the ID of the Terrain
      */
-    public int getID() {
+    public int getId() {
         return id;
     }
 
