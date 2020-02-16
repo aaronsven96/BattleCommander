@@ -203,7 +203,7 @@ public class HexMap {
         Gson gson = new Gson();
 
         String location = "configuration/Saves/";
-        String filename = new SimpleDateFormat("yyyyMMddHHmmssSS'.json'").format(new Date());
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
         FileHandle file = Gdx.files.local(location + filename);
 
         String json = gson.toJson(this);
