@@ -4,9 +4,9 @@
       "trigger": {
         "type": "proximity",
         "details": {
-          "id1": 10001,
-          "id2": 10002,
-          "range": 1
+          "id1": 10000,
+          "id2": 20000,
+          "range": 0
         }
       }
     }
