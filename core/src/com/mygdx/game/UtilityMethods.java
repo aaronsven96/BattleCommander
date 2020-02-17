@@ -1,7 +1,9 @@
 package com.mygdx.game;
 
+import com.mygdx.game.models.HexBoard;
 import com.mygdx.game.models.HexMap;
 import com.mygdx.game.models.Position;
+import com.mygdx.game.models.Terrain;
 
 public abstract class UtilityMethods {
     /**
@@ -15,7 +17,7 @@ public abstract class UtilityMethods {
     }
 
     /** Calculates whether the start position can see the end position. */
-    public static boolean calculateLineOfSight(HexMap board, Position startPosition, Position endPosition) {
+    public static boolean calculateLineOfSight(HexBoard<Terrain> board, Position startPosition, Position endPosition) {
         return true;
     }
 

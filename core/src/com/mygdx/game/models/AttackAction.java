@@ -27,23 +27,15 @@ public class AttackAction implements UnitAction {
 
     @Override
     public boolean isValidAction(Command action) {
-        if (action. && action.getDistance() <= maxRange && action.getDistance() > 0 && damage[action.getDistance()] <= 0){
+        if (action.hasLineOfSight() && action.getDistance() <= maxRange && action.getDistance() > 0 && damage[action.getDistance()] > 0) {
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean applyAction() {
-        return false;
-    }
-
-    private int calculateDistance(Position startPosition, Position endPosition) {
-        return 0;
-    }
-
-    private boolean checkSightline(Position startPosition, Position endPosition) {
-        return false;
+    public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
+        return null;
     }
 
     private int calculateRangedDamage(int distance, int[] damage) {

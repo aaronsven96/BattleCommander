@@ -23,12 +23,13 @@ public class Command {
     /** Whether there is line of sight between the start and end positions */
     private boolean hasLineOfSight;
 
-    public Command(String actionType, int unitId, Position startPosition, Position targetPosition) {
+    public Command(String actionType, int unitId, Position startPosition, Position targetPosition, HexBoard<Terrain> board) {
         this.actionType = actionType;
         this.unitId = unitId;
         this.startPosition = startPosition;
         this.targetPosition = targetPosition;
         distance = UtilityMethods.calculateDistance(startPosition, targetPosition);
+        hasLineOfSight = UtilityMethods.calculateLineOfSight(board, startPosition, targetPosition);
     }
 
     public int getUnitId() {

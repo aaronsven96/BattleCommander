@@ -1,6 +1,14 @@
 package com.mygdx.game.models;
 
 public class MoveAction implements UnitAction {
+    private int maxLength;
+    private boolean flight;
+
+    public MoveAction(int maxLength, boolean flight) {
+        this.maxLength = maxLength;
+        this.flight = flight;
+    }
+
     @Override
     public String getActionName() {
         return null;
@@ -12,12 +20,12 @@ public class MoveAction implements UnitAction {
     }
 
     @Override
-    public boolean isValidAction(Position startPosition, Position endPosition, HexMap map) {
-        return false;
+    public boolean isValidAction(Command action) {
+        return action.getDistance() <= maxLength && action.hasLineOfSight();
     }
 
     @Override
-    public boolean applyAction(Position startPosition, Position endPosition, HexMap map) {
-        return false;
+    public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
+        return null;
     }
 }
