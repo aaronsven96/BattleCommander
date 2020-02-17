@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class IntermediateBoard {
     private HexBoard<List<BasicUnit>> units;
-    private HexBoard<int[]> strengths;
+    private HexBoard<ArrayList> strengths;
     private HexMap newBoard;
 
     public IntermediateBoard(HexMap board, HexBoard<List<BasicUnit>> units) {
-        this.units = units;
-        this.strengths = strengths;
         newBoard = new HexMap(board);
+        this.units = units;
+        this.strengths = new HexBoard<ArrayList>(board.,1);
     }
 
     public void applyToBoard(IntermediateBoard intermediateBoard) {

@@ -178,4 +178,8 @@ public class HexMap {
     public HexBoard<BasicUnit> getUnits() {
         return units;
     }
+
+    public int getBoardSize() {
+
+    }
 }
