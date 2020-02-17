@@ -11,7 +11,7 @@ public class IntermediateBoard {
     public IntermediateBoard(HexMap board, HexBoard<List<BasicUnit>> units) {
         newBoard = new HexMap(board);
         this.units = units;
-        this.strengths = new HexBoard<ArrayList>(board.,1);
+        this.strengths = new HexBoard<ArrayList>(board.getCols(), board.getRows());
     }
 
     public void applyToBoard(IntermediateBoard intermediateBoard) {
@@ -22,4 +22,7 @@ public class IntermediateBoard {
         return null;
     }
 
+    public HexBoard<List<BasicUnit>> getUnits() {
+        return units;
+    }
 }

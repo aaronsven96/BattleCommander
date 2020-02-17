@@ -26,6 +26,7 @@ public class MoveAction implements UnitAction {
 
     @Override
     public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
-        return null;
+        board.getUnits().setHex(action.getTargetPosition(), board.getUnits().getHex(action.getTargetPosition()));
+        return board;
     }
 }
