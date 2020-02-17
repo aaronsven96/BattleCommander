@@ -30,4 +30,17 @@ public class Position {
         return y;
     }
 
+    @Override
+    public String toString() {
+        return "x: " + getX() + "y: " + getY();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!o.getClass().equals(Position.class)){
+            throw new IllegalArgumentException();
+        }
+        Position position = (Position) o;
+        return position.x == this.x && position.y == this.y;
+    }
 }

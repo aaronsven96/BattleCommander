@@ -13,7 +13,7 @@ public enum ScreenEnum {
     },
     GAME_SCREEN{
         public AbstractScreen getScreen(Object[] args){
-            return new GameScreen();
+            return new GameScreen(args);
         }
     },
     MULTIPLAYER_SELECT_SCREEN{

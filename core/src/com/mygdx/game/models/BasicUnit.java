@@ -2,20 +2,16 @@ package com.mygdx.game.models;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 
 import java.util.List;
-
-import static com.badlogic.gdx.Gdx.files;
 
 public class BasicUnit implements Unit {
     private String type; //unit name
     private String description; //unit description
-    private int max_health; //unit maximum health
+    private int maxHealth; //unit maximum health
     private int health; //unit current health
     private int strength; //base strength
-    private int ranged_strength; //base ranged strength
+    private int rangedStrength; //base ranged strength
     private int range; //unit's range of attack (if ranged unit)
     private int speed; //movement speed
     private UnitState state; //unit's current state
@@ -23,54 +19,34 @@ public class BasicUnit implements Unit {
     private int pid; //player ID
     private String texture; //unit texture
 
-    private BasicUnit(String type, String description, int max_health, int strength, int ranged_strength, int range, int speed, int id, int pid, String texture) {
-        this.type=type;
-        this.description=description;
-        this.max_health=max_health;
-        this.strength=strength;
-        this.ranged_strength=ranged_strength;
-        this.range=range;
-        this.speed=speed;
+    private BasicUnit(String type, String description, int maxHealth, int strength, int rangedStrength, int range, int speed, int id, int pid, String texture) {
+        this.type = type;
+        this.description = description;
+        this.maxHealth = maxHealth;
+        this.strength = strength;
+        this.rangedStrength = rangedStrength;
+        this.range = range;
+        this.speed = speed;
 
-        this.health=max_health; //set the unit's health to its max health
-        this.state=UnitState.normal; //set the unit's state to normal
+        this.health = maxHealth; //set the unit's health to its max health
+        this.state = UnitState.normal; //set the unit's state to normal
 
         this.id = id;
         this.pid = pid;
         this.texture = texture;
     }
 
-    //File name constructor
-   public BasicUnit(String filename){
-       FileHandle file = Gdx.files.internal(filename);
-       String content = file.readString();
-
-       Gson gson = new Gson();
-       JsonObject unit = gson.fromJson(content, JsonObject.class);
-
-       this.type = unit.get("Type").getAsString();
-       this.description = unit.get("Description").getAsString();
-       this.max_health = unit.get("Max Health").getAsInt();
-       this.strength = unit.get("Strength").getAsInt();
-       this.ranged_strength = unit.get("Ranged Strength").getAsInt();
-       this.range = unit.get("Range").getAsInt();
-       this.speed = unit.get("Speed").getAsInt();
-
-       this.health=max_health; //set the unit's health to its max health
-       this.state=UnitState.normal; //set the unit's state to normal
-   }
-
     //Copy constructor
     public BasicUnit(BasicUnit original) {
-        type=original.type;
-        description=original.description;
-        max_health=original.max_health;
-        strength=original.strength;
-        ranged_strength=original.ranged_strength;
-        range=original.range;
-        speed=original.speed;
-        health=original.health;
-        state=original.state;
+        type = original.type;
+        description = original.description;
+        maxHealth = original.maxHealth;
+        strength = original.strength;
+        rangedStrength = original.rangedStrength;
+        range = original.range;
+        speed = original.speed;
+        health = original.health;
+        state = original.state;
         id = original.id;
         pid = original.pid;
         texture = original.texture;
@@ -87,40 +63,43 @@ public class BasicUnit implements Unit {
         Gson gson = new Gson();
         JsonObject unit = gson.fromJson(config, JsonObject.class);
 
-        String type = unit.get("Type").getAsString();
-        String description = unit.get("Description").getAsString();
-        int max_health = unit.get("Max Health").getAsInt();
-        int strength = unit.get("Strength").getAsInt();
-        int ranged_strength = unit.get("Ranged Strength").getAsInt();
-        int range = unit.get("Range").getAsInt();
-        int speed = unit.get("Speed").getAsInt();
+        String type = unit.get("type").getAsString();
+        String description = unit.get("description").getAsString();
+        int maxHealth = unit.get("maxHealth").getAsInt();
+        int strength = unit.get("strength").getAsInt();
+        int rangedStrength = unit.get("rangedStrength").getAsInt();
+        int range = unit.get("range").getAsInt();
+        int speed = unit.get("speed").getAsInt();
 
-        return new BasicUnit(type, description, max_health, strength, ranged_strength, range, speed, id, pid, texture);
+        return new BasicUnit(type, description, maxHealth, strength, rangedStrength, range, speed, id, pid, texture);
     }
 
-    public List<UnitAction> getActions(){
+    public List<UnitAction> getActions() {
         return null;
     }
 
-    public boolean isCommandValid(Command command){
+    public boolean isCommandValid(Command command) {
         return true;
     }
-
 
 
     /**
      * Returns the state of the unit
      */
-    public UnitState getUnitState(){
+    public UnitState getUnitState() {
         return state;
-    };
+    }
+
+    ;
 
     /**
      * Sets the state of the unit to desired state
      */
-    public void setUnitState(UnitState unitState){
+    public void setUnitState(UnitState unitState) {
         state = unitState;
-    };
+    }
+
+    ;
 
     /**
      * Returns unit's type
@@ -146,8 +125,8 @@ public class BasicUnit implements Unit {
     /**
      * Returns unit's current maximum health
      */
-    public int getMax_health() {
-        return max_health;
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     /**
@@ -160,8 +139,8 @@ public class BasicUnit implements Unit {
     /**
      * Returns unit's ranged strength
      */
-    public int getRanged_strength() {
-        return ranged_strength;
+    public int getRangedStrength() {
+        return rangedStrength;
     }
 
     /**
@@ -178,59 +157,63 @@ public class BasicUnit implements Unit {
         return speed;
     }
 
+    public int getId(){
+        return id;
+    }
+
     /**
      * Returns unit's state
      */
-    public UnitState getState () {
+    public UnitState getState() {
         return this.state;
     }
 
     /**
      * Changes the unit's health
      */
-    public void setHealth( int new_health ) {
+    public void setHealth(int new_health) {
         health = new_health;
     }
 
     /**
      * Changes the unit's max health
      */
-    public void setMax_health( int new_max ) {
-        max_health = new_max;
+    public void setMaxHealth(int new_max) {
+        maxHealth = new_max;
     }
 
     /**
      * Changes the unit's strength
      */
-    public void setStrength( int new_strength ) {
+    public void setStrength(int new_strength) {
         strength = new_strength;
     }
 
     /**
      * Changes the unit's ranged strength
      */
-    public void setRanged_strength( int new_rangedStrength ) {
-        ranged_strength = new_rangedStrength;
+    public void setRangedStrength(int new_rangedStrength) {
+        rangedStrength = new_rangedStrength;
     }
 
     /**
      * Changes the unit's range
      */
-    public void setRange( int new_range ) {
+    public void setRange(int new_range) {
         range = new_range;
     }
 
     /**
      * Changes the unit's speed
      */
-    public void setSpeed( int new_speed ) {
+    public void setSpeed(int new_speed) {
         speed = new_speed;
     }
 
     /**
      * Changes the unit's state
      */
-    public void setState ( UnitState new_state ) {
+    public void setState(UnitState new_state) {
         state = new_state;
     }
 
@@ -240,4 +223,10 @@ public class BasicUnit implements Unit {
     public int getPid() {
         return pid;
     }
+
+    public String getTexture(){
+        return texture;
+    }
+
+
 }

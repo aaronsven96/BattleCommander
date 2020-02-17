@@ -26,11 +26,11 @@ public class HexBoard<T> {
      * @param p2 the second position
      * @return the distance (least number of moves) between two positions
      */
-    public int getDistanceBetweenTwoPositions(Position p1, Position p2) {
+    public Optional<Integer> getDistanceBetweenTwoPositions(Position p1, Position p2) {
         if (isValidPosition(p1) && isValidPosition(p2)) {
-            return (Math.abs(p1.getY() - p2.getY()) + Math.abs(p1.getX() - p2.getX()));
+            return Optional.of(Math.abs(p1.getY() - p2.getY()) + Math.abs(p1.getX() - p2.getX()));
         }
-        return -1;
+        return Optional.empty(); // returns Optional.empty() if either position is invalid
     }
 
     /**
@@ -105,19 +105,22 @@ public class HexBoard<T> {
     /**
      * Returns true if the positions are in proximity to each other, or false otherwise.
      *
-     * @param p1               the first position
-     * @param p2               the second position
-     * @param maxDistance the maximum allowed distance between two positions
+     * @param p1          the first position
+     * @param p2          the second position
+     * @param range the maximum allowed distance between two positions
      * @return true if the positions are in proximity to each other, or false otherwise.
      */
-    public boolean isInProximity(Position p1, Position p2, int maxDistance) {
-        if (maxDistance < 0) {
-            throw new IllegalArgumentException("distance must be non-negative");
+    public boolean isInProximity(Position p1, Position p2, int range) {
+        if (range < 0) {
+            throw new IllegalArgumentException("range must be non-negative");
         }
 
-        int actualDistance = getDistanceBetweenTwoPositions(p1, p2);
+        Optional<Integer> distance = getDistanceBetweenTwoPositions(p1, p2);
 
-        return actualDistance >= 0 && actualDistance <= maxDistance;
+        if (distance.isPresent()) {
+            return distance.get() <= range;
+        }
+        return false;
     }
 
     /**

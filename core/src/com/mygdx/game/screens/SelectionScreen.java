@@ -14,7 +14,7 @@ import com.mygdx.game.models.ConfigurationGetter;
 
 public class SelectionScreen extends AbstractScreen {
 
-
+    String selectedMap;
 
     @Override
     public void buildStage() {
@@ -28,7 +28,8 @@ public class SelectionScreen extends AbstractScreen {
         visList.addListener(new EventListener() {
             @Override
             public boolean handle(Event event) {
-                return false;
+                selectedMap = visList.getSelected();
+                return true;
             }
         });
 
@@ -48,7 +49,9 @@ public class SelectionScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 ScreenManager.instance.popScreen();
-                ScreenManager.instance.pushScreen(ScreenEnum.GAME_SCREEN, null);
+                Object[] args = new Object[1];
+                args[0] = selectedMap;
+                ScreenManager.instance.pushScreen(ScreenEnum.GAME_SCREEN, args);
             }
         });
 

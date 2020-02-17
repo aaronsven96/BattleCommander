@@ -12,12 +12,19 @@ public class ConfigurationFactory {
 
     //Singleton instance
     public static ConfigurationFactory instance = new ConfigurationFactory();
+    private static final String PATH_TO_UNIT_CONFIGURATION = "configuration/units/";
+    private static final String PATH_TO_TERRAIN_CONFIGURATION = "configuration/terrain/";
+    private static final String PATH_TO_MAP_CONFIGURATION = "configuration/maps/";
+    private static final String PATH_TO_UNIT_TEXTURE = "assets/units/";
+    private static final String PATH_TO_TERRAIN_TEXTURE = "assets/terrain/";
+
 
     private ConfigurationFactory() {
     }
 
-    private static final HashMap<String, Terrain> terrainHashMap = new HashMap<>();
     private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
+    private static final HashMap<String, Terrain> terrainHashMap = new HashMap<>();
+    private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
     private static final HashMap<String, BasicUnit> unitsHashMap = new HashMap<>();
 
     private static final Gson GSON = new Gson();
@@ -33,7 +40,14 @@ public class ConfigurationFactory {
 //            terrainHashMap.put(config, Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config)));
 //        }
 //        return terrainHashMap.get(config);
-        return Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config), texture, id);
+        return Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_TERRAIN_CONFIGURATION + config), PATH_TO_TERRAIN_TEXTURE + texture, id);
+    }
+
+    public TriggerProximity makeTriggerFromConfig(String config) {
+        if (!triggerHashMap.containsKey(config)) {
+            triggerHashMap.put(config, TriggerProximity.getTriggerFromConfig(ConfigurationGetter.getConfiguration(config)));
+        }
+        return triggerHashMap.get(config);
     }
 
     /**
@@ -47,7 +61,7 @@ public class ConfigurationFactory {
 //            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
 //        }
 //        return unitsHashMap.get(config);
-        return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config), id, pid, texture);
+        return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_UNIT_CONFIGURATION + config), id, pid, PATH_TO_UNIT_TEXTURE + texture);
     }
 
     /**
@@ -58,7 +72,7 @@ public class ConfigurationFactory {
      */
     public HexMap makeHexMapFromConfig(String config) {
         if (!hexMapHashMap.containsKey(config)) {
-            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(ConfigurationGetter.getConfiguration(config)));
+            hexMapHashMap.put(config, HexMap.getHexMapFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_MAP_CONFIGURATION + config)));
         }
         return hexMapHashMap.get(config);
     }

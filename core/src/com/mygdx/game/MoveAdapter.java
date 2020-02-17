@@ -21,6 +21,7 @@ public class MoveAdapter {
 
     private Integer selectedUnit;
 
+    private Map<Integer, Position> startPositions = new HashMap<>();
     private Map<Integer, ArrayList<Command>> tempOrders = new HashMap<>();
 
     public MoveAdapter(int playerId, HexMap currentMap){
@@ -29,6 +30,7 @@ public class MoveAdapter {
     }
 
     public void rightClickHex(Position p){
+        System.out.println("right");
         selectedUnit = null;
     }
 
@@ -37,13 +39,10 @@ public class MoveAdapter {
         // If theres no selected unit then select a unit if possible
         if(selectedUnit == null){
             //Todo add hexmap support
-            /*Optional<BasicUnit> unit = currentMap.getUnit(p);
-            if(unit.isPresent() && unit.get().getPid() == playerId){
-                selectedUnit = unit.get().getPid();
-            }*/
-            if(p.getY() == 1 && p.getX() == 1){
-                selectedUnit = 1;
-                System.out.println("selected Unit");
+            Optional<BasicUnit> unit = currentMap.getUnit(p);
+            if(unit.isPresent() /*&& unit.get().getPid() == playerId*/){
+                selectedUnit = unit.get().getId();
+                startPositions.put(unit.get().getId(), p);
             }
         }
         else{
@@ -51,6 +50,7 @@ public class MoveAdapter {
             //Todo Add validity check
             tempOrders.putIfAbsent(selectedUnit, new ArrayList<>());
             tempOrders.get(selectedUnit).add(newCommand);
+
             /*ArrayList<Command> commands = tempOrders.get(selectedUnit);
             // Revert orders back to this square
             if(commands.stream().anyMatch(command -> command.getTargetPosition() == p)){
@@ -82,10 +82,15 @@ public class MoveAdapter {
         return convertToPlayerOrders();
     }
 
+    public void clearAllOrders(){
+        selectedUnit = null;
+        tempOrders.clear();
+    }
+
     private PlayerOrders convertToPlayerOrders(){
         Map<Integer, Orders> playerOrders = new HashMap<>();
         for(Integer unitId: tempOrders.keySet()){
-            playerOrders.put(unitId, new Orders(unitId, tempOrders.get(unitId), new Position(1,1)));
+            playerOrders.put(unitId, new Orders(unitId, tempOrders.get(unitId), startPositions.get(unitId)));
         }
         return new PlayerOrders(playerId, playerOrders);
     }

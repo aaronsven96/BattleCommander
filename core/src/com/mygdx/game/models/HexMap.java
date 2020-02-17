@@ -1,11 +1,14 @@
 package com.mygdx.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +20,13 @@ public class HexMap {
     private HexBoard<Terrain> terrain;
     private HexBoard<Boolean> mapShape;
     private List<HexBoard<String>> textures;
+    private final int rows;
+    private final int cols;
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int cols) {
         this.units = units;
+        this.rows = rows;
+        this.cols = cols;
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
@@ -27,11 +34,22 @@ public class HexMap {
 
     // Copy constructor
     public HexMap(HexMap original) {
+        this.rows = original.rows;
+        this.cols = original.cols;
         units = original.units;
         terrain = original.terrain;
         mapShape = original.mapShape;
         textures = original.textures;
     }
+
+    public int getCols(){
+        return cols;
+    }
+
+    public int getRows(){
+        return rows;
+    }
+
 
     public static HexMap getHexMapFromConfig(String content) {
         Gson gson = new Gson();
@@ -68,9 +86,11 @@ public class HexMap {
                 Position p = new Position(i, j);
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
+                String unitTexture = newUnit == null ? null : newUnit.getTexture(); // make the Basic Unit
+
                 units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
-                terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
+                unitTextures.setHex(p, unitTexture); // add texture to HexBoard<String>
             }
         }
 
@@ -87,9 +107,11 @@ public class HexMap {
                 Position p = new Position(i, j);
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
+                String unitTexture = newTerrain == null ? null : newTerrain.getTexture(); // make the Basic Unit
+
                 terrain.setHex(p, newTerrain); // add Terrain to HexBoard<Terrain>
 
-                terrainTextures.setHex(p, texture); // add texture to HexBoard<String>
+                terrainTextures.setHex(p, unitTexture); // add texture to HexBoard<String>
             }
         }
 
@@ -103,10 +125,11 @@ public class HexMap {
         }
 
         // Set up textures
-        textures.add(unitTextures);
         textures.add(terrainTextures);
+        textures.add(unitTextures);
 
-        return new HexMap(units, terrain, mapShape, textures);
+
+        return new HexMap(units, terrain, mapShape, textures, rows, columns);
     }
 
     // TODO: add interactions to the game
@@ -119,6 +142,15 @@ public class HexMap {
      */
     public HexBoard<Boolean> getMapShape() {
         return mapShape;
+    }
+
+    /**
+     * Returns the Terrain HexBoard.
+     *
+     * @return the Terrain HexBoard
+     */
+    public HexBoard<Terrain> getTerrain() {
+        return terrain;
     }
 
     /**
@@ -141,7 +173,16 @@ public class HexMap {
     }
 
     /**
-     * Returns the BasicUnits at a position.
+     * Returns the BasicUnits HexBoard.
+     *
+     * @return the BasicUnits HexBoard
+     */
+    public HexBoard<BasicUnit> getUnits() {
+        return units;
+    }
+
+    /**
+     * Returns the BasicUnit at a position.
      *
      * @param p the position
      * @return the BasicUnits at a position
@@ -151,7 +192,7 @@ public class HexMap {
     }
 
     /**
-     * Returns all units for a specific player id.
+     * Returns all BasicUnits for a specific player id.
      *
      * @param pid the player id
      * @return all units for a specific player id
@@ -171,15 +212,21 @@ public class HexMap {
                 }
             }
         }
-
         return unitsForPlayer;
     }
 
-    public HexBoard<BasicUnit> getUnits() {
-        return units;
-    }
+    /**
+     * Saves the HexMap as a JSON file on the disk.
+     */
+    public void save() {
+        Gson gson = new Gson();
 
-    public int getBoardSize() {
+        String location = "configuration/Saves/";
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
+        FileHandle file = Gdx.files.local(location + filename);
 
+        String json = gson.toJson(this);
+
+        file.writeString(json, false);
     }
 }

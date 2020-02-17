@@ -6,6 +6,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
 public class MultiplayerSelect extends AbstractScreen {
+
     @Override
     public void buildStage() {
         VisTable table = new VisTable();
