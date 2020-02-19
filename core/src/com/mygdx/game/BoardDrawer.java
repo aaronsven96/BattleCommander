@@ -40,6 +40,7 @@ public class BoardDrawer extends Actor implements Disposable {
     private static List<Color> colors = Arrays.asList(Color.BLACK, Color.BLUE, Color.CHARTREUSE, Color.CORAL
     , Color.CYAN, Color.DARK_GRAY);
     MoveAdapter moveAdapter;
+    Map<String, TextureRegion> textureMap = new HashMap<>();
     HexMap hexMap;
 
     public BoardDrawer(Viewport viewport, HexMap hexMap) {
@@ -144,6 +145,7 @@ public class BoardDrawer extends Actor implements Disposable {
                 //if(!whereToDraw[i][i1]) {
                     //drawer.filledPolygon(center.x, center.y, 6, (float) (float)size, (float) size, 0, Color.RED, Color.WHITE);
                 //}
+
                 drawer.setColor(Color.BROWN);
                 drawer.polygon(center.x, center.y, 6, (float) (float)50, (float) 50, 0, 3);
                 drawer.circle(center.x, center.y, 30);
@@ -158,10 +160,16 @@ public class BoardDrawer extends Actor implements Disposable {
                 for(int col = 0; col < layer.getNumColumns();col ++){
                     Optional<String> texturePath = layer.getHex(new Position(row, col));
                     if(texturePath.isPresent()) {
-                        Texture texture = new Texture(Gdx.files.internal(texturePath.get()));
-                        TextureRegion region = new TextureRegion(texture);
+                        TextureRegion textureR;
+                        if(!textureMap.containsKey(texturePath.get())){
+                            Texture texture = new Texture(Gdx.files.internal(texturePath.get()));
+                            textureR = new TextureRegion(texture);
+                            textureMap.put(texturePath.get(), textureR);
+                        }else{
+                            textureR = textureMap.get(texturePath.get());
+                        }
                         Vector3 center = centerHexes[row][col];
-                        batch.draw(region, center.x - (texture.getWidth() >> 1), center.y - (texture.getHeight() >> 1));
+                        batch.draw(textureR, center.x - (textureR.getRegionWidth() >> 1), center.y - (textureR.getRegionHeight() >> 1));
                     }
                 }
             }
