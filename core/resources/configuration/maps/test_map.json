@@ -7,7 +7,7 @@
         "config": "soldier.json",
         "id": 10000,
         "pid": 100,
-        "texture": "soldier_small.png"
+        "texture": "soldier.png"
       },
       {
         "config": "null",
@@ -21,13 +21,13 @@
         "config": "soldier.json",
         "id": 10002,
         "pid": 101,
-        "texture": "soldier_small.png"
+        "texture": "soldier.png"
       },
       {
         "config": "soldier.json",
         "id": 10003,
         "pid": 101,
-        "texture": "soldier_small.png"
+        "texture": "soldier.png"
       }
     ]
   ],
@@ -36,24 +36,24 @@
       {
         "config": "swamp.json",
         "id": 20000,
-        "texture": "desert_hex_small.png"
+        "texture": "desert.png"
       },
       {
         "config": "snow.json",
         "id": 20001,
-        "texture": "desert_hex_small.png"
+        "texture": "desert.png"
       }
     ],
     [
       {
         "config": "desert.json",
         "id": 20010,
-        "texture": "desert_hex_small.png"
+        "texture": "desert.png"
       },
       {
         "config": "ocean.json",
         "id": 20011,
-        "texture": "desert_hex_small.png"
+        "texture": "desert.png"
       }
     ]
   ],
