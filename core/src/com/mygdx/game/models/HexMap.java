@@ -289,7 +289,7 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save(String filename) {
-        Map<String, Object> hexMap = new LinkedHashMap<>();
+        Map<String, Object> hexMap = new LinkedHashMap<>(); // map -> JSON String -> file
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
 
