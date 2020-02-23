@@ -293,6 +293,7 @@ public class HexMap {
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
 
+        // Construct "units" Array
         Map[][] buArr = new Map[getNumRows()][getNumColumns()];
         BasicUnit unitAtHex;
         for (int i = 0; i < getNumRows(); i++) {
@@ -317,6 +318,7 @@ public class HexMap {
         }
         hexMap.put("units", buArr);
 
+        // Construct "terrain" Array
         Map[][] terrainArr = new Map[getNumRows()][getNumColumns()];
         Terrain terrainAtHex;
         for (int i = 0; i < getNumRows(); i++) {
@@ -340,6 +342,7 @@ public class HexMap {
         }
         hexMap.put("terrain", terrainArr);
 
+        // Construct "mapShape" Array
         Boolean[][] mapShapeArr = new Boolean[getNumRows()][getNumColumns()];
         Boolean mapShapeAtHex;
         for (int i = 0; i < getNumRows(); i++) {
@@ -362,8 +365,8 @@ public class HexMap {
 
         FileHandle file = Gdx.files.local(location + filename);
 
-        String json = gson.toJson(hexMap);
+        String json = gson.toJson(hexMap); // Convert map to JSON String
 
-        file.writeString(json, false);
+        file.writeString(json, false); // Write String to a .json file
     }
 }
