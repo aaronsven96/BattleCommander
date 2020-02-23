@@ -9,10 +9,10 @@ import com.google.gson.JsonObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 /**
  * A class that represents all the HexBoard layers.
@@ -221,8 +221,9 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save() {
-        BasicUnitToMap[][] buArr = new BasicUnitToMap[units.getNumRows()][units.getNumColumns()];
-        Map<String, BasicUnitToMap[][]> buMap = new HashMap<>();
+        Map<String, Object> hexMap = new TreeMap<>();
+
+        Map[][] buArr = new Map[units.getNumRows()][units.getNumColumns()];
         BasicUnit unitAtHex;
 
         for (int i = 0; i < units.getNumRows(); i++) {
@@ -230,17 +231,24 @@ public class HexMap {
                 Optional<BasicUnit> optional = units.getHex(new Position(i, j));
                 if (optional.isPresent()) {
                     unitAtHex = optional.get();
+                    Map<String, Object> newUnit = new TreeMap<>();
 
                     String config = unitAtHex.getType().toLowerCase() + ".json";
                     int index = unitAtHex.getTexture().lastIndexOf("/");
                     String unitTexture = unitAtHex.getTexture().substring(index + 1);
 
-                    BasicUnitToMap newUnit = new BasicUnitToMap(config, unitAtHex.getId(), unitAtHex.getPid(), unitTexture);
+                    newUnit.put("config", config);
+                    newUnit.put("id", unitAtHex.getId());
+                    newUnit.put("pid", unitAtHex.getPid());
+                    newUnit.put("texture", unitTexture);
+
                     buArr[i][j] = newUnit;
                 }
             }
         }
-        buMap.put("units", buArr);
+        hexMap.put("rows", units.getNumRows());
+        hexMap.put("columns", units.getNumColumns());
+        hexMap.put("units", buArr);
 
         Gson gson = new Gson();
 
@@ -248,7 +256,7 @@ public class HexMap {
         String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
         FileHandle file = Gdx.files.local(location + filename);
 
-        String json = gson.toJson(buMap);
+        String json = gson.toJson(hexMap);
 
         file.writeString(json, false);
     }
