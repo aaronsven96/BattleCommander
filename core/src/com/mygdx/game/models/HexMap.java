@@ -194,10 +194,10 @@ public class HexMap {
     }
 
     /**
-     * Returns all BasicUnits for a specific player id.
+     * Returns all BasicUnits for a specific player ID.
      *
-     * @param pid the player id
-     * @return all units for a specific player id
+     * @param pid the player ID
+     * @return all units for a specific player ID
      */
     public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing!
         BasicUnit unitAtHex;
@@ -215,6 +215,58 @@ public class HexMap {
             }
         }
         return unitsForPlayer;
+    }
+
+    /**
+     * Returns true if the IDs are in proximity, false otherwise
+     *
+     * @param id1   the first ID
+     * @param id2   the second ID
+     * @param range the range
+     * @return true if the IDs are in proximity, false otherwise
+     */
+    public boolean isInProximity(int id1, int id2, int range) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int i = 0; i < getUnits().getNumRows(); i++) {
+            for (int j = 0; j < getUnits().getNumColumns(); j++) {
+                Position p = new Position(i, j);
+                Optional<BasicUnit> optional = getUnits().getHex(p);
+                if (optional.isPresent()) {
+                    BasicUnit bu = optional.get();
+                    if (bu.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (bu.getId() == id2) {
+                        positions.add(p);
+                    }
+                }
+            }
+            if (positions.size() == 2) {
+                return getUnits().isInProximity(positions.get(0), positions.get(1), range);
+            }
+        }
+
+        for (int i = 0; i < getTerrain().getNumRows(); i++) {
+            for (int j = 0; j < getTerrain().getNumColumns(); j++) {
+                Position p = new Position(i, j);
+                Optional<Terrain> optional = getTerrain().getHex(p);
+                if (optional.isPresent()) {
+                    Terrain t = optional.get();
+                    if (t.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (t.getId() == id2) {
+                        positions.add(p);
+                    }
+                }
+            }
+            if (positions.size() == 2) {
+                return getTerrain().isInProximity(positions.get(0), positions.get(1), range);
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -269,49 +321,5 @@ public class HexMap {
         String json = gson.toJson(hexMap);
 
         file.writeString(json, false);
-    }
-
-    public boolean isInProximity(int id1, int id2, int range) {
-        List<Position> positions = new ArrayList<>();
-
-        for (int i = 0; i < getUnits().getNumRows(); i++) {
-            for (int j = 0; j < getUnits().getNumColumns(); j++) {
-                Position p = new Position(i, j);
-                Optional<BasicUnit> optional = getUnits().getHex(p);
-                if (optional.isPresent()) {
-                    BasicUnit bu = optional.get();
-                    if (bu.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (bu.getId() == id2) {
-                        positions.add(p);
-                    }
-                }
-            }
-            if (positions.size() == 2) {
-                return getUnits().isInProximity(positions.get(0), positions.get(1), range);
-            }
-        }
-
-        for (int i = 0; i < getTerrain().getNumRows(); i++) {
-            for (int j = 0; j < getTerrain().getNumColumns(); j++) {
-                Position p = new Position(i, j);
-                Optional<Terrain> optional = getTerrain().getHex(p);
-                if (optional.isPresent()) {
-                    Terrain t = optional.get();
-                    if (t.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (t.getId() == id2) {
-                        positions.add(p);
-                    }
-                }
-            }
-            if (positions.size() == 2) {
-                return getTerrain().isInProximity(positions.get(0), positions.get(1), range);
-            }
-        }
-
-        return false;
     }
 }
