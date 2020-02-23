@@ -220,6 +220,13 @@ public class HexMap {
     /**
      * Saves the HexMap as a JSON file on the disk.
      */
+    public void save() {
+        save("");
+    }
+
+    /**
+     * Saves the HexMap as a JSON file on the disk.
+     */
     public void save(String filename) {
         Map<String, Object> hexMap = new TreeMap<>();
 
@@ -262,12 +269,5 @@ public class HexMap {
         String json = gson.toJson(hexMap);
 
         file.writeString(json, false);
-    }
-
-    /**
-     * Saves the HexMap as a JSON file on the disk.
-     */
-    public void save() {
-        save("");
     }
 }
