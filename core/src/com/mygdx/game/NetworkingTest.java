@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+//import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-public class Networking implements ApplicationListener {
+public class NetworkingTest implements ApplicationListener {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Skin skin;
@@ -41,6 +42,7 @@ public class Networking implements ApplicationListener {
     private TextButton button;
     private TextArea textIPAddress;
     private TextArea textMessage;
+//    private Viewport viewport;
 
     // Pick a resolution that is 16:9 but not unreadibly small
     public final static float VIRTUAL_SCREEN_HEIGHT = 960;
@@ -54,7 +56,7 @@ public class Networking implements ApplicationListener {
 
         // Load our UI skin from file.  Once again, I used the files included in the tests.
         // Make sure default.fnt, default.png, uiskin.[atlas/json/png] are all added to your assets
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("default/uiskin.json"));
         stage = new Stage();
         // Wire the stage to receive input, as we are using Scene2d in this example
         Gdx.input.setInputProcessor(stage);
@@ -112,7 +114,8 @@ public class Networking implements ApplicationListener {
 
         // Setup a viewport to map screen to a 480x640 virtual resolution
         // As otherwise this is way too tiny on my 1080p android phone.
-//        stage.setViewport(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT, false);
+//        viewport =
+        stage.getViewport().update((int) VIRTUAL_SCREEN_WIDTH, (int) VIRTUAL_SCREEN_HEIGHT,false);
         stage.getCamera().position.set(VIRTUAL_SCREEN_WIDTH/2,VIRTUAL_SCREEN_HEIGHT/2,0);
 
         // Now we create a thread that will listen for incoming socket connections
