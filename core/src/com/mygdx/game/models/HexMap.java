@@ -281,10 +281,11 @@ public class HexMap {
      */
     public void save(String filename) {
         Map<String, Object> hexMap = new TreeMap<>();
+        hexMap.put("rows", units.getNumRows());
+        hexMap.put("columns", units.getNumColumns());
 
         Map[][] buArr = new Map[units.getNumRows()][units.getNumColumns()];
         BasicUnit unitAtHex;
-
         for (int i = 0; i < units.getNumRows(); i++) {
             for (int j = 0; j < units.getNumColumns(); j++) {
                 Optional<BasicUnit> optional = units.getHex(new Position(i, j));
@@ -305,9 +306,31 @@ public class HexMap {
                 }
             }
         }
-        hexMap.put("rows", units.getNumRows());
-        hexMap.put("columns", units.getNumColumns());
         hexMap.put("units", buArr);
+
+        Map[][] terrainArr = new Map[terrain.getNumRows()][terrain.getNumColumns()];
+        Terrain terrainAtHex;
+        for (int i = 0; i < terrain.getNumRows(); i++) {
+            for (int j = 0; j < terrain.getNumColumns(); j++) {
+                Optional<Terrain> optional = terrain.getHex(new Position(i, j));
+                if (optional.isPresent()) {
+                    terrainAtHex = optional.get();
+                    Map<String, Object> newTerrain = new TreeMap<>();
+
+                    String config = terrainAtHex.getType().toLowerCase() + ".json";
+                    int index = terrainAtHex.getTexture().lastIndexOf("/");
+                    String terrainTexture = terrainAtHex.getTexture().substring(index + 1);
+
+                    newTerrain.put("config", config);
+                    newTerrain.put("id", terrainAtHex.getId());
+                    newTerrain.put("texture", terrainTexture);
+
+                    terrainArr[i][j] = newTerrain;
+                }
+            }
+        }
+        hexMap.put("terrain", terrainArr);
+
 
         Gson gson = new Gson();
 
