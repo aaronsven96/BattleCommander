@@ -220,7 +220,7 @@ public class HexMap {
     /**
      * Saves the HexMap as a JSON file on the disk.
      */
-    public void save() {
+    public void save(String filename) {
         Map<String, Object> hexMap = new TreeMap<>();
 
         Map[][] buArr = new Map[units.getNumRows()][units.getNumColumns()];
@@ -253,11 +253,21 @@ public class HexMap {
         Gson gson = new Gson();
 
         String location = "configuration/saves/";
-        String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
+        if (filename.equals("")) {
+            filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
+        }
+
         FileHandle file = Gdx.files.local(location + filename);
 
         String json = gson.toJson(hexMap);
 
         file.writeString(json, false);
+    }
+
+    /**
+     * Saves the HexMap as a JSON file on the disk.
+     */
+    public void save() {
+        save("");
     }
 }
