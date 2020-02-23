@@ -358,7 +358,7 @@ public class HexMap {
 
         Gson gson = new Gson();
 
-        String location = "configuration/saves/";
+        String location = "configuration/saves/"; // TODO: get path from Configuration Factory?
         if (filename.equals("")) {
             filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
         }
