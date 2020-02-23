@@ -289,7 +289,7 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save(String filename) {
-        Map<String, Object> hexMap = new LinkedHashMap<>(); // map -> JSON String -> file
+        Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> file
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
 
@@ -316,7 +316,7 @@ public class HexMap {
                 }
             }
         }
-        hexMap.put("units", buArr);
+        hexMap.put("units", buArr); // add "units" Array to Map
 
         // Construct "terrain" Array
         Map[][] terrainArr = new Map[getNumRows()][getNumColumns()];
@@ -340,7 +340,7 @@ public class HexMap {
                 }
             }
         }
-        hexMap.put("terrain", terrainArr);
+        hexMap.put("terrain", terrainArr); // add "terrain" Array to Map
 
         // Construct "mapShape" Array
         Boolean[][] mapShapeArr = new Boolean[getNumRows()][getNumColumns()];
@@ -354,7 +354,7 @@ public class HexMap {
                 }
             }
         }
-        hexMap.put("mapShape", mapShapeArr);
+        hexMap.put("mapShape", mapShapeArr); // add "mapShape" Array to Map
 
         Gson gson = new Gson();
 
@@ -365,7 +365,7 @@ public class HexMap {
 
         FileHandle file = Gdx.files.local(location + filename);
 
-        String json = gson.toJson(hexMap); // convert map to JSON String
+        String json = gson.toJson(hexMap); // convert Map to JSON String
 
         file.writeString(json, false); // write String to the file
     }
