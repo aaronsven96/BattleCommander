@@ -44,15 +44,6 @@ public class HexMap {
         textures = original.textures;
     }
 
-    public int getNumColumns() {
-        return columns;
-    }
-
-    public int getNumRows() {
-        return rows;
-    }
-
-
     public static HexMap getHexMapFromConfig(String content) {
         Gson gson = new Gson();
 
@@ -144,6 +135,24 @@ public class HexMap {
      */
     public HexBoard<Boolean> getMapShape() {
         return mapShape;
+    }
+
+    /**
+     * Returns the number of columns in the map.
+     *
+     * @return the number of columns in the map
+     */
+    public int getNumColumns() {
+        return columns;
+    }
+
+    /**
+     * Returns the number of rows in the map.
+     *
+     * @return the number of rows in the map
+     */
+    public int getNumRows() {
+        return rows;
     }
 
     /**
