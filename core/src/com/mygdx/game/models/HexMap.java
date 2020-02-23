@@ -270,4 +270,48 @@ public class HexMap {
 
         file.writeString(json, false);
     }
+
+    public boolean isInProximity(int id1, int id2, int range) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int i = 0; i < getUnits().getNumRows(); i++) {
+            for (int j = 0; j < getUnits().getNumColumns(); j++) {
+                Position p = new Position(i, j);
+                Optional<BasicUnit> optional = getUnits().getHex(p);
+                if (optional.isPresent()) {
+                    BasicUnit bu = optional.get();
+                    if (bu.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (bu.getId() == id2) {
+                        positions.add(p);
+                    }
+                }
+            }
+            if (positions.size() == 2) {
+                return getUnits().isInProximity(positions.get(0), positions.get(1), range);
+            }
+        }
+
+        for (int i = 0; i < getTerrain().getNumRows(); i++) {
+            for (int j = 0; j < getTerrain().getNumColumns(); j++) {
+                Position p = new Position(i, j);
+                Optional<Terrain> optional = getTerrain().getHex(p);
+                if (optional.isPresent()) {
+                    Terrain t = optional.get();
+                    if (t.getId() == id1) {
+                        positions.add(p);
+                    }
+                    if (t.getId() == id2) {
+                        positions.add(p);
+                    }
+                }
+            }
+            if (positions.size() == 2) {
+                return getTerrain().isInProximity(positions.get(0), positions.get(1), range);
+            }
+        }
+
+        return false;
+    }
 }
