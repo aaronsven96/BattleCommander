@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 /**
  * A class that represents all the HexBoard layers.
@@ -23,12 +23,12 @@ public class HexMap {
     private HexBoard<Boolean> mapShape;
     private List<HexBoard<String>> textures;
     private final int rows;
-    private final int cols;
+    private final int columns;
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int cols) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
         this.units = units;
         this.rows = rows;
-        this.cols = cols;
+        this.columns = columns;
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
@@ -37,18 +37,18 @@ public class HexMap {
     // Copy constructor
     public HexMap(HexMap original) {
         this.rows = original.rows;
-        this.cols = original.cols;
+        this.columns = original.columns;
         units = original.units;
         terrain = original.terrain;
         mapShape = original.mapShape;
         textures = original.textures;
     }
 
-    public int getCols() {
-        return cols;
+    public int getNumColumns() {
+        return columns;
     }
 
-    public int getRows() {
+    public int getNumRows() {
         return rows;
     }
 
@@ -280,18 +280,18 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save(String filename) {
-        Map<String, Object> hexMap = new TreeMap<>();
-        hexMap.put("rows", units.getNumRows());
-        hexMap.put("columns", units.getNumColumns());
+        Map<String, Object> hexMap = new LinkedHashMap<>();
+        hexMap.put("rows", getNumRows());
+        hexMap.put("columns", getNumColumns());
 
-        Map[][] buArr = new Map[units.getNumRows()][units.getNumColumns()];
+        Map[][] buArr = new Map[getNumRows()][getNumColumns()];
         BasicUnit unitAtHex;
-        for (int i = 0; i < units.getNumRows(); i++) {
-            for (int j = 0; j < units.getNumColumns(); j++) {
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumColumns(); j++) {
                 Optional<BasicUnit> optional = units.getHex(new Position(i, j));
                 if (optional.isPresent()) {
                     unitAtHex = optional.get();
-                    Map<String, Object> newUnit = new TreeMap<>();
+                    Map<String, Object> newUnit = new LinkedHashMap<>();
 
                     String config = unitAtHex.getType().toLowerCase() + ".json";
                     int index = unitAtHex.getTexture().lastIndexOf("/");
@@ -308,14 +308,14 @@ public class HexMap {
         }
         hexMap.put("units", buArr);
 
-        Map[][] terrainArr = new Map[terrain.getNumRows()][terrain.getNumColumns()];
+        Map[][] terrainArr = new Map[getNumRows()][getNumColumns()];
         Terrain terrainAtHex;
-        for (int i = 0; i < terrain.getNumRows(); i++) {
-            for (int j = 0; j < terrain.getNumColumns(); j++) {
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumColumns(); j++) {
                 Optional<Terrain> optional = terrain.getHex(new Position(i, j));
                 if (optional.isPresent()) {
                     terrainAtHex = optional.get();
-                    Map<String, Object> newTerrain = new TreeMap<>();
+                    Map<String, Object> newTerrain = new LinkedHashMap<>();
 
                     String config = terrainAtHex.getType().toLowerCase() + ".json";
                     int index = terrainAtHex.getTexture().lastIndexOf("/");
@@ -331,10 +331,10 @@ public class HexMap {
         }
         hexMap.put("terrain", terrainArr);
 
-        Boolean[][] mapShapeArr = new Boolean[mapShape.getNumRows()][mapShape.getNumColumns()];
+        Boolean[][] mapShapeArr = new Boolean[getNumRows()][getNumColumns()];
         Boolean mapShapeAtHex;
-        for (int i = 0; i < mapShape.getNumRows(); i++) {
-            for (int j = 0; j < mapShape.getNumColumns(); j++) {
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumColumns(); j++) {
                 Optional<Boolean> optional = mapShape.getHex(new Position(i, j));
                 if (optional.isPresent()) {
                     mapShapeAtHex = optional.get();
