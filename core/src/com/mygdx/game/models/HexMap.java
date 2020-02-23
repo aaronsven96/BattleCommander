@@ -365,8 +365,8 @@ public class HexMap {
 
         FileHandle file = Gdx.files.local(location + filename);
 
-        String json = gson.toJson(hexMap); // Convert map to JSON String
+        String json = gson.toJson(hexMap); // convert map to JSON String
 
-        file.writeString(json, false); // Write String to a .json file
+        file.writeString(json, false); // write String to the file
     }
 }
