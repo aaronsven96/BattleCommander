@@ -1,6 +1,180 @@
 {
-  "rows": 5,
   "columns": 5,
+  "mapShape": [
+    [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    [
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  ],
+  "rows": 5,
+  "terrain": [
+    [
+      {
+        "config": "snow.json",
+        "id": 20000,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20001,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20002,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20003,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20004,
+        "texture": "snow.png"
+      }
+    ],
+    [
+      {
+        "config": "desert.json",
+        "id": 20010,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20011,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20012,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20013,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20014,
+        "texture": "desert.png"
+      }
+    ],
+    [
+      {
+        "config": "ocean.json",
+        "id": 20020,
+        "texture": "ocean.png"
+      },
+      {
+        "config": "ocean.json",
+        "id": 20021,
+        "texture": "ocean.png"
+      },
+      {
+        "config": "ocean.json",
+        "id": 20022,
+        "texture": "ocean.png"
+      },
+      {
+        "config": "ocean.json",
+        "id": 20023,
+        "texture": "ocean.png"
+      },
+      {
+        "config": "ocean.json",
+        "id": 20024,
+        "texture": "ocean.png"
+      }
+    ],
+    [
+      {
+        "config": "desert.json",
+        "id": 20030,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20031,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20032,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20033,
+        "texture": "desert.png"
+      },
+      {
+        "config": "desert.json",
+        "id": 20034,
+        "texture": "desert.png"
+      }
+    ],
+    [
+      {
+        "config": "snow.json",
+        "id": 20040,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20041,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20042,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20043,
+        "texture": "snow.png"
+      },
+      {
+        "config": "snow.json",
+        "id": 20044,
+        "texture": "snow.png"
+      }
+    ]
+  ],
   "units": [
     [
       {
@@ -161,180 +335,6 @@
         "pid": 102,
         "texture": "archer.png"
       }
-    ]
-  ],
-  "terrain": [
-    [
-      {
-        "config": "snow.json",
-        "id": 20000,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20001,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20002,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20003,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20004,
-        "texture": "snow.png"
-      }
-    ],
-    [
-      {
-        "config": "desert.json",
-        "id": 20010,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20011,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20012,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20013,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20014,
-        "texture": "desert.png"
-      }
-    ],
-    [
-      {
-        "config": "ocean.json",
-        "id": 20020,
-        "texture": "ocean.png"
-      },
-      {
-        "config": "ocean.json",
-        "id": 20021,
-        "texture": "ocean.png"
-      },
-      {
-        "config": "ocean.json",
-        "id": 20022,
-        "texture": "ocean.png"
-      },
-      {
-        "config": "ocean.json",
-        "id": 20023,
-        "texture": "ocean.png"
-      },
-      {
-        "config": "ocean.json",
-        "id": 20024,
-        "texture": "ocean.png"
-      }
-    ],
-    [
-      {
-        "config": "desert.json",
-        "id": 20030,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20031,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20032,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20033,
-        "texture": "desert.png"
-      },
-      {
-        "config": "desert.json",
-        "id": 20034,
-        "texture": "desert.png"
-      }
-    ],
-    [
-      {
-        "config": "snow.json",
-        "id": 20040,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20041,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20042,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20043,
-        "texture": "snow.png"
-      },
-      {
-        "config": "snow.json",
-        "id": 20044,
-        "texture": "snow.png"
-      }
-    ]
-  ],
-  "mapShape": [
-    [
-      true,
-      true,
-      true,
-      true,
-      true
-    ],
-    [
-      true,
-      true,
-      true,
-      true,
-      true
-    ],
-    [
-      true,
-      true,
-      true,
-      true,
-      true
-    ],
-    [
-      true,
-      true,
-      true,
-      true,
-      true
-    ],
-    [
-      true,
-      true,
-      true,
-      true,
-      true
     ]
   ]
 }
