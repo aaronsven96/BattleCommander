@@ -9,7 +9,9 @@ import com.google.gson.JsonObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -42,11 +44,11 @@ public class HexMap {
         textures = original.textures;
     }
 
-    public int getCols(){
+    public int getCols() {
         return cols;
     }
 
-    public int getRows(){
+    public int getRows() {
         return rows;
     }
 
@@ -198,16 +200,16 @@ public class HexMap {
      * @return all units for a specific player id
      */
     public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing!
-        BasicUnit unitsAtHex;
+        BasicUnit unitAtHex;
         List<BasicUnit> unitsForPlayer = new ArrayList<>();
 
         for (int i = 0; i < units.getNumRows(); i++) {
             for (int j = 0; j < units.getNumColumns(); j++) {
                 Optional<BasicUnit> optional = units.getHex(new Position(i, j));
                 if (optional.isPresent()) {
-                    unitsAtHex = optional.get();
-                    if (unitsAtHex.getPid() == pid) {
-                        unitsForPlayer.add(unitsAtHex);
+                    unitAtHex = optional.get();
+                    if (unitAtHex.getPid() == pid) {
+                        unitsForPlayer.add(unitAtHex);
                     }
                 }
             }
@@ -219,13 +221,34 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save() {
+        BasicUnitToMap[][] buArr = new BasicUnitToMap[units.getNumRows()][units.getNumColumns()];
+        Map<String, BasicUnitToMap[][]> buMap = new HashMap<>();
+        BasicUnit unitAtHex;
+
+        for (int i = 0; i < units.getNumRows(); i++) {
+            for (int j = 0; j < units.getNumColumns(); j++) {
+                Optional<BasicUnit> optional = units.getHex(new Position(i, j));
+                if (optional.isPresent()) {
+                    unitAtHex = optional.get();
+
+                    String config = unitAtHex.getType().toLowerCase() + ".json";
+                    int index = unitAtHex.getTexture().lastIndexOf("/");
+                    String unitTexture = unitAtHex.getTexture().substring(index + 1);
+
+                    BasicUnitToMap newUnit = new BasicUnitToMap(config, unitAtHex.getId(), unitAtHex.getPid(), unitTexture);
+                    buArr[i][j] = newUnit;
+                }
+            }
+        }
+        buMap.put("units", buArr);
+
         Gson gson = new Gson();
 
-        String location = "configuration/Saves/";
+        String location = "configuration/saves/";
         String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
         FileHandle file = Gdx.files.local(location + filename);
 
-        String json = gson.toJson(this);
+        String json = gson.toJson(buMap);
 
         file.writeString(json, false);
     }
