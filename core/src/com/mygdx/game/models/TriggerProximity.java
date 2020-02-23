@@ -27,7 +27,7 @@ public class TriggerProximity implements Trigger {
         Gson gson = new Gson();
         JsonObject event = gson.fromJson(config, JsonObject.class);
         JsonArray trigger1 = event.get("events").getAsJsonArray();
-        JsonObject trigger2 = trigger1.get(0).getAsJsonObject();
+        JsonObject trigger2 = trigger1.get(0).getAsJsonObject(); // TODO: add loop
         JsonObject trigger3 = trigger2.get("trigger").getAsJsonObject();
         JsonObject trigger4 = trigger3.get("details").getAsJsonObject();
 
