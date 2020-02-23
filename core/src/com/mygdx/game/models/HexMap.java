@@ -331,6 +331,18 @@ public class HexMap {
         }
         hexMap.put("terrain", terrainArr);
 
+        Boolean[][] mapShapeArr = new Boolean[mapShape.getNumRows()][mapShape.getNumColumns()];
+        Boolean mapShapeAtHex;
+        for (int i = 0; i < mapShape.getNumRows(); i++) {
+            for (int j = 0; j < mapShape.getNumColumns(); j++) {
+                Optional<Boolean> optional = mapShape.getHex(new Position(i, j));
+                if (optional.isPresent()) {
+                    mapShapeAtHex = optional.get();
+                    mapShapeArr[i][j] = mapShapeAtHex;
+                }
+            }
+        }
+        hexMap.put("mapShape", mapShapeArr);
 
         Gson gson = new Gson();
 
