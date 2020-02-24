@@ -93,7 +93,7 @@ public class HexMap {
             for (int j = 0; j < row.size(); j++) {
                 JsonObject object = row.get(j).getAsJsonObject();
 
-                String config = object.get("config").getAsString(); // "swamp.json", "desert.json", etc.
+                String config = object.get("config").getAsString(); // "rock.json", "desert.json", etc.
                 int id = object.get("id").getAsInt();
                 String texture = object.get("texture").getAsString();
 
