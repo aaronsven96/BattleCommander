@@ -9,10 +9,13 @@ import com.google.gson.JsonObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.LinkedHashMap;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * A class that represents all the HexBoard layers.
@@ -24,6 +27,7 @@ public class HexMap {
     private List<HexBoard<String>> textures;
     private final int rows;
     private final int columns;
+    private Set<Integer> randomIds = new HashSet<>();
 
     private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
         this.units = units;
@@ -282,16 +286,27 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save() {
-        save("");
+        save("", false, -1);
     }
 
     /**
      * Saves the HexMap as a JSON file on the disk.
      */
-    public void save(String filename) {
+    public void save(String filename, boolean randomizeIds) {
+        save(filename, randomizeIds, 1000000000);
+    }
+
+    /**
+     * Saves the HexMap as a JSON file on the disk.
+     */
+    public void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
+        Set<Integer> randomIds = new HashSet<>();
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
+
+        Random r = new Random();
+        int newId;
 
         // Construct "units" Array
         Map[][] buArr = new Map[getNumRows()][getNumColumns()];
@@ -308,7 +323,15 @@ public class HexMap {
                     String unitTexture = unitAtHex.getTexture().substring(index + 1);
 
                     newUnit.put("config", config);
-                    newUnit.put("id", unitAtHex.getId());
+                    if (randomizeIds) {
+                        do {
+                            newId = r.nextInt(upperBound);
+                        } while (randomIds.contains(newId));
+                        randomIds.add(newId);
+                        newUnit.put("id", newId);
+                    } else {
+                        newUnit.put("id", unitAtHex.getId());
+                    }
                     newUnit.put("pid", unitAtHex.getPid());
                     newUnit.put("texture", unitTexture);
 
@@ -321,7 +344,8 @@ public class HexMap {
         // Construct "terrain" Array
         Map[][] terrainArr = new Map[getNumRows()][getNumColumns()];
         Terrain terrainAtHex;
-        for (int i = 0; i < getNumRows(); i++) {
+        for (
+                int i = 0; i < getNumRows(); i++) {
             for (int j = 0; j < getNumColumns(); j++) {
                 Optional<Terrain> optional = terrain.getHex(new Position(i, j));
                 if (optional.isPresent()) {
@@ -333,7 +357,15 @@ public class HexMap {
                     String terrainTexture = terrainAtHex.getTexture().substring(index + 1);
 
                     newTerrain.put("config", config);
-                    newTerrain.put("id", terrainAtHex.getId());
+                    if (randomizeIds) {
+                        do {
+                            newId = r.nextInt(upperBound);
+                        } while (randomIds.contains(newId));
+                        randomIds.add(newId);
+                        newTerrain.put("id", newId);
+                    } else {
+                        newTerrain.put("id", terrainAtHex.getId());
+                    }
                     newTerrain.put("texture", terrainTexture);
 
                     terrainArr[i][j] = newTerrain;
@@ -345,7 +377,8 @@ public class HexMap {
         // Construct "mapShape" Array
         Boolean[][] mapShapeArr = new Boolean[getNumRows()][getNumColumns()];
         Boolean mapShapeAtHex;
-        for (int i = 0; i < getNumRows(); i++) {
+        for (
+                int i = 0; i < getNumRows(); i++) {
             for (int j = 0; j < getNumColumns(); j++) {
                 Optional<Boolean> optional = mapShape.getHex(new Position(i, j));
                 if (optional.isPresent()) {
