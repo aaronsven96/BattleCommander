@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextButton;
@@ -23,7 +24,9 @@ public class MultiplayerCreate extends AbstractScreen {
     public void buildStage() {
         VisTable table = new VisTable();
         table.setFillParent(true);
-        table.debugAll();
+//        table.debugAll();
+//        VisTextField.VisTextFieldStyle visTextFieldStyle = VisUI.getSkin().get(VisTextField.VisTextFieldStyle.class);
+//        visTextFieldStyle.font.getData().setScale(0.5f);
 
         // The following code loops through the available network interfaces
         // Keep in mind, there can be multiple interfaces per device, for example
@@ -44,27 +47,31 @@ public class MultiplayerCreate extends AbstractScreen {
             e.printStackTrace();
         }
 
-        // Print the contents of our array to a string.  Yeah, should have used StringBuilder
         String ipAddress = new String("");
         for(String str:addresses)
         {
-            ipAddress = ipAddress + str + "\n";
+            if (str.equals("127.0.0.1")) {
+                continue;
+            }
+            else if (ipAddress.equals("")) {
+                ipAddress = str;
+            }
+            else {
+                ipAddress = ipAddress + ", " + str;
+            }
         }
 
-        VisLabel ipLabel = new VisLabel("Room IP:");
-        VisLabel ipAdd = new VisLabel("Room Name");
-        /*nameInput.addListener(new ClickListener() {
+        VisLabel ipLabel = new VisLabel("Room IP(s):");
+        VisLabel ipList = new VisLabel(ipAddress);
+        VisLabel roomName = new VisLabel("Room Name:");
+        VisTextField nameInput = new VisTextField("Room Name");
+        nameInput.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 nameInput.setText("");
             }
-        });*/
-      /*  name.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
-            }
-        });*/
+        });
 
         VisLabel passwordLabel = new VisLabel("Password");
         VisTextField passwordInput = new VisTextField("Password");
@@ -75,28 +82,27 @@ public class MultiplayerCreate extends AbstractScreen {
                 passwordInput.setText("");
             }
         });
-   /*     password.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN);
-            }
-        });*/
 
         VisTextButton create = new VisTextButton("Create");
         create.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_CREATE_SCREEN, null);
+                ScreenManager.instance.pushScreen(ScreenEnum.MULTIPLAYER_LOBBY_SCREEN, null);
             }
         });
 
         VisTextButton back = new VisTextButton("Back");
         back.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
+//                visTextFieldStyle.font.getData().setScale(0.5f);
                 ScreenManager.instance.popScreen();
             }
         });
 
         table.add(ipLabel);
-        table.add(ipAdd);
+        table.add(ipList);
+        table.row();
+        table.add(roomName);
+        table.add(nameInput);
         table.row();
         table.add(passwordLabel);
         table.add(passwordInput);
