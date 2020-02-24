@@ -285,8 +285,8 @@ public class HexMap {
     /**
      * Saves the HexMap as a JSON file on the disk.
      */
-    public void save() {
-        save("", false, -1);
+    public void save(boolean randomizeIds) {
+        save("", randomizeIds, 1000000000);
     }
 
     /**
