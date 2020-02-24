@@ -286,7 +286,8 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save(boolean randomizeIds) {
-        save("", randomizeIds, 1000000000);
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
+        save(filename, randomizeIds, 1000000000);
     }
 
     /**
@@ -392,9 +393,6 @@ public class HexMap {
         Gson gson = new Gson();
 
         String location = "configuration/saves/"; // TODO: get path from Configuration Factory?
-        if (filename.equals("")) {
-            filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
-        }
 
         FileHandle file = Gdx.files.local(location + filename);
 
