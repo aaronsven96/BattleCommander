@@ -390,12 +390,10 @@ public class HexMap {
         }
         hexMap.put("mapShape", mapShapeArr); // add "mapShape" Array to Map
 
-        Gson gson = new Gson();
-
         String location = "configuration/saves/"; // TODO: get path from Configuration Factory?
-
         FileHandle file = Gdx.files.local(location + filename);
 
+        Gson gson = new Gson();
         String json = gson.toJson(hexMap); // convert Map to JSON String
 
         file.writeString(json, false); // write String to JSON file
