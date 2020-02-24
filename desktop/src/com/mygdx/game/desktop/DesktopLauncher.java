@@ -4,7 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.models.ConfigurationFactory;
-import com.mygdx.game.models.ConfigurationGetter;
 import com.mygdx.game.models.HexMap;
 import com.mygdx.game.models.TriggerProximity;
 
@@ -15,9 +14,9 @@ public class DesktopLauncher {
         //config.width = 1000;
         //config.height = 1000;
         new LwjglApplication(new MyGdxGame(), config);
-//		HexMap map = ConfigurationFactory.instance.makeHexMapFromConfig("configuration/Maps/HexMap.json");
-//		map.save();
-//        TriggerProximity trigger = ConfigurationFactory.instance.makeTriggerFromConfig("configuration/Events/events.json");
+//		HexMap map = ConfigurationFactory.instance.makeHexMapFromConfig("hex_map.json");
+//		map.save("hex_map.json");
+//        TriggerProximity trigger = ConfigurationFactory.instance.makeTriggerFromConfig("configuration/events/events.json");
 //        System.out.println(trigger.isTriggered(map));
     }
 }
