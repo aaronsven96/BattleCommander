@@ -108,12 +108,20 @@ public class BoardDrawer extends Actor implements Disposable {
                 endV.x += yOffset * slopeP;
                 endV.add((change.cpy().scl(-20)));
                 startV.add((change.cpy().scl(20)));
+                Vector2 arrowR = endV.cpy().add((change.cpy().scl(-10)));
+                Vector2 arrowL = arrowR.cpy();
+                arrowL.x += 10 * slopeP;
 
+                arrowR.x -= 10 * slopeP;
+                if(slope != 1) {
+                    arrowR.y += 10;
+                    arrowL.y -= 10;
+                }
                 yOffset = yOffset - padding;
                 drawer.line(startV, endV, 3);
-                drawer.filledCircle(endV.x, endV.y, 5);
-                //drawer.line(arrowR, endV, 3);
-                //drawer.line(arrowL, endV, 3);
+
+                drawer.line(arrowR, endV, 3);
+                drawer.line(arrowL, endV, 3);
             }
         }
     }
@@ -159,7 +167,7 @@ public class BoardDrawer extends Actor implements Disposable {
             for(int row = 0; row < layer.getNumColumns();row ++){
                 for(int col = 0; col < layer.getNumColumns();col ++){
                     Optional<String> texturePath = layer.getHex(new Position(row, col));
-                    if(texturePath.isPresent()) {
+                    if(texturePath.isPresent() && !"assets/units/null.png".equals(texturePath.get())) {
                         TextureRegion textureR;
                         if(!textureMap.containsKey(texturePath.get())){
                             Texture texture = new Texture(Gdx.files.internal(texturePath.get()));
