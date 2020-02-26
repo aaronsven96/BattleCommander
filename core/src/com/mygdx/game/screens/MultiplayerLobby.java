@@ -16,6 +16,16 @@ import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisWindow;
 
 public class MultiplayerLobby extends AbstractScreen {
+    public MultiplayerLobby(String type) throws Exception {
+        if (type == "server") {
+            String[] serverArgs = new String[0];
+            LobbyServer.main(serverArgs);
+        }
+        else if (type == "client") {
+            
+        }
+    }
+
     public void buildStage() {
         VisTable table1 = new VisTable();
         VisTable table2 = new VisTable();
@@ -35,7 +45,9 @@ public class MultiplayerLobby extends AbstractScreen {
         input.addListener(new FocusListener() {
 //            @Override
             public void focusLost(FocusEvent event) {
-//                if ()
+                if (input.getText() == "") {
+                    input.setText("Chat");
+                }
             }
         });
 

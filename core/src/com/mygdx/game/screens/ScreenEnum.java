@@ -29,7 +29,7 @@ public enum ScreenEnum {
     },
     MULTIPLAYER_LOBBY_SCREEN{
         public AbstractScreen getScreen(Object[] args){
-            return new MultiplayerLobby();
+            return new MultiplayerLobby((String) args[0]);
         }
     }
     ;
