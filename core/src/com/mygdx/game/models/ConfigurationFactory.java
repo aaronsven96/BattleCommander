@@ -11,11 +11,13 @@ import java.util.HashMap;
 public class ConfigurationFactory {
     //Singleton instance
     private static ConfigurationFactory instance = new ConfigurationFactory();
+
     private static final String PATH_TO_UNIT_CONFIGURATION = "configuration/units/";
     private static final String PATH_TO_TERRAIN_CONFIGURATION = "configuration/terrain/";
     private static final String PATH_TO_MAP_CONFIGURATION = "configuration/maps/";
     private static final String PATH_TO_UNIT_TEXTURE = "assets/units/";
     private static final String PATH_TO_TERRAIN_TEXTURE = "assets/terrain/";
+
     private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
     private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
     private static final Gson GSON = new Gson();
