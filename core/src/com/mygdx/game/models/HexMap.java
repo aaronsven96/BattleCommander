@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.LinkedHashMap;
 /**
  * A class that represents all the HexBoard layers.
  */
-public class HexMap {
+public class HexMap implements Serializable {
     private HexBoard<BasicUnit> units;
     private HexBoard<Terrain> terrain;
     private HexBoard<Boolean> mapShape;
