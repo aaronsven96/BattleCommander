@@ -4,10 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 public class TriggerProximity implements Trigger {
     private String type;
     private int id1;
@@ -31,7 +27,7 @@ public class TriggerProximity implements Trigger {
         Gson gson = new Gson();
         JsonObject event = gson.fromJson(config, JsonObject.class);
         JsonArray trigger1 = event.get("events").getAsJsonArray();
-        JsonObject trigger2 = trigger1.get(0).getAsJsonObject();
+        JsonObject trigger2 = trigger1.get(0).getAsJsonObject(); // TODO: add loop
         JsonObject trigger3 = trigger2.get("trigger").getAsJsonObject();
         JsonObject trigger4 = trigger3.get("details").getAsJsonObject();
 
@@ -51,46 +47,6 @@ public class TriggerProximity implements Trigger {
      */
     @Override
     public boolean isTriggered(HexMap map) {
-        List<Position> positions = new ArrayList<>();
-
-        for (int i = 0; i < map.getUnits().getNumRows(); i++) {
-            for (int j = 0; j < map.getUnits().getNumColumns(); j++) {
-                Position p = new Position(i, j);
-                Optional<BasicUnit> optional = map.getUnits().getHex(p);
-                if (optional.isPresent()) {
-                    BasicUnit bu = optional.get();
-                    if (bu.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (bu.getId() == id2) {
-                        positions.add(p);
-                    }
-                }
-            }
-            if (positions.size() == 2) {
-                return map.getUnits().isInProximity(positions.get(0), positions.get(1), range);
-            }
-        }
-
-        for (int i = 0; i < map.getTerrain().getNumRows(); i++) {
-            for (int j = 0; j < map.getTerrain().getNumColumns(); j++) {
-                Position p = new Position(i, j);
-                Optional<Terrain> optional = map.getTerrain().getHex(p);
-                if (optional.isPresent()) {
-                    Terrain t = optional.get();
-                    if (t.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (t.getId() == id2) {
-                        positions.add(p);
-                    }
-                }
-            }
-            if (positions.size() == 2) {
-                return map.getTerrain().isInProximity(positions.get(0), positions.get(1), range);
-            }
-        }
-
-        return false;
+        return map.isInProximity(id1, id2, range);
     }
 }
