@@ -9,25 +9,25 @@ import java.util.HashMap;
  * A singleton class that produces configuration files
  */
 public class ConfigurationFactory {
-
     //Singleton instance
-    public static ConfigurationFactory instance = new ConfigurationFactory();
+    private static ConfigurationFactory instance = new ConfigurationFactory();
     private static final String PATH_TO_UNIT_CONFIGURATION = "configuration/units/";
     private static final String PATH_TO_TERRAIN_CONFIGURATION = "configuration/terrain/";
     private static final String PATH_TO_MAP_CONFIGURATION = "configuration/maps/";
     private static final String PATH_TO_UNIT_TEXTURE = "assets/units/";
     private static final String PATH_TO_TERRAIN_TEXTURE = "assets/terrain/";
+    private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
+    private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
+    private static final Gson GSON = new Gson();
 
-
+    //Private constructor
     private ConfigurationFactory() {
     }
 
-    private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
-    private static final HashMap<String, Terrain> terrainHashMap = new HashMap<>();
-    private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
-    private static final HashMap<String, BasicUnit> unitsHashMap = new HashMap<>();
-
-    private static final Gson GSON = new Gson();
+    //Singleton accessor method
+    public static ConfigurationFactory getInstance() {
+        return instance;
+    }
 
     /**
      * Returns the Terrain Object from the config file.
@@ -36,10 +36,6 @@ public class ConfigurationFactory {
      * @return the Terrain Object from the config file
      */
     public Terrain makeTerrainFromConfig(String config, String texture, int id) {
-//        if (!terrainHashMap.containsKey(config)) {
-//            terrainHashMap.put(config, Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(config)));
-//        }
-//        return terrainHashMap.get(config);
         return Terrain.getTerrainFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_TERRAIN_CONFIGURATION + config), PATH_TO_TERRAIN_TEXTURE + texture, id);
     }
 
@@ -57,10 +53,6 @@ public class ConfigurationFactory {
      * @return the Unit Object from the config file
      */
     public BasicUnit makeUnitFromConfig(String config, int id, int pid, String texture) {
-//        if (!unitsHashMap.containsKey(config)) {
-//            unitsHashMap.put(config, BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(config)));
-//        }
-//        return unitsHashMap.get(config);
         return BasicUnit.getUnitFromConfig(ConfigurationGetter.getConfiguration(PATH_TO_UNIT_CONFIGURATION + config), id, pid, PATH_TO_UNIT_TEXTURE + texture);
     }
 
