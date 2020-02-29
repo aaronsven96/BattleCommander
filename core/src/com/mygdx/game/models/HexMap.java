@@ -64,7 +64,7 @@ public class HexMap {
         HexBoard<String> unitTextures = new HexBoard<>(rows, columns);
         HexBoard<String> terrainTextures = new HexBoard<>(rows, columns);
 
-        ConfigurationFactory cf = ConfigurationFactory.instance;
+        ConfigurationFactory cf = ConfigurationFactory.getInstance();
         JsonArray jsonArrayUnits = hexMap.get("units").getAsJsonArray();
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
