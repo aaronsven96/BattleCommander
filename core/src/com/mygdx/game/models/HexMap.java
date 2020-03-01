@@ -28,7 +28,7 @@ public class HexMap {
     private final int rows;
     private final int columns;
     private int turnNum;
-    private static int turnNumGen = 0;
+    private static int turnNumGenerator = 0;
 
     private Set<Integer> randomIds = new HashSet<>();
 
@@ -39,8 +39,8 @@ public class HexMap {
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
-        this.turnNum = turnNumGen;
-        turnNumGen++;
+        this.turnNum = turnNumGenerator;
+        turnNumGenerator++;
     }
 
     // Copy constructor
@@ -58,8 +58,10 @@ public class HexMap {
 
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
-        int rows = Integer.parseInt(hexMap.get("rows").getAsString());
-        int columns = Integer.parseInt(hexMap.get("columns").getAsString());
+        int rows = hexMap.get("rows").getAsInt();
+        int columns = hexMap.get("columns").getAsInt();
+        int turnNum = hexMap.get("turnNum").getAsInt();
+        turnNumGenerator = turnNum;
 
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
@@ -129,7 +131,6 @@ public class HexMap {
         // Set up textures
         textures.add(terrainTextures);
         textures.add(unitTextures);
-
 
         return new HexMap(units, terrain, mapShape, textures, rows, columns);
     }
