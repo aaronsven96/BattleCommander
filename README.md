@@ -6,6 +6,7 @@ Files/folders: all lowercase with underscores
     input
         keyboard_configuration.json
         mouse_configuration.json 
+        
 JSON keys: camelCase
 
     {
