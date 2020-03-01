@@ -34,10 +34,10 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns the object at position y,x.
+     * Returns the object at position (y,x).
      *
      * @param p the position
-     * @return the object at position y,x
+     * @return the object at position (y,x)
      */
     public Optional<T> getHex(Position p) {
         // Returns Optional.empty() if the position is outside the Array bounds
@@ -52,10 +52,10 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns a List of neighbors to a hex at y,x.
+     * Returns a List of neighbors to a hex at position (y,x).
      *
      * @param p the position
-     * @return a List of neighbors to a hex at y,x
+     * @return a List of neighbors to a hex at (y,x)
      */
     public List<T> getHexNeighbors(Position p) {
         List<T> neighbors = new ArrayList<>();
@@ -137,7 +137,7 @@ public class HexBoard<T> {
     }
 
     /**
-     * Sets a hex at position y,x.
+     * Sets a hex at position (y,x).
      *
      * @param p   the position
      * @param hex the hex
