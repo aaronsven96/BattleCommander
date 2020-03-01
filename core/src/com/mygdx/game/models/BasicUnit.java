@@ -53,7 +53,7 @@ public class BasicUnit implements Unit {
     /**
      * Returns the Unit from the configuration file.
      *
-     * @param config the file path
+     * @param config the config
      * @return the Unit from the configuration file
      */
     public static BasicUnit getUnitFromConfig(String config, int id, int pid, String texture) {
