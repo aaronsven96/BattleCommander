@@ -27,10 +27,8 @@ public class BasicUnit implements Unit {
         this.rangedStrength = rangedStrength;
         this.range = range;
         this.speed = speed;
-
         this.health = maxHealth; //set the unit's health to its max health
         this.state = UnitState.normal; //set the unit's state to normal
-
         this.id = id;
         this.pid = pid;
         this.texture = texture;
