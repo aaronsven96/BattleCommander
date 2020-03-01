@@ -28,6 +28,8 @@ public class HexMap {
     private final int rows;
     private final int columns;
     private Set<Integer> randomIds = new HashSet<>();
+    private int turnNum;
+    private static int turnNumGen = 0;
 
     private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
         this.units = units;
@@ -36,6 +38,8 @@ public class HexMap {
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
+        this.turnNum = turnNumGen;
+        turnNumGen++;
     }
 
     // Copy constructor
@@ -409,5 +413,7 @@ public class HexMap {
         file.writeString(json, false); // write String to JSON file
     }
 
+
+    public void setTerrain
 
 }
