@@ -27,10 +27,9 @@ public class HexMap {
     private List<HexBoard<String>> textures;
     private final int rows;
     private final int columns;
-    private int turnNum;
-    private static int turnNumGenerator = 0;
-
-    private Set<Integer> randomIds = new HashSet<>();
+    private int turn;
+    private static int turnGenerator;
+    private Set<Integer> ids;
 
     private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
         this.units = units;
@@ -39,8 +38,8 @@ public class HexMap {
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
-        this.turnNum = turnNumGenerator;
-        turnNumGenerator++;
+        this.turn = turnGenerator;
+        turnGenerator++;
     }
 
     // Copy constructor
@@ -58,10 +57,10 @@ public class HexMap {
 
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
+        int turn = hexMap.get("turn").getAsInt();
+        turnGenerator = turn;
         int rows = hexMap.get("rows").getAsInt();
         int columns = hexMap.get("columns").getAsInt();
-        int turnNum = hexMap.get("turnNum").getAsInt();
-        turnNumGenerator = turnNum;
 
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
@@ -76,6 +75,8 @@ public class HexMap {
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
 
+        Set<Integer> ids = new HashSet<>();
+
         // Set up units
         for (int i = 0; i < jsonArrayUnits.size(); i++) {
             JsonArray row = jsonArrayUnits.get(i).getAsJsonArray();
@@ -84,13 +85,14 @@ public class HexMap {
 
                 String config = object.get("config").getAsString(); // "archer.json", "null", etc.
                 int id = object.get("id").getAsInt();
+                ids.add(id);
                 int pid = object.get("pid").getAsInt();
                 String texture = object.get("texture").getAsString();
 
                 Position p = new Position(i, j);
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
-                String unitTexture = newUnit == null ? null : newUnit.getTexture(); // make the Basic Unit
+                String unitTexture = newUnit == null ? null : newUnit.getTexture();
 
                 units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
@@ -106,16 +108,17 @@ public class HexMap {
 
                 String config = object.get("config").getAsString(); // "rock.json", "desert.json", etc.
                 int id = object.get("id").getAsInt();
+                ids.add(id);
                 String texture = object.get("texture").getAsString();
 
                 Position p = new Position(i, j);
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
-                String unitTexture = newTerrain == null ? null : newTerrain.getTexture(); // make the Basic Unit
+                String terrainTexture = newTerrain == null ? null : newTerrain.getTexture();
 
                 terrain.setHex(p, newTerrain); // add Terrain to HexBoard<Terrain>
 
-                terrainTextures.setHex(p, unitTexture); // add texture to HexBoard<String>
+                terrainTextures.setHex(p, terrainTexture); // add texture to HexBoard<String>
             }
         }
 
@@ -129,8 +132,8 @@ public class HexMap {
         }
 
         // Set up textures
-        textures.add(terrainTextures);
         textures.add(unitTextures);
+        textures.add(terrainTextures);
 
         return new HexMap(units, terrain, mapShape, textures, rows, columns);
     }
@@ -198,8 +201,8 @@ public class HexMap {
      *
      * @return the current turn number
      */
-    public int getTurnNum() {
-        return turnNum;
+    public int getTurn() {
+        return turn;
     }
 
     /**
@@ -297,7 +300,6 @@ public class HexMap {
         return false;
     }
 
-
     /**
      * Saves the HexMap as a JSON file on the disk.
      *
@@ -305,7 +307,7 @@ public class HexMap {
      */
     public void save(boolean randomizeIds) {
         String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
-        save(filename, randomizeIds, 1000000000);
+        save(filename, randomizeIds, Integer.MAX_VALUE);
     }
 
     /**
@@ -315,7 +317,7 @@ public class HexMap {
      * @param randomizeIds if true, randomize all ID numbers in the save file
      */
     public void save(String filename, boolean randomizeIds) {
-        save(filename, randomizeIds, 1000000000);
+        save(filename, randomizeIds, Integer.MAX_VALUE);
     }
 
     /**
@@ -328,6 +330,7 @@ public class HexMap {
     public void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
         Set<Integer> randomIds = new HashSet<>();
+        hexMap.put("turn", getTurn());
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
 
@@ -424,7 +427,36 @@ public class HexMap {
         file.writeString(json, false); // write String to JSON file
     }
 
+    /**
+     * Set a Terrain hex at a position (y,x) on the board.
+     *
+     * @param p       the position
+     * @param config  the config file
+     * @param texture the texture
+     */
+    public void setTerrain(Position p, String config, String texture) {
+        Random r = new Random();
+        int id = r.nextInt();
 
-    public void setTerrain
+        ConfigurationFactory cf = ConfigurationFactory.getInstance();
+        Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
+        String terrainTexture = newTerrain == null ? null : newTerrain.getTexture();
 
+        terrain.setHex(p, newTerrain); // add Terrain to HexBoard<Terrain>
+
+        textures.get(1).setHex(p, terrainTexture); // add terrain texture to HexBoard<String> at first position
+    }
+
+    public void setUnit(Position p, String config, int pid, String texture) {
+        Random r = new Random();
+        int id = r.nextInt();
+
+        ConfigurationFactory cf = ConfigurationFactory.getInstance();
+        BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
+        String unitTexture = newUnit == null ? null : newUnit.getTexture();
+
+        units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
+
+        textures.get(0).setHex(p, unitTexture); // add unit texture to HexBoard<String> at zeroth position
+    }
 }
