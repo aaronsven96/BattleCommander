@@ -302,8 +302,6 @@ public class HexMap {
 
     /**
      * Saves the HexMap as a JSON file on the disk.
-     *
-     * @param randomizeIds if true, randomize all ID numbers in the save file
      */
     public void save() {
         String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
@@ -313,8 +311,7 @@ public class HexMap {
     /**
      * Saves the HexMap as a JSON file on the disk.
      *
-     * @param filename     the filename
-     * @param randomizeIds if true, randomize all ID numbers in the save file
+     * @param filename the filename
      */
     public void save(String filename) {
         save(filename, false, Integer.MAX_VALUE);
@@ -434,7 +431,7 @@ public class HexMap {
      * @param texture the texture
      */
     public void setTerrain(Position p, String config, String texture) {
-        int id = getRandomInt();
+        int id = getRandomId();
 
         ConfigurationFactory cf = ConfigurationFactory.getInstance();
         Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
@@ -454,7 +451,7 @@ public class HexMap {
      * @param pid     the player ID
      */
     public void setUnit(Position p, String config, int pid, String texture) {
-        int id = getRandomInt();
+        int id = getRandomId();
 
         ConfigurationFactory cf = ConfigurationFactory.getInstance();
         BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
@@ -465,7 +462,12 @@ public class HexMap {
         textures.get(0).setHex(p, unitTexture); // add unit texture to HexBoard<String> at zeroth position
     }
 
-    private int getRandomInt() {
+    /**
+     * Returns a random ID from 0 to ‭2,147,483,647‬.
+     *
+     * @return a random ID from 0 to ‭2,147,483,647‬
+     */
+    private int getRandomId() {
         Random r = new Random();
         int newId;
 
