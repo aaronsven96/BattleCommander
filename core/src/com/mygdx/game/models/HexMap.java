@@ -305,9 +305,9 @@ public class HexMap {
      *
      * @param randomizeIds if true, randomize all ID numbers in the save file
      */
-    public void save(boolean randomizeIds) {
+    public void save() {
         String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
-        save(filename, randomizeIds, Integer.MAX_VALUE);
+        save(filename, false, Integer.MAX_VALUE);
     }
 
     /**
@@ -316,8 +316,8 @@ public class HexMap {
      * @param filename     the filename
      * @param randomizeIds if true, randomize all ID numbers in the save file
      */
-    public void save(String filename, boolean randomizeIds) {
-        save(filename, randomizeIds, Integer.MAX_VALUE);
+    public void save(String filename) {
+        save(filename, false, Integer.MAX_VALUE);
     }
 
     /**
@@ -327,7 +327,7 @@ public class HexMap {
      * @param randomizeIds if true, randomize all ID numbers in the save file
      * @param upperBound   the upper bound (exclusive) on the number generator
      */
-    public void save(String filename, boolean randomizeIds, int upperBound) {
+    private void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
         Set<Integer> randomIds = new HashSet<>();
         hexMap.put("turn", getTurn());
