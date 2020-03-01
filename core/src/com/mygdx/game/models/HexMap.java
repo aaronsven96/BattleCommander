@@ -400,7 +400,7 @@ public class HexMap {
         }
         hexMap.put("mapShape", mapShapeArr); // add "mapShape" Array to Map
 
-        String location = "configuration/saves/"; // TODO: get path from Configuration Factory?
+        String location = ConfigurationFactory.getInstance().getPathToSaveFiles();
         FileHandle file = Gdx.files.local(location + filename);
 
         Gson gson = new Gson();

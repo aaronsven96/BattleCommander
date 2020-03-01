@@ -17,6 +17,7 @@ public class ConfigurationFactory {
     private static final String PATH_TO_MAP_CONFIGURATION = "configuration/maps/";
     private static final String PATH_TO_UNIT_TEXTURE = "assets/units/";
     private static final String PATH_TO_TERRAIN_TEXTURE = "assets/terrain/";
+    private static final String PATH_TO_SAVE_FILES = "saves/";
 
     private static final HashMap<String, HexMap> hexMapHashMap = new HashMap<>();
     private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
@@ -82,5 +83,13 @@ public class ConfigurationFactory {
         }
 
         return null;
+    }
+
+    /**
+     * Returns the path to the save files.
+     * @return path to the save files
+     */
+    public String getPathToSaveFiles() {
+        return PATH_TO_SAVE_FILES;
     }
 }
