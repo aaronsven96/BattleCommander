@@ -1,7 +1,7 @@
 {
   "rows": 32,
   "columns": 32,
-  "turnNum": 0,
+  "turn": 0,
   "units": [
     [
       {
