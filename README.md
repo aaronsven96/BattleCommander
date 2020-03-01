@@ -4,8 +4,9 @@ BattleCommander
 ## Naming conventions
 Files/folders: all lowercase with underscores
 
-    keyboard_configuration.json
-    mouse_configuration.json
+    input
+        keyboard_configuration.json
+        mouse_configuration.json
 
 JSON: camelCase
 
