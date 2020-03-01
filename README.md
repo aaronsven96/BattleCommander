@@ -1,13 +1,13 @@
 # BattleCommander
 
 ## Naming conventions
-#### Files/folders: all lowercase with underscores
+Files/folders: all lowercase with underscores
 
     input
         keyboard_configuration.json
         mouse_configuration.json
 
-#### JSON keys: camelCase
+JSON keys: camelCase
 
     {
     "type": "Archer",
