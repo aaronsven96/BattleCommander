@@ -23,11 +23,10 @@ public class ConfigurationFactory {
     private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
     private static final Gson GSON = new Gson();
 
-    // Private constructor
     private ConfigurationFactory() {
     }
 
-    // Singleton accessor method
+    // Lazy initialization with double-checked locking
     public static ConfigurationFactory getInstance() {
         if (instance == null) {
             synchronized (ConfigurationFactory.class) {
