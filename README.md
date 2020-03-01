@@ -1,7 +1,6 @@
 # BattleCommander
-BattleCommander
 
-## Naming conventions
+### Naming conventions
 Files/folders: all lowercase with underscores
 
     input
