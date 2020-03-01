@@ -86,8 +86,8 @@ public class ConfigurationFactory {
     }
 
     /**
-     * Returns the path to the save files.
-     * @return path to the save files
+     * Returns the relative path to the save files.
+     * @return relative path to the save files
      */
     public String getPathToSaveFiles() {
         return PATH_TO_SAVE_FILES;
