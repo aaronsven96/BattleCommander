@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 
 /**
- * A singleton class that produces configuration files
+ * A singleton class that produces configuration files.
  */
 public class ConfigurationFactory {
     //Singleton instance
