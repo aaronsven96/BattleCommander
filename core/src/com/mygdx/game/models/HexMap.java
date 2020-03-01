@@ -463,9 +463,9 @@ public class HexMap {
     }
 
     /**
-     * Returns a random ID from 0 to ‭4,294,967,295‬.
+     * Returns a random ID from 0 to ‭4,294,967,296 (exclusive)‬.
      *
-     * @return a random ID from 0 to ‭4,294,967,295‬.
+     * @return a random ID from 0 to ‭4,294,967,295 (exclusive)
      */
     private int getRandomId() {
         Random r = new Random();
