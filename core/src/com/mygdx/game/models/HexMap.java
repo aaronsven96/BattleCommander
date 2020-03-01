@@ -445,7 +445,6 @@ public class HexMap {
         textures.get(1).setHex(p, terrainTexture); // add terrain texture to HexBoard<String> at first position
     }
 
-
     /**
      * Set a Unit at a position (y,x) on the board.
      *
