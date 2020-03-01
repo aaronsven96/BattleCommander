@@ -8,7 +8,7 @@ Files/folders: all lowercase with underscores
         keyboard_configuration.json
         mouse_configuration.json
 
-JSON: camelCase
+JSON keys: camelCase
 
     {
     "type": "Archer",
