@@ -27,9 +27,10 @@ public class HexMap {
     private List<HexBoard<String>> textures;
     private final int rows;
     private final int columns;
-    private Set<Integer> randomIds = new HashSet<>();
     private int turnNum;
     private static int turnNumGen = 0;
+
+    private Set<Integer> randomIds = new HashSet<>();
 
     private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
         this.units = units;
@@ -192,6 +193,15 @@ public class HexMap {
     }
 
     /**
+     * Returns the current turn number.
+     *
+     * @return the current turn number
+     */
+    public int getTurnNum() {
+        return turnNum;
+    }
+
+    /**
      * Returns the BasicUnits HexBoard.
      *
      * @return the BasicUnits HexBoard
@@ -216,7 +226,7 @@ public class HexMap {
      * @param pid the player ID
      * @return all units for a specific player ID
      */
-    public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing!
+    public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing
         BasicUnit unitAtHex;
         List<BasicUnit> unitsForPlayer = new ArrayList<>();
 
