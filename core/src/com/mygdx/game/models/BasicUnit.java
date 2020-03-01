@@ -150,10 +150,6 @@ public class BasicUnit implements Unit {
         return speed;
     }
 
-    public int getId() {
-        return id;
-    }
-
     /**
      * Returns unit's state
      */
