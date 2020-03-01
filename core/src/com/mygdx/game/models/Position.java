@@ -1,15 +1,15 @@
 package com.mygdx.game.models;
 
 /**
- * A class that represents an x,y position on the board.
+ * A class that represents an y,x position on the board.
  */
 public class Position {
-    private int x;
     private int y;
+    private int x;
 
-    public Position(int x, int y) {
-        this.x = x;
+    public Position(int y, int x) {
         this.y = y;
+        this.x = x;
     }
 
     /**
