@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -258,46 +259,30 @@ public class HexMap {
      */
     public boolean isInProximity(int id1, int id2, int range) {
         List<Position> positions = new ArrayList<>();
+        Map<Integer, Position> proximityMap = new HashMap<>();
 
-        for (int i = 0; i < getUnits().getNumRows(); i++) {
-            for (int j = 0; j < getUnits().getNumColumns(); j++) {
+
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumColumns(); j++) {
                 Position p = new Position(i, j);
-                Optional<BasicUnit> optional = getUnits().getHex(p);
-                if (optional.isPresent()) {
-                    BasicUnit bu = optional.get();
-                    if (bu.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (bu.getId() == id2) {
-                        positions.add(p);
-                    }
+
+                Optional<BasicUnit> buOpt = getUnits().getHex(p);
+                if (buOpt.isPresent()) {
+                    BasicUnit bu = buOpt.get();
+                    int buId = bu.getId();
+                    proximityMap.put(buId, p);
                 }
-            }
-            if (positions.size() == 2) {
-                return getUnits().isInProximity(positions.get(0), positions.get(1), range);
+
+                Optional<Terrain> tOpt = getTerrain().getHex(p);
+                if (tOpt.isPresent()) {
+                    Terrain t = tOpt.get();
+                    int tId = t.getId();
+                    proximityMap.put(tId, p);
+                }
             }
         }
 
-        for (int i = 0; i < getTerrain().getNumRows(); i++) {
-            for (int j = 0; j < getTerrain().getNumColumns(); j++) {
-                Position p = new Position(i, j);
-                Optional<Terrain> optional = getTerrain().getHex(p);
-                if (optional.isPresent()) {
-                    Terrain t = optional.get();
-                    if (t.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (t.getId() == id2) {
-                        positions.add(p);
-                    }
-                }
-            }
-            if (positions.size() == 2) {
-                return getTerrain().isInProximity(positions.get(0), positions.get(1), range);
-            }
-        }
-
-        return false;
+        return units.isInProximity(proximityMap.get(id1), proximityMap.get(id2), range);
     }
 
     /**
