@@ -224,9 +224,10 @@ public class BasicUnit implements Unit {
         return pid;
     }
 
+    /**
+     * Returns the unit's texture
+     */
     public String getTexture(){
         return texture;
     }
-
-
 }
