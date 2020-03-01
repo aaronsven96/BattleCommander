@@ -9,7 +9,7 @@ import java.util.HashMap;
  * A singleton class that produces configuration files.
  */
 public class ConfigurationFactory {
-    //Singleton instance
+    // Singleton instance
     private static ConfigurationFactory instance = new ConfigurationFactory();
 
     private static final String PATH_TO_UNIT_CONFIGURATION = "configuration/units/";
@@ -22,11 +22,11 @@ public class ConfigurationFactory {
     private static final HashMap<String, TriggerProximity> triggerHashMap = new HashMap<>();
     private static final Gson GSON = new Gson();
 
-    //Private constructor
+    // Private constructor
     private ConfigurationFactory() {
     }
 
-    //Singleton accessor method
+    // Singleton accessor method
     public static ConfigurationFactory getInstance() {
         return instance;
     }
