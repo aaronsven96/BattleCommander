@@ -80,7 +80,6 @@ public class BasicUnit implements Unit {
         return true;
     }
 
-
     /**
      * Returns the state of the unit
      */
@@ -88,16 +87,12 @@ public class BasicUnit implements Unit {
         return state;
     }
 
-    ;
-
     /**
      * Sets the state of the unit to desired state
      */
     public void setUnitState(UnitState unitState) {
         state = unitState;
     }
-
-    ;
 
     /**
      * Returns unit's type
