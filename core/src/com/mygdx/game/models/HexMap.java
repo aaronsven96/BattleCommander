@@ -282,8 +282,11 @@ public class HexMap {
         return false;
     }
 
+
     /**
      * Saves the HexMap as a JSON file on the disk.
+     *
+     * @param randomizeIds if true, randomize all ID numbers in the save file
      */
     public void save(boolean randomizeIds) {
         String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
@@ -292,6 +295,9 @@ public class HexMap {
 
     /**
      * Saves the HexMap as a JSON file on the disk.
+     *
+     * @param filename     the filename
+     * @param randomizeIds if true, randomize all ID numbers in the save file
      */
     public void save(String filename, boolean randomizeIds) {
         save(filename, randomizeIds, 1000000000);
@@ -299,6 +305,10 @@ public class HexMap {
 
     /**
      * Saves the HexMap as a JSON file on the disk.
+     *
+     * @param filename     the filename
+     * @param randomizeIds if true, randomize all ID numbers in the save file
+     * @param upperBound   the upper bound (exclusive) on the number generator
      */
     public void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
@@ -398,4 +408,6 @@ public class HexMap {
 
         file.writeString(json, false); // write String to JSON file
     }
+
+
 }
