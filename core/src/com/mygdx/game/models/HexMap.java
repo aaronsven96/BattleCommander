@@ -329,6 +329,7 @@ public class HexMap {
      */
     public void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
+        Set<Integer> randomIds = new HashSet<>();
         hexMap.put("turn", getTurn());
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
@@ -354,8 +355,8 @@ public class HexMap {
                     if (randomizeIds) {
                         do {
                             newId = r.nextInt(upperBound);
-                        } while (ids.contains(newId));
-                        ids.add(newId);
+                        } while (randomIds.contains(newId));
+                        randomIds.add(newId);
                         newUnit.put("id", newId);
                     } else {
                         newUnit.put("id", unitAtHex.getId());
@@ -372,8 +373,7 @@ public class HexMap {
         // Construct "terrain" Array
         Map[][] terrainArr = new Map[getNumRows()][getNumColumns()];
         Terrain terrainAtHex;
-        for (
-                int i = 0; i < getNumRows(); i++) {
+        for (int i = 0; i < getNumRows(); i++) {
             for (int j = 0; j < getNumColumns(); j++) {
                 Optional<Terrain> optional = terrain.getHex(new Position(i, j));
                 if (optional.isPresent()) {
@@ -388,8 +388,8 @@ public class HexMap {
                     if (randomizeIds) {
                         do {
                             newId = r.nextInt(upperBound);
-                        } while (ids.contains(newId));
-                        ids.add(newId);
+                        } while (randomIds.contains(newId));
+                        randomIds.add(newId);
                         newTerrain.put("id", newId);
                     } else {
                         newTerrain.put("id", terrainAtHex.getId());
@@ -434,9 +434,7 @@ public class HexMap {
      * @param texture the texture
      */
     public void setTerrain(Position p, String config, String texture) {
-        Random r = new Random();
-        int id = r.nextInt();
-        ids.add(id);
+        int id = getRandomInt();
 
         ConfigurationFactory cf = ConfigurationFactory.getInstance();
         Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
@@ -457,12 +455,7 @@ public class HexMap {
      * @param pid     the player ID
      */
     public void setUnit(Position p, String config, int pid, String texture) {
-        Random r = new Random();
-        int newId;
-        do {
-            newId = r.nextInt();
-        } while (ids.contains(newId));
-        ids.add(newId);
+        int id = getRandomInt();
 
         ConfigurationFactory cf = ConfigurationFactory.getInstance();
         BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
@@ -471,5 +464,17 @@ public class HexMap {
         units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
         textures.get(0).setHex(p, unitTexture); // add unit texture to HexBoard<String> at zeroth position
+    }
+
+    private int getRandomInt() {
+        Random r = new Random();
+        int newId;
+
+        do {
+            newId = r.nextInt();
+        } while (ids.contains(newId));
+        ids.add(newId);
+
+        return newId;
     }
 }
