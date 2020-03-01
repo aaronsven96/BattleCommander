@@ -150,7 +150,7 @@ public class BasicUnit implements Unit {
         return speed;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
@@ -211,6 +211,13 @@ public class BasicUnit implements Unit {
     }
 
     /**
+     * Returns the unit's ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * Returns the unit's player ID
      */
     public int getPid() {
@@ -220,7 +227,7 @@ public class BasicUnit implements Unit {
     /**
      * Returns the unit's texture
      */
-    public String getTexture(){
+    public String getTexture() {
         return texture;
     }
 }
