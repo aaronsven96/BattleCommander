@@ -282,7 +282,10 @@ public class HexMap {
             }
         }
 
-        return units.isInProximity(proximityMap.get(id1), proximityMap.get(id2), range);
+        if (proximityMap.containsKey(id1) && proximityMap.containsKey(id2)) {
+            return units.isInProximity(proximityMap.get(id1), proximityMap.get(id2), range);
+        }
+        return false;
     }
 
     /**
