@@ -2,7 +2,7 @@
 BattleCommander
 
 ## Naming conventions
-Files/folders: lowercase with underscores
+Files/folders: all lowercase with underscores
 
     input
         keyboard_configuration.json
