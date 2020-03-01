@@ -30,7 +30,11 @@ public class ConfigurationFactory {
     // Singleton accessor method
     public static ConfigurationFactory getInstance() {
         if (instance == null) {
-            instance = new ConfigurationFactory();
+            synchronized (ConfigurationFactory.class) {
+                if (instance == null) {
+                    instance = new ConfigurationFactory();
+                }
+            }
         }
         return instance;
     }
