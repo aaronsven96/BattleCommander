@@ -329,7 +329,6 @@ public class HexMap {
      */
     public void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
-        Set<Integer> randomIds = new HashSet<>();
         hexMap.put("turn", getTurn());
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
@@ -355,8 +354,8 @@ public class HexMap {
                     if (randomizeIds) {
                         do {
                             newId = r.nextInt(upperBound);
-                        } while (randomIds.contains(newId));
-                        randomIds.add(newId);
+                        } while (ids.contains(newId));
+                        ids.add(newId);
                         newUnit.put("id", newId);
                     } else {
                         newUnit.put("id", unitAtHex.getId());
@@ -389,8 +388,8 @@ public class HexMap {
                     if (randomizeIds) {
                         do {
                             newId = r.nextInt(upperBound);
-                        } while (randomIds.contains(newId));
-                        randomIds.add(newId);
+                        } while (ids.contains(newId));
+                        ids.add(newId);
                         newTerrain.put("id", newId);
                     } else {
                         newTerrain.put("id", terrainAtHex.getId());
@@ -428,7 +427,7 @@ public class HexMap {
     }
 
     /**
-     * Set a Terrain hex at a position (y,x) on the board.
+     * Set a Terrain at a position (y,x) on the board.
      *
      * @param p       the position
      * @param config  the config file
@@ -437,6 +436,7 @@ public class HexMap {
     public void setTerrain(Position p, String config, String texture) {
         Random r = new Random();
         int id = r.nextInt();
+        ids.add(id);
 
         ConfigurationFactory cf = ConfigurationFactory.getInstance();
         Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
@@ -447,9 +447,22 @@ public class HexMap {
         textures.get(1).setHex(p, terrainTexture); // add terrain texture to HexBoard<String> at first position
     }
 
+
+    /**
+     * Set a Unit at a position (y,x) on the board.
+     *
+     * @param p       the position
+     * @param config  the config file
+     * @param texture the texture
+     * @param pid     the player ID
+     */
     public void setUnit(Position p, String config, int pid, String texture) {
         Random r = new Random();
-        int id = r.nextInt();
+        int newId;
+        do {
+            newId = r.nextInt();
+        } while (ids.contains(newId));
+        ids.add(newId);
 
         ConfigurationFactory cf = ConfigurationFactory.getInstance();
         BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
