@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class ConfigurationFactory {
     // Singleton instance
-    private static ConfigurationFactory instance = new ConfigurationFactory();
+    private static ConfigurationFactory instance;
 
     private static final String PATH_TO_UNIT_CONFIGURATION = "configuration/units/";
     private static final String PATH_TO_TERRAIN_CONFIGURATION = "configuration/terrain/";
@@ -29,6 +29,9 @@ public class ConfigurationFactory {
 
     // Singleton accessor method
     public static ConfigurationFactory getInstance() {
+        if (instance == null) {
+            instance = new ConfigurationFactory();
+        }
         return instance;
     }
 
@@ -87,6 +90,7 @@ public class ConfigurationFactory {
 
     /**
      * Returns the relative path to the save files.
+     *
      * @return relative path to the save files
      */
     public String getPathToSaveFiles() {
