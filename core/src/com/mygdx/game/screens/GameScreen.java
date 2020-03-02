@@ -18,7 +18,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void buildStage() {
 
-        HexMap map = ConfigurationFactory.instance.makeHexMapFromConfig(mapConfig);
+        HexMap map = ConfigurationFactory.getInstance().makeHexMapFromConfig(mapConfig);
         VisTable table = new VisTable();
         table.setFillParent(true);
 

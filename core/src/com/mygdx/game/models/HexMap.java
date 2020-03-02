@@ -6,19 +6,23 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.Set;
 
 /**
  * A class that represents all the HexBoard layers.
  */
-public class HexMap {
+public class HexMap implements Serializable {
     private HexBoard<BasicUnit> units;
     private HexBoard<Terrain> terrain;
     private HexBoard<Boolean> mapShape;
@@ -26,6 +30,9 @@ public class HexMap {
     private Set<Integer> playerIds;
     private final int rows;
     private final int columns;
+    private int turn;
+    private static int turnGenerator;
+    private Set<Integer> ids;
 
     private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
         this.units = units;
@@ -34,6 +41,8 @@ public class HexMap {
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
+        this.turn = turnGenerator;
+        turnGenerator++;
     }
 
     // Copy constructor
@@ -51,8 +60,10 @@ public class HexMap {
 
         JsonObject hexMap = gson.fromJson(content, JsonObject.class);
 
-        int rows = Integer.parseInt(hexMap.get("rows").getAsString());
-        int columns = Integer.parseInt(hexMap.get("columns").getAsString());
+        int turn = hexMap.get("turn").getAsInt();
+        turnGenerator = turn;
+        int rows = hexMap.get("rows").getAsInt();
+        int columns = hexMap.get("columns").getAsInt();
 
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
@@ -62,10 +73,12 @@ public class HexMap {
         HexBoard<String> unitTextures = new HexBoard<>(rows, columns);
         HexBoard<String> terrainTextures = new HexBoard<>(rows, columns);
 
-        ConfigurationFactory cf = ConfigurationFactory.instance;
+        ConfigurationFactory cf = ConfigurationFactory.getInstance();
         JsonArray jsonArrayUnits = hexMap.get("units").getAsJsonArray();
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
+
+        Set<Integer> ids = new HashSet<>();
 
         // Set up units
         for (int i = 0; i < jsonArrayUnits.size(); i++) {
@@ -75,13 +88,14 @@ public class HexMap {
 
                 String config = object.get("config").getAsString(); // "archer.json", "null", etc.
                 int id = object.get("id").getAsInt();
+                ids.add(id);
                 int pid = object.get("pid").getAsInt();
                 String texture = object.get("texture").getAsString();
 
                 Position p = new Position(i, j);
 
                 BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
-                String unitTexture = newUnit == null ? null : newUnit.getTexture(); // make the Basic Unit
+                String unitTexture = newUnit == null ? null : newUnit.getTexture();
 
                 units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
 
@@ -95,18 +109,19 @@ public class HexMap {
             for (int j = 0; j < row.size(); j++) {
                 JsonObject object = row.get(j).getAsJsonObject();
 
-                String config = object.get("config").getAsString(); // "swamp.json", "desert.json", etc.
+                String config = object.get("config").getAsString(); // "rock.json", "desert.json", etc.
                 int id = object.get("id").getAsInt();
+                ids.add(id);
                 String texture = object.get("texture").getAsString();
 
                 Position p = new Position(i, j);
 
                 Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
-                String unitTexture = newTerrain == null ? null : newTerrain.getTexture(); // make the Basic Unit
+                String terrainTexture = newTerrain == null ? null : newTerrain.getTexture();
 
                 terrain.setHex(p, newTerrain); // add Terrain to HexBoard<Terrain>
 
-                terrainTextures.setHex(p, unitTexture); // add texture to HexBoard<String>
+                terrainTextures.setHex(p, terrainTexture); // add texture to HexBoard<String>
             }
         }
 
@@ -120,9 +135,8 @@ public class HexMap {
         }
 
         // Set up textures
-        textures.add(terrainTextures);
         textures.add(unitTextures);
-
+        textures.add(terrainTextures);
 
         return new HexMap(units, terrain, mapShape, textures, rows, columns);
     }
@@ -186,6 +200,15 @@ public class HexMap {
     }
 
     /**
+     * Returns the current turn number.
+     *
+     * @return the current turn number
+     */
+    public int getTurn() {
+        return turn;
+    }
+
+    /**
      * Returns the BasicUnits HexBoard.
      *
      * @return the BasicUnits HexBoard
@@ -210,7 +233,7 @@ public class HexMap {
      * @param pid the player ID
      * @return all units for a specific player ID
      */
-    public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing!
+    public List<BasicUnit> getUnitsForPlayer(int pid) {  // TODO: testing
         BasicUnit unitAtHex;
         List<BasicUnit> unitsForPlayer = new ArrayList<>();
 
@@ -238,45 +261,32 @@ public class HexMap {
      */
     public boolean isInProximity(int id1, int id2, int range) {
         List<Position> positions = new ArrayList<>();
+        Map<Integer, Position> proximityMap = new HashMap<>();
 
-        for (int i = 0; i < getUnits().getNumRows(); i++) {
-            for (int j = 0; j < getUnits().getNumColumns(); j++) {
+
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumColumns(); j++) {
                 Position p = new Position(i, j);
-                Optional<BasicUnit> optional = getUnits().getHex(p);
-                if (optional.isPresent()) {
-                    BasicUnit bu = optional.get();
-                    if (bu.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (bu.getId() == id2) {
-                        positions.add(p);
-                    }
+
+                Optional<BasicUnit> buOpt = getUnits().getHex(p);
+                if (buOpt.isPresent()) {
+                    BasicUnit bu = buOpt.get();
+                    int buId = bu.getId();
+                    proximityMap.put(buId, p);
                 }
-            }
-            if (positions.size() == 2) {
-                return getUnits().isInProximity(positions.get(0), positions.get(1), range);
+
+                Optional<Terrain> tOpt = getTerrain().getHex(p);
+                if (tOpt.isPresent()) {
+                    Terrain t = tOpt.get();
+                    int tId = t.getId();
+                    proximityMap.put(tId, p);
+                }
             }
         }
 
-        for (int i = 0; i < getTerrain().getNumRows(); i++) {
-            for (int j = 0; j < getTerrain().getNumColumns(); j++) {
-                Position p = new Position(i, j);
-                Optional<Terrain> optional = getTerrain().getHex(p);
-                if (optional.isPresent()) {
-                    Terrain t = optional.get();
-                    if (t.getId() == id1) {
-                        positions.add(p);
-                    }
-                    if (t.getId() == id2) {
-                        positions.add(p);
-                    }
-                }
-            }
-            if (positions.size() == 2) {
-                return getTerrain().isInProximity(positions.get(0), positions.get(1), range);
-            }
+        if (proximityMap.containsKey(id1) && proximityMap.containsKey(id2)) {
+            return units.isInProximity(proximityMap.get(id1), proximityMap.get(id2), range);
         }
-
         return false;
     }
 
@@ -284,16 +294,35 @@ public class HexMap {
      * Saves the HexMap as a JSON file on the disk.
      */
     public void save() {
-        save("");
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
+        save(filename, false, Integer.MAX_VALUE);
     }
 
     /**
      * Saves the HexMap as a JSON file on the disk.
+     *
+     * @param filename the filename
      */
     public void save(String filename) {
+        save(filename, false, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Saves the HexMap as a JSON file on the disk.
+     *
+     * @param filename     the filename
+     * @param randomizeIds if true, randomize all ID numbers in the save file
+     * @param upperBound   the upper bound (exclusive) on the number generator
+     */
+    private void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
+        Set<Integer> randomIds = new HashSet<>();
+        hexMap.put("turn", getTurn());
         hexMap.put("rows", getNumRows());
         hexMap.put("columns", getNumColumns());
+
+        Random r = new Random();
+        int newId;
 
         // Construct "units" Array
         Map[][] buArr = new Map[getNumRows()][getNumColumns()];
@@ -310,7 +339,15 @@ public class HexMap {
                     String unitTexture = unitAtHex.getTexture().substring(index + 1);
 
                     newUnit.put("config", config);
-                    newUnit.put("id", unitAtHex.getId());
+                    if (randomizeIds) {
+                        do {
+                            newId = r.nextInt(upperBound);
+                        } while (randomIds.contains(newId));
+                        randomIds.add(newId);
+                        newUnit.put("id", newId);
+                    } else {
+                        newUnit.put("id", unitAtHex.getId());
+                    }
                     newUnit.put("pid", unitAtHex.getPid());
                     newUnit.put("texture", unitTexture);
 
@@ -335,7 +372,15 @@ public class HexMap {
                     String terrainTexture = terrainAtHex.getTexture().substring(index + 1);
 
                     newTerrain.put("config", config);
-                    newTerrain.put("id", terrainAtHex.getId());
+                    if (randomizeIds) {
+                        do {
+                            newId = r.nextInt(upperBound);
+                        } while (randomIds.contains(newId));
+                        randomIds.add(newId);
+                        newTerrain.put("id", newId);
+                    } else {
+                        newTerrain.put("id", terrainAtHex.getId());
+                    }
                     newTerrain.put("texture", terrainTexture);
 
                     terrainArr[i][j] = newTerrain;
@@ -347,7 +392,8 @@ public class HexMap {
         // Construct "mapShape" Array
         Boolean[][] mapShapeArr = new Boolean[getNumRows()][getNumColumns()];
         Boolean mapShapeAtHex;
-        for (int i = 0; i < getNumRows(); i++) {
+        for (
+                int i = 0; i < getNumRows(); i++) {
             for (int j = 0; j < getNumColumns(); j++) {
                 Optional<Boolean> optional = mapShape.getHex(new Position(i, j));
                 if (optional.isPresent()) {
@@ -358,15 +404,10 @@ public class HexMap {
         }
         hexMap.put("mapShape", mapShapeArr); // add "mapShape" Array to Map
 
-        Gson gson = new Gson();
-
-        String location = "configuration/saves/"; // TODO: get path from Configuration Factory?
-        if (filename.equals("")) {
-            filename = new SimpleDateFormat("yyyyMMdd_HHmm_ssSS'.json'").format(new Date()); // e.g., 20200215_1723_30397.json
-        }
-
+        String location = ConfigurationFactory.getInstance().getPathToSaveFiles();
         FileHandle file = Gdx.files.local(location + filename);
 
+        Gson gson = new Gson();
         String json = gson.toJson(hexMap); // convert Map to JSON String
 
         file.writeString(json, false); // write String to JSON file
@@ -374,5 +415,61 @@ public class HexMap {
 
     public Set<Integer> getPlayerIds() {
         return playerIds;
+    }
+
+    /**
+     * Set a Terrain at a position (y,x) on the board.
+     *
+     * @param p       the position
+     * @param config  the config file
+     * @param texture the texture
+     */
+    public void setTerrain(Position p, String config, String texture) {
+        int id = getRandomId();
+
+        ConfigurationFactory cf = ConfigurationFactory.getInstance();
+        Terrain newTerrain = config.equals("null") ? null : cf.makeTerrainFromConfig(config, texture, id); // make the Terrain
+        String terrainTexture = newTerrain == null ? null : newTerrain.getTexture();
+
+        terrain.setHex(p, newTerrain); // add Terrain to HexBoard<Terrain>
+
+        textures.get(1).setHex(p, terrainTexture); // add terrain texture to HexBoard<String> at first position
+    }
+
+    /**
+     * Set a Unit at a position (y,x) on the board.
+     *
+     * @param p       the position
+     * @param config  the config file
+     * @param texture the texture
+     * @param pid     the player ID
+     */
+    public void setUnit(Position p, String config, int pid, String texture) {
+        int id = getRandomId();
+
+        ConfigurationFactory cf = ConfigurationFactory.getInstance();
+        BasicUnit newUnit = config.equals("null") ? null : cf.makeUnitFromConfig(config, id, pid, texture); // make the Basic Unit
+        String unitTexture = newUnit == null ? null : newUnit.getTexture();
+
+        units.setHex(p, newUnit); // add BasicUnit to HexBoard<BasicUnit>
+
+        textures.get(0).setHex(p, unitTexture); // add unit texture to HexBoard<String> at zeroth position
+    }
+
+    /**
+     * Returns a random ID from 0 to ‭4,294,967,296 (exclusive)‬.
+     *
+     * @return a random ID from 0 to ‭4,294,967,296 (exclusive)
+     */
+    private int getRandomId() {
+        Random r = new Random();
+        int newId;
+
+        do {
+            newId = r.nextInt();
+        } while (ids.contains(newId));
+        ids.add(newId);
+
+        return newId;
     }
 }

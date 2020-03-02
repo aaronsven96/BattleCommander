@@ -1,6 +1,7 @@
 package com.mygdx.game.models;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * All of the Commands given to a unit for a turn
  */
-public class Orders {
+public class Orders implements Serializable {
 
     /* The acting unit's ID */
     private int unitId;

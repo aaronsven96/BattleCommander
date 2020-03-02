@@ -1,10 +1,22 @@
 # BattleCommander
-BattleCommander
 
-## Naming conventions
-**aaronsven96**: Generally people use camel case for Json property names or underscores.
-https://google.github.io/styleguide/jsoncstyleguide.xml?showone=Property_Name_Format#Property_Name_Format
+### Naming conventions
+Files/folders: all lowercase with underscores
 
-We should decide what way we want to name them. Maybe we should add a wiki page to this project with naming conventions.
+    input
+        keyboard_configuration.json
+        mouse_configuration.json 
+        
+JSON keys: camelCase
 
-**ksve**: camelCase seems to be the better option since it's consistent with the Java naming conventions.
+    {
+    "type": "Archer",
+    "description": "An example configuration file for an archer",
+    "maxHealth": 15,
+    "strength": 0,
+    "rangedStrength": 10,
+    "speed": 1,
+    "range": 2,
+    "areaOfEffect": "Skewer",
+    "attributes": []
+    }

@@ -1,6 +1,0 @@
-{
-  "type": "Swamp",
-  "description": "An example configuration file for a swamp terrain",
-  "defense": 10,
-  "terrainState": "IMPASSABLE"
-}
