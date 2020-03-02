@@ -1,46 +1,42 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
 import com.kotcrab.vis.ui.widget.VisTextField;
-import com.mygdx.game.multiplayer.LobbyServer;
+import com.mygdx.game.multiplayer.LobbyServerBak;
+import com.mygdx.game.multiplayer.Networking;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisTextArea;
-import com.kotcrab.vis.ui.widget.VisWindow;
 
 public class MultiplayerLobby extends AbstractScreen {
-    public MultiplayerLobby(String type) throws Exception {
-        if (type == "server") {
-            String[] serverArgs = new String[0];
-            LobbyServer.main(serverArgs);
-        }
-        else if (type == "client") {
-            
-        }
+    VisTable table1 = new VisTable();
+    VisTable table2 = new VisTable();
+    VisTextArea chatArea = new VisTextArea();
+    VisTextField input = new VisTextField("Chat");
+    VisTextButton back = new VisTextButton("Back");
+
+    public void addChat(String text) {
+        chatArea.appendText(text);
+        chatArea.appendText("\n");
     }
 
     public void buildStage() {
-        VisTable table1 = new VisTable();
-        VisTable table2 = new VisTable();
         table1.setFillParent(true);
         table1.debugAll();
 //        table2.setFillParent(true);
         table2.debugAll();
 
-        VisTextArea chatArea = new VisTextArea();
+
         chatArea.setFillParent(true);
-        chatArea.appendText("\n");
-        chatArea.appendText("\n");
         chatArea.setTouchable(Touchable.disabled);
 
-        VisTextField input = new VisTextField("Chat");
+
         input.setWidth(chatArea.getWidth());
         input.addListener(new FocusListener() {
 //            @Override
@@ -71,7 +67,7 @@ public class MultiplayerLobby extends AbstractScreen {
             }
         } );
 
-        VisTextButton back = new VisTextButton("Back");
+
         back.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 ScreenManager.instance.popScreen();
@@ -89,5 +85,6 @@ public class MultiplayerLobby extends AbstractScreen {
 //        table.add(input);
 
         super.addActor(table1);
+        System.out.println("The lobby screen is showing...");
     }
 }

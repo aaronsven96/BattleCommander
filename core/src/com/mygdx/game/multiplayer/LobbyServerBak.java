@@ -1,19 +1,19 @@
 package com.mygdx.game.multiplayer;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
-import com.badlogic.gdx.net.SocketHints;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -28,15 +28,15 @@ import java.util.concurrent.ExecutorService;
  * better logging. Another is to accept a lot of fun commands, like Slack.
  */
 
-public class LobbyServer {
+public class LobbyServerBak {
     // All client names, so we can check for duplicates upon registration.
     private static Set<String> names = new HashSet<>();
 
     // The set of all the print writers for all the clients, used for broadcast.
     private static Set<PrintWriter> writers = new HashSet<>();
 
-    public static void main(String[] args) throws Exception {
-        System.out.println("The chat server is running...");
+    public static boolean main(String[] args) {
+        System.out.println("The chat server is starting...");
         ServerSocketHints serverSocketHint = new ServerSocketHints();
         // 0 means no timeout.  Probably not the greatest idea in production!
         serverSocketHint.acceptTimeout = 0;
@@ -45,6 +45,7 @@ public class LobbyServer {
         while (true) {
 //            Socket socket = serverSocket.accept(null)
             pool.execute(new Handler(serverSocket.accept(null)));
+            System.out.println("The chat server is running...");
         }
     }
 
@@ -54,8 +55,8 @@ public class LobbyServer {
     private static class Handler implements Runnable {
         private String name;
         private Socket socket;
-        private Scanner in;
-        private PrintWriter out;
+        private InputStream in;
+        private OutputStream out;
 
         /**
          * Constructs a handler thread, squirreling away the socket. All the interesting
@@ -74,43 +75,44 @@ public class LobbyServer {
          */
         public void run() {
             try {
-                in = new Scanner(socket.getInputStream());
-                out = new PrintWriter(socket.getOutputStream(), true);
-
-                // Keep requesting a name until we get a unique one.
-                while (true) {
-                    out.println("ENTER NAME");
-                    name = in.nextLine();
-                    if (name == null) {
-                        return;
-                    }
-                    synchronized (names) {
-                        if (!name.isEmpty() && !names.contains(name)) {
-                            names.add(name);
-                            break;
-                        }
-                    }
-                }
-
-                // Now that a successful name has been chosen, add the socket's print writer
-                // to the set of all writers so this client can receive broadcast messages.
-                // But BEFORE THAT, let everyone else know that the new person has joined!
-                out.println("NAME ACCEPTED " + name);
-                for (PrintWriter writer : writers) {
-                    writer.println("Server: " + name + " has joined");
-                }
-                writers.add(out);
-
-                // Accept messages from this client and broadcast them.
-                while (true) {
-                    String input = in.nextLine();
-                    if (input.toLowerCase().startsWith("/quit")) {
-                        return;
-                    }
-                    for (PrintWriter writer : writers) {
-                        writer.println(name + ": " + input);
-                    }
-                }
+                in = socket.getInputStream();
+//                out = new PrintWriter(socket.getOutputStream(), true);
+                out = socket.getOutputStream();
+//
+//                // Keep requesting a name until we get a unique one.
+//                while (true) {
+//                    out.println("ENTER NAME");
+//                    name = in.nextLine();
+//                    if (name == null) {
+//                        return;
+//                    }
+//                    synchronized (names) {
+//                        if (!name.isEmpty() && !names.contains(name)) {
+//                            names.add(name);
+//                            break;
+//                        }
+//                    }
+//                }
+//
+//                // Now that a successful name has been chosen, add the socket's print writer
+//                // to the set of all writers so this client can receive broadcast messages.
+//                // But BEFORE THAT, let everyone else know that the new person has joined!
+//                out.println("NAME ACCEPTED " + name);
+//                for (PrintWriter writer : writers) {
+//                    writer.println("Server: " + name + " has joined");
+//                }
+//                writers.add(out);
+//
+//                // Accept messages from this client and broadcast them.
+//                while (true) {
+//                    String input = in.nextLine();
+//                    if (input.toLowerCase().startsWith("/quit")) {
+//                        return;
+//                    }
+//                    for (PrintWriter writer : writers) {
+//                        writer.println(name + ": " + input);
+//                    }
+//                }
             } catch (Exception e) {
                 System.out.println(e);
             } finally {

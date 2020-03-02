@@ -1,5 +1,9 @@
 package com.mygdx.game.screens;
 
+import com.mygdx.game.multiplayer.Networking;
+
+import sun.nio.ch.Net;
+
 public enum ScreenEnum {
     TITLE_SCREEN{
         public AbstractScreen getScreen(Object[] args){
@@ -29,7 +33,15 @@ public enum ScreenEnum {
     },
     MULTIPLAYER_LOBBY_SCREEN{
         public AbstractScreen getScreen(Object[] args){
-            return new MultiplayerLobby((String) args[0]);
+            if (args[0].toString() == "create") {
+                return Networking.createServer((String[]) args[1]);
+            }
+            else if (args[0].toString() == "join") {
+                return Networking.joinServer((String[]) args[1]);
+            }
+            else {
+                return null;
+            }
         }
     }
     ;
