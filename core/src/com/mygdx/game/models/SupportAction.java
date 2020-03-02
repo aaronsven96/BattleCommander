@@ -1,12 +1,15 @@
 package com.mygdx.game.models;
 
+import java.util.List;
+
+
 public class SupportAction implements UnitAction {
     private int maxRange;
-    private boolean flight;
+    private int strength;
 
-    public SupportAction(int maxRange, boolean flight) {
+    public SupportAction(int maxRange, int strength) {
         this.maxRange = maxRange;
-        this.flight = flight;
+        this.strength = strength;
     }
 
     @Override
@@ -26,6 +29,9 @@ public class SupportAction implements UnitAction {
 
     @Override
     public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
-        return null;
+        HexBoard<List<Integer>> newBoard = new HexBoard<List<Integer>>(board.getUnits().getNumRows(), board.getUnits().getNumColumns());
+        List<Integer> newTargetHex = board.getStrengths().getHex(action.getTargetPosition()).get();
+
+        newBoard.setHex(action.getTargetPosition(), );
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 /**
  * A class that represents all the HexBoard layers.
@@ -22,6 +23,7 @@ public class HexMap {
     private HexBoard<Terrain> terrain;
     private HexBoard<Boolean> mapShape;
     private List<HexBoard<String>> textures;
+    private Set<Integer> playerIds;
     private final int rows;
     private final int columns;
 
@@ -368,5 +370,9 @@ public class HexMap {
         String json = gson.toJson(hexMap); // convert Map to JSON String
 
         file.writeString(json, false); // write String to JSON file
+    }
+
+    public Set<Integer> getPlayerIds() {
+        return playerIds;
     }
 }

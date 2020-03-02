@@ -1,17 +1,18 @@
 package com.mygdx.game.models;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public class IntermediateBoard {
     private HexBoard<List<BasicUnit>> units;
-    private HexBoard<ArrayList> strengths;
+    private HexBoard<List<Integer>> strengths;
+    private List<Integer> playerIds;
     private HexMap newBoard;
 
-    public IntermediateBoard(HexMap board, HexBoard<List<BasicUnit>> units) {
+    public IntermediateBoard(HexMap board, HexBoard<List<BasicUnit>> units, List<Integer> playerIds) {
         newBoard = new HexMap(board);
         this.units = units;
-        this.strengths = new HexBoard<ArrayList>(board.getCols(), board.getRows());
+        this.strengths = new HexBoard<List<Integer>>(board.getNumColumns(), board.getNumRows());
+        this.playerIds = playerIds;
     }
 
     public void applyToBoard(IntermediateBoard intermediateBoard) {
@@ -24,5 +25,13 @@ public class IntermediateBoard {
 
     public HexBoard<List<BasicUnit>> getUnits() {
         return units;
+    }
+
+    public HexBoard<List<Integer>> getStrengths() {
+        return strengths;
+    }
+
+    public List<Integer> getPlayerIds() {
+        return playerIds;
     }
 }

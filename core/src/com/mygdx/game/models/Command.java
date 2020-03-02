@@ -1,7 +1,5 @@
 package com.mygdx.game.models;
 
-import com.mygdx.game.UtilityMethods;
-
 /**
  * Class to represent a command
  */
@@ -28,8 +26,10 @@ public class Command {
         this.unitId = unitId;
         this.startPosition = startPosition;
         this.targetPosition = targetPosition;
-        distance = UtilityMethods.calculateDistance(startPosition, targetPosition);
-        hasLineOfSight = UtilityMethods.calculateLineOfSight(board, startPosition, targetPosition);
+        if (board.getDistanceBetweenTwoPositions(startPosition, targetPosition).isPresent()) {
+            distance = board.getDistanceBetweenTwoPositions(startPosition, targetPosition).get();
+        }
+        hasLineOfSight = board.checkLineOfSight(board, startPosition, targetPosition);
     }
 
     public int getUnitId() {

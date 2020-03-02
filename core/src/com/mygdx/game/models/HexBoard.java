@@ -151,4 +151,11 @@ public class HexBoard<T> {
         }
         return false; // returns false if the position is outside the Array bounds
     }
+
+    // TODO: Implement these methods
+
+    /** Returns true if there are no obstacles between the positions that would block line of sight */
+    public boolean checkLineOfSight(HexBoard<Terrain> board, Position startPosition, Position endPosition) {
+        return true;
+    }
 }
