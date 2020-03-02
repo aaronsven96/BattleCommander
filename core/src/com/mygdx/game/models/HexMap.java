@@ -33,7 +33,7 @@ public class HexMap implements Serializable {
     private static int turnGenerator;
     private Set<Integer> ids;
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns, Set<Integer> ids) {
         this.units = units;
         this.rows = rows;
         this.columns = columns;
@@ -41,6 +41,7 @@ public class HexMap implements Serializable {
         this.mapShape = mapShape;
         this.textures = textures;
         this.turn = turnGenerator;
+        this.ids = ids;
         turnGenerator++;
     }
 
@@ -52,6 +53,7 @@ public class HexMap implements Serializable {
         terrain = original.terrain;
         mapShape = original.mapShape;
         textures = original.textures;
+        ids = original.ids;
     }
 
     public static HexMap getHexMapFromConfig(String content) {
@@ -63,6 +65,7 @@ public class HexMap implements Serializable {
         turnGenerator = turn;
         int rows = hexMap.get("rows").getAsInt();
         int columns = hexMap.get("columns").getAsInt();
+        Set<Integer> ids = new HashSet<>();
 
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
@@ -76,8 +79,6 @@ public class HexMap implements Serializable {
         JsonArray jsonArrayUnits = hexMap.get("units").getAsJsonArray();
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
-
-        Set<Integer> ids = new HashSet<>();
 
         // Set up units
         for (int i = 0; i < jsonArrayUnits.size(); i++) {
@@ -137,7 +138,7 @@ public class HexMap implements Serializable {
         textures.add(unitTextures);
         textures.add(terrainTextures);
 
-        return new HexMap(units, terrain, mapShape, textures, rows, columns);
+        return new HexMap(units, terrain, mapShape, textures, rows, columns, ids);
     }
 
     // TODO: add interactions to the game
