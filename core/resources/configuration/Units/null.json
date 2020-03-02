@@ -1,0 +1,11 @@
+{
+  "type": "null",
+  "description": "",
+  "maxHealth": 0,
+  "strength": 0,
+  "rangedStrength": 0,
+  "speed": 0,
+  "range": 0,
+  "areaOfEffect": "",
+  "attributes": []
+}
