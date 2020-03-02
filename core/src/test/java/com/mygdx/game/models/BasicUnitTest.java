@@ -20,7 +20,7 @@ public class BasicUnitTest {
 
 @Test
     public void getState(){
-        assertEquals("state should be normal", UnitState.normal, soldier.getState());
+    assertEquals("state should be normal", UnitState.normal, soldier.getUnitState());
         //assertEquals("state should be normal", UnitState.normal, archer.getState());
     }
 

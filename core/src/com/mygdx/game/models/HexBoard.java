@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.Getter;
+
 /**
  * A class that represents the HexBoard of Type T that we will use as the map of the game.
  */
+@Getter
 public class HexBoard<T> {
     private T[][] board;
-    private int numRows, numColumns;
+    private int numRows;
+    private int numColumns;
 
     public HexBoard(int numRows, int numColumns) {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
@@ -85,24 +89,6 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns the number of columns in the board.
-     *
-     * @return the number of columns in the board
-     */
-    public int getNumColumns() {
-        return numColumns;
-    }
-
-    /**
-     * Returns the number of rows in the board.
-     *
-     * @return the number of rows in the board
-     */
-    public int getNumRows() {
-        return numRows;
-    }
-
-    /**
      * Returns true if the positions are in proximity to each other, or false otherwise.
      *
      * @param p1    the first position
@@ -124,19 +110,6 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns true if the position is valid, or false otherwise.
-     *
-     * @param p the position
-     * @return true if the position is valid, or false otherwise
-     */
-    private boolean isValidPosition(Position p) {
-        if (!(p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Sets a hex at position (y,x).
      *
      * @param p   the position
@@ -150,5 +123,15 @@ public class HexBoard<T> {
             return true;
         }
         return false; // returns false if the position is outside the Array bounds
+    }
+
+    /**
+     * Returns true if the position is valid, or false otherwise.
+     *
+     * @param p the position
+     * @return true if the position is valid, or false otherwise
+     */
+    private boolean isValidPosition(Position p) {
+        return p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1;
     }
 }

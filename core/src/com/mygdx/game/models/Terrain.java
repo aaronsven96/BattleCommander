@@ -3,15 +3,21 @@ package com.mygdx.game.models;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * A class that represents a tile in the game.
  */
+@Getter
+@Setter
 public class Terrain {
-    private String type;
-    private int defense;
-    private TerrainState terrainState;
-    private String texture;
-    private int id;
+    private String type; // fixed type (e.g., "Desert", "Ocean", "Rock", "Snow")
+    private int defense; // defense attribute
+    private TerrainState terrainState; // current state (e.g., "IMPASSABLE")
+    private String texture; // texture filename
+    private int id; // unique ID
 
     private Terrain(String type, int defense, TerrainState terrainState, String texture, int id) {
         this.type = type;
@@ -46,51 +52,4 @@ public class Terrain {
 
         return new Terrain(type, defense, terrainState, texture, id);
     }
-
-    /**
-     * Returns the type of the Terrain.
-     *
-     * @return the type of the Terrain
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Returns the defense of the tile.
-     *
-     * @return the defense of the tile
-     */
-    public int getDefense() {
-        return defense;
-    }
-
-    /**
-     * Returns the Terrain State of the Terrain (e.g., impassable).
-     *
-     * @return the Terrain State of the Terrain (e.g., impassable)
-     */
-    public TerrainState getTerrainState() {
-        return terrainState;
-    }
-
-
-    /**
-     * Returns the Texture of the Terrain.
-     *
-     * @return the Texture of the Terrain
-     */
-    public String getTexture() {
-        return texture;
-    }
-
-    /**
-     * Returns the ID of the Terrain.
-     *
-     * @return the ID of the Terrain
-     */
-    public int getId() {
-        return id;
-    }
-
 }
