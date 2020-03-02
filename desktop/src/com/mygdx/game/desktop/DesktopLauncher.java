@@ -14,9 +14,9 @@ public class DesktopLauncher {
         //config.width = 1000;
         //config.height = 1000;
         new LwjglApplication(new MyGdxGame(), config);
-//		HexMap map = ConfigurationFactory.instance.makeHexMapFromConfig("hex_map.json");
-//		map.save("hex_map.json");
-//        TriggerProximity trigger = ConfigurationFactory.instance.makeTriggerFromConfig("configuration/events/events.json");
+//        HexMap map = ConfigurationFactory.getInstance().makeHexMapFromConfig("hex_map2.json");
+//        TriggerProximity trigger = ConfigurationFactory.getInstance().makeTriggerFromConfig("configuration/events/events.json");
 //        System.out.println(trigger.isTriggered(map));
+//        map.save();
     }
 }

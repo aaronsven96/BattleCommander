@@ -63,7 +63,7 @@ public class SelectionScreen extends AbstractScreen {
 
     private Array<String> getItemsFromConfig(){
         Gson gson = new Gson();
-        JsonArray array = gson.fromJson(ConfigurationGetter.getConfiguration("configuration/Maps/MapList.json"), JsonArray.class);
+        JsonArray array = gson.fromJson(ConfigurationGetter.getConfiguration("configuration/Maps/map_list.json"), JsonArray.class);
         Array<String> maps = new Array<>();
         array.forEach(i->maps.add(i.getAsString()));
         return maps;

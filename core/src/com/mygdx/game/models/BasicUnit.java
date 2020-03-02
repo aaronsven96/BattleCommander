@@ -27,10 +27,8 @@ public class BasicUnit implements Unit {
         this.rangedStrength = rangedStrength;
         this.range = range;
         this.speed = speed;
-
         this.health = maxHealth; //set the unit's health to its max health
         this.state = UnitState.normal; //set the unit's state to normal
-
         this.id = id;
         this.pid = pid;
         this.texture = texture;
@@ -55,7 +53,7 @@ public class BasicUnit implements Unit {
     /**
      * Returns the Unit from the configuration file.
      *
-     * @param config the file path
+     * @param config the config
      * @return the Unit from the configuration file
      */
     public static BasicUnit getUnitFromConfig(String config, int id, int pid, String texture) {
@@ -82,7 +80,6 @@ public class BasicUnit implements Unit {
         return true;
     }
 
-
     /**
      * Returns the state of the unit
      */
@@ -90,16 +87,12 @@ public class BasicUnit implements Unit {
         return state;
     }
 
-    ;
-
     /**
      * Sets the state of the unit to desired state
      */
     public void setUnitState(UnitState unitState) {
         state = unitState;
     }
-
-    ;
 
     /**
      * Returns unit's type
@@ -155,10 +148,6 @@ public class BasicUnit implements Unit {
      */
     public int getSpeed() {
         return speed;
-    }
-
-    public int getId(){
-        return id;
     }
 
     /**
@@ -218,15 +207,23 @@ public class BasicUnit implements Unit {
     }
 
     /**
+     * Returns the unit's ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * Returns the unit's player ID
      */
     public int getPid() {
         return pid;
     }
 
-    public String getTexture(){
+    /**
+     * Returns the unit's texture
+     */
+    public String getTexture() {
         return texture;
     }
-
-
 }
