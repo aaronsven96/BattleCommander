@@ -18,12 +18,12 @@ import java.util.Optional;
 
 public class GameListener implements InputProcessor {
 
-    private static final float ZOOM_UPPER_BOUND = 3;
+    private static final float ZOOM_UPPER_BOUND = 4;
     private static final float ZOOM_LOWER_BOUND = 1;
     private static final float CAMERA_PAN_SPEED = 4;
-    private static final float MAP_WIDTH_UPPER_BOUND = 1000;
+    private static final float MAP_WIDTH_UPPER_BOUND = 10000;
     private static final float MAP_WIDTH_LOWER_BOUND = 0;
-    private static final float MAP_DEPTH_UPPER_BOUND = 1000;
+    private static final float MAP_DEPTH_UPPER_BOUND = 10000;
     private static final float MAP_DEPTH_LOWER_BOUND = 0;
     private Map<Integer, Boolean> isKeyPressed = new HashMap<>();
     private Optional<Position> selectedHex = Optional.empty();
