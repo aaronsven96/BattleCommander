@@ -1,6 +1,7 @@
 package com.mygdx.game.models;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class SupportAction implements UnitAction {
@@ -29,9 +30,11 @@ public class SupportAction implements UnitAction {
 
     @Override
     public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
-        HexBoard<List<Integer>> newBoard = new HexBoard<List<Integer>>(board.getUnits().getNumRows(), board.getUnits().getNumColumns());
-        List<Integer> newTargetHex = board.getStrengths().getHex(action.getTargetPosition()).get();
-
-        newBoard.setHex(action.getTargetPosition(), );
+        HexBoard<List<Integer>> newBoard = new HexBoard<>(board.getUnits().getNumRows(), board.getUnits().getNumColumns());
+        Map<Integer, Integer> newTargetHex = board.getStrengths().getHex(action.getTargetPosition()).get();
+        if () {
+            newTargetHex.get(board.getUnitOwnerId().get()) += strength;
+        }
+        newBoard.setHex(action.getTargetPosition(), newTargetHex);
     }
 }

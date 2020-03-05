@@ -1,27 +1,34 @@
 package com.mygdx.game.models;
 
-import java.util.List;
+import java.util.Set;
 
-public interface Player {
+public class Player {
 
-    /**
-     * The number associated with the Player
-     */
-    int getPlayerNum();
+    private int playerId;
+    private Set<Integer> units;
 
-    /**
-     * All moves that the player has made
-     */
-    List<Orders> getPlayerMoves();
+    public Player(int playerId, Set<Integer> units) {
+        this.playerId = playerId;
+        this.units = units;
+    }
 
-    /**
-     * Adds a player move
-     */
-    Orders addPlayerMove();
+    /** Returns the player's id */
+    public int getPlayerId() {
+        return playerId;
+    }
 
-    /**
-     * returns a list of units ids for a player
-     */
-    List<Integer> getPlayerUnits();
+    /** Returns a list of unit ids for a player */
+    public Set<Integer> getUnitIds() {
+        return units;
+    }
 
+//    /**
+//     * All moves that the player has made
+//     */
+//    List<Orders> getPlayerMoves();
+//
+//    /**
+//     * Adds a player move
+//     */
+//    Orders addPlayerMove();
 }
