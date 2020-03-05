@@ -34,20 +34,23 @@ public class HexMap implements Serializable {
     private HexBoard<BasicUnit> units;
     private HexBoard<Terrain> terrain;
     private HexBoard<Boolean> mapShape; // HexBoard of active tiles
-    private List<HexBoard<String>> textures; // HexBoard of texture filenames for BasicUnits (zeroth position) and Terrain (first position)
+    private List<HexBoard<String>> textures; // contains HexBoards of texture filenames for BasicUnits (zeroth position) and Terrain (first position)
 
-    private Set<Integer> ids; // unique ids of all BasicUnits and Terrain
+    private Set<Integer> ids; // contains all BasicUnit and Terrain IDs in the Map
+    private Map<Integer, Position> idToPosition; // {ID=Position, ...}
+
     private int turn; // turn number
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns, Set<Integer> ids) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns, Set<Integer> ids, Map<Integer, Position> idToPosition) {
         this.units = units;
         this.rows = rows;
         this.columns = columns;
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
-        this.turn = turnGenerator;
         this.ids = ids;
+        this.idToPosition = idToPosition;
+        this.turn = turnGenerator;
         turnGenerator++;
     }
 
@@ -60,8 +63,16 @@ public class HexMap implements Serializable {
         mapShape = original.mapShape;
         textures = original.textures;
         ids = original.ids;
+        turn = original.turn;
+        idToPosition = original.idToPosition;
     }
 
+    /**
+     * Returns the HexMap from the configuration file.
+     *
+     * @param content the config
+     * @return the HexMap from the configuration file.
+     */
     public static HexMap getHexMapFromConfig(String content) {
         Gson gson = new Gson();
 
@@ -144,11 +155,46 @@ public class HexMap implements Serializable {
         textures.add(unitTextures);
         textures.add(terrainTextures);
 
-        return new HexMap(units, terrain, mapShape, textures, rows, columns, ids);
+        // Set up idToPosition, which maps each unique ID to a HexBoard Position
+        Map<Integer, Position> idToPosition = new HashMap<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Position p = new Position(i, j);
+
+                Optional<BasicUnit> buOpt = units.getHex(p);
+                if (buOpt.isPresent()) {
+                    BasicUnit bu = buOpt.get();
+                    int buId = bu.getId();
+                    idToPosition.put(buId, p);
+                }
+
+                Optional<Terrain> tOpt = terrain.getHex(p);
+                if (tOpt.isPresent()) {
+                    Terrain t = tOpt.get();
+                    int tId = t.getId();
+                    idToPosition.put(tId, p);
+                }
+            }
+        }
+
+        return new HexMap(units, terrain, mapShape, textures, rows, columns, ids, idToPosition);
     }
 
     // TODO: add interactions to the game
     // Interaction getInteraction(Position p);
+
+    /**
+     * Returns the position (y,x) of a given ID.
+     *
+     * @param id the ID
+     * @return the Position of a given ID
+     */
+    public Optional<Position> getPositionById(int id) {
+        if (idToPosition.containsKey(id)) {
+            return Optional.of(idToPosition.get(id));
+        }
+        return Optional.empty();
+    }
 
     /**
      * Returns the Terrain at a position.
@@ -203,32 +249,8 @@ public class HexMap implements Serializable {
      * @return true if the IDs are in proximity, false otherwise
      */
     public boolean isInProximity(int id1, int id2, int range) {
-        List<Position> positions = new ArrayList<>();
-        Map<Integer, Position> proximityMap = new HashMap<>();
-
-
-        for (int i = 0; i < getRows(); i++) {
-            for (int j = 0; j < getColumns(); j++) {
-                Position p = new Position(i, j);
-
-                Optional<BasicUnit> buOpt = getUnits().getHex(p);
-                if (buOpt.isPresent()) {
-                    BasicUnit bu = buOpt.get();
-                    int buId = bu.getId();
-                    proximityMap.put(buId, p);
-                }
-
-                Optional<Terrain> tOpt = getTerrain().getHex(p);
-                if (tOpt.isPresent()) {
-                    Terrain t = tOpt.get();
-                    int tId = t.getId();
-                    proximityMap.put(tId, p);
-                }
-            }
-        }
-
-        if (proximityMap.containsKey(id1) && proximityMap.containsKey(id2)) {
-            return units.isInProximity(proximityMap.get(id1), proximityMap.get(id2), range);
+        if (idToPosition.containsKey(id1) && idToPosition.containsKey(id2)) {
+            return units.isInProximity(idToPosition.get(id1), idToPosition.get(id2), range);
         }
         return false;
     }
@@ -320,9 +342,6 @@ public class HexMap implements Serializable {
         hexMap.put("rows", getRows());
         hexMap.put("columns", getColumns());
 
-        Random r = new Random();
-        int newId;
-
         // Construct "units" Array
         Map[][] buArr = new Map[getRows()][getColumns()];
         BasicUnit unitAtHex;
@@ -339,10 +358,7 @@ public class HexMap implements Serializable {
 
                     newUnit.put("config", config);
                     if (randomizeIds) {
-                        do {
-                            newId = r.nextInt(upperBound);
-                        } while (randomIds.contains(newId));
-                        randomIds.add(newId);
+                        int newId = getRandomId();
                         newUnit.put("id", newId);
                     } else {
                         newUnit.put("id", unitAtHex.getId());
@@ -372,10 +388,7 @@ public class HexMap implements Serializable {
 
                     newTerrain.put("config", config);
                     if (randomizeIds) {
-                        do {
-                            newId = r.nextInt(upperBound);
-                        } while (randomIds.contains(newId));
-                        randomIds.add(newId);
+                        int newId = getRandomId();
                         newTerrain.put("id", newId);
                     } else {
                         newTerrain.put("id", terrainAtHex.getId());
