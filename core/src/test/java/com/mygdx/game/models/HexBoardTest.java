@@ -157,35 +157,35 @@ public class HexBoardTest {
     @Test
     public void testGetHexNeighbors() {
         List n1 = h1.getHexNeighbors(tl);
-        assertEquals("should be 2", 2, n1.size());
+        assertEquals("should be 3", 3, n1.size());
         assertEquals("should be 01", "01", n1.get(0));
         assertEquals("should be 10", "10", n1.get(1));
+        assertEquals("should be 11", "11", n1.get(2));
 
         List n2 = h1.getHexNeighbors(tr);
-        assertEquals("should be 3", 3, n2.size());
+        assertEquals("should be 2", 2, n2.size());
         assertEquals("should be 08", "08", n2.get(0));
-        assertEquals("should be 18", "18", n2.get(1));
-        assertEquals("should be 19", "19", n2.get(2));
+        assertEquals("should be 19", "19", n2.get(1));
 
         List n3 = h1.getHexNeighbors(m);
         assertEquals("should be 6", 6, n3.size());
         assertEquals("should be 45", "45", n3.get(0));
-        assertEquals("should be 46", "46", n3.get(1));
-        assertEquals("should be 54", "54", n3.get(2));
+        assertEquals("should be 54", "54", n3.get(1));
+        assertEquals("should be 44", "44", n3.get(2));
         assertEquals("should be 56", "56", n3.get(3));
-        assertEquals("should be 64", "64", n3.get(4));
-        assertEquals("should be 65", "65", n3.get(5));
+        assertEquals("should be 65", "65", n3.get(4));
+        assertEquals("should be 66", "66", n3.get(5));
 
         List n4 = h1.getHexNeighbors(bl);
-        assertEquals("should be 3", 3, n4.size());
+        assertEquals("should be 2", 2, n4.size());
         assertEquals("should be 80", "80", n4.get(0));
-        assertEquals("should be 81", "81", n4.get(1));
-        assertEquals("should be 91", "91", n4.get(2));
+        assertEquals("should be 91", "91", n4.get(1));
 
         List n5 = h1.getHexNeighbors(br);
-        assertEquals("should be 2", 2, n5.size());
+        assertEquals("should be 3", 3, n5.size());
         assertEquals("should be 89", "89", n5.get(0));
         assertEquals("should be 98", "98", n5.get(1));
+        assertEquals("should be 88", "88", n5.get(2));
 
         assertEquals("should be 0", 0, h1.getHexNeighbors(oob).size());
     }

@@ -15,14 +15,13 @@ public class DesktopLauncher {
         //config.height = 1000;
         new LwjglApplication(new MyGdxGame(), config);
 
-
-        HexMap map = ConfigurationFactory.getInstance().makeHexMapFromConfig("hex_map2.json");
-        TriggerProximity trigger = ConfigurationFactory.getInstance().makeTriggerFromConfig("configuration/events/events.json");
-        System.out.println(trigger.isTriggered(map));
-        long start = System.nanoTime();
-        map.save("hex_map2.json");
-        long end = System.nanoTime();
-        long timeMs = end - start;
-        System.out.println("Took " + timeMs + "ms to execute");
+//        HexMap map = ConfigurationFactory.getInstance().makeHexMapFromConfig("hex_map2.json");
+//        TriggerProximity trigger = ConfigurationFactory.getInstance().makeTriggerFromConfig("configuration/events/events.json");
+//        System.out.println(trigger.isTriggered(map));
+//        long start = System.nanoTime();
+//        map.save("hex_map2.json");
+//        long end = System.nanoTime();
+//        long timeMs = end - start;
+//        System.out.println("Took " + timeMs + "ms to execute");
     }
 }
