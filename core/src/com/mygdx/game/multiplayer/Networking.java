@@ -20,6 +20,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -161,6 +162,7 @@ public class Networking {
             String[] ipInfo = data[0].split(":");
             data[0] = new Networking().getLocalIp();
             String sendData = String.join("<:.:>", data);
+            System.out.println(Arrays.toString(ipInfo));
             //create the socket and connect to the server entered in the text box ( x.x.x.x format ) on port
             serverConnection = Gdx.net.newClientSocket(Protocol.TCP, ipInfo[0], Integer.parseInt(ipInfo[1]), socketHints);
             try {
@@ -188,40 +190,45 @@ public class Networking {
         }
     }
 
-    private static void parseCommand(String[] command) {
+    private static boolean parseCommand(String[] command) {
         listenLog.add(new String[] {String.valueOf(java.time.LocalDateTime.now()), String.valueOf(command)});
 //        String[] inputArray = input.split("<:.:>");
 
         if (command[0].equals("server")) {
-            parseServer(command);
+            return (parseServer(command));
         }
         else if (command[0].equals("client")) {
-            parseClient(command);
+            return (parseClient(command));
         }
+        return false;
     }
 
-    private static void parseServer(String[] command) {
+    private static boolean parseServer(String[] command) {
         String[] commandArray = command[2].split("<:.:>");
         System.out.println(command);
 
         if (commandArray[1].equals("lobbyMessage")) {
-            sendAll(commandArray[2]);
+            return (sendAll(commandArray[2]));
         }
         else if (commandArray[1].equals("joinServer")) {
-            join(command);
+            return (join(command));
         }
+        return false;
     }
 
-    private static void parseClient(String[] command) {
-
+    private static boolean parseClient(String[] command) {
+        return false;
     }
 
-    private static void sendAll(String s) {
+    private static boolean sendAll(String s) {
+        return false;
     }
 
-    private static void join(String[] inputArray) {
+    private static boolean join(String[] inputArray) {
+        System.out.println(Arrays.toString(inputArray));
         if (inputArray[3].equals(roomPassword)) {
 
         }
+        return false;
     }
 }
