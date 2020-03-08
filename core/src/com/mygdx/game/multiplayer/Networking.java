@@ -73,10 +73,7 @@ public class Networking {
 
         String ipAddress = "";
         for(String str:addresses) {
-            if (str.equals("127.0.0.1")) {
-                continue;
-            }
-            else if (ipAddress.equals("")) {
+            if (ipAddress.equals("")) {
                 ipAddress = str;
             }
             else {
@@ -104,10 +101,10 @@ public class Networking {
 
     public static AbstractScreen joinServer(String[] args) {
         screen = new MultiplayerLobby();
-        roomIp = args[0];
-        localUser = args[1];
-        roomPassword = args[2];
-        localIp = new Networking().getLocalIp();
+        localIp = args[0];
+        roomIp = args[1];
+        localUser = args[2];
+        roomPassword = args[3];
         clientListener(new String[] {roomIp, "joinServer", localUser, roomPassword});
         screen.addChat("Joined Room IP: " + roomIp);
         names.add(localUser);

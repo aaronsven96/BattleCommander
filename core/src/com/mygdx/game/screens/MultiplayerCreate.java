@@ -3,8 +3,11 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.kotcrab.vis.ui.widget.VisDialog;
 import com.mygdx.game.multiplayer.LobbyServerBak;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTable;
@@ -22,6 +25,8 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import static com.kotcrab.vis.ui.widget.ButtonBar.ButtonType.OK;
+
 public class MultiplayerCreate extends AbstractScreen {
     @Override
     public void buildStage() {
@@ -29,10 +34,27 @@ public class MultiplayerCreate extends AbstractScreen {
         table.setFillParent(true);
 //        table.debugAll();
 
-        String ipAddress = new Networking().getLocalIp();
+        String ipAddresses = new Networking().getLocalIp();
+        VisDialog dialog = new VisDialog("Select Local IP");
+        dialog.closeOnEscape();
+        String[] addresses = ipAddresses.split(",");
 
-        VisLabel ipLabel = new VisLabel("Room IP(s):");
-        VisLabel ipList = new VisLabel(ipAddress);
+        VisLabel ipLabel = new VisLabel("Room IP:");
+        VisLabel ipList = new VisLabel("");
+
+        for(String str:addresses) {
+            VisTextButton button = new VisTextButton(str);
+            button.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    ipList.setText(str);
+                }
+            });
+            dialog.button(button).padBottom(3);
+        }
+        dialog.pack();
+        dialog.centerWindow();
 
         VisLabel roomName = new VisLabel("Room Name:");
         VisTextField roomNameInput = new VisTextField("Room Name");
@@ -95,5 +117,6 @@ public class MultiplayerCreate extends AbstractScreen {
         table.add(create).bottom().right();
 
         super.addActor(table);
+        super.addActor(dialog.fadeIn());
     }
 }
