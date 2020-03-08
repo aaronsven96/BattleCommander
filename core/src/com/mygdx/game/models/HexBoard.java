@@ -34,28 +34,28 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns the object at position x,y.
+     * Returns the object at position (y,x).
      *
      * @param p the position
-     * @return the object at position x,y
+     * @return the object at position (y,x)
      */
     public Optional<T> getHex(Position p) {
         // Returns Optional.empty() if the position is outside the Array bounds
         if (isValidPosition(p)) {
-            if (board[p.getX()][p.getY()] == null) {
+            if (board[p.getY()][p.getX()] == null) {
                 return Optional.empty();
             } else {
-                return Optional.of(board[p.getX()][p.getY()]);
+                return Optional.of(board[p.getY()][p.getX()]);
             }
         }
         return Optional.empty();
     }
 
     /**
-     * Returns a List of neighbors to a hex at x,y.
+     * Returns a List of neighbors to a hex at position (y,x).
      *
      * @param p the position
-     * @return a List of neighbors to a hex at x,y
+     * @return a List of neighbors to a hex at (y,x)
      */
     public List<T> getHexNeighbors(Position p) {
         List<T> neighbors = new ArrayList<>();
@@ -64,22 +64,22 @@ public class HexBoard<T> {
         if (!isValidPosition(p)) return neighbors;
 
         // Top left neighbor
-        if (p.getX() >= 1) neighbors.add(board[p.getX() - 1][p.getY()]);
+        if (p.getY() >= 1) neighbors.add(board[p.getY() - 1][p.getX()]);
 
         // Top right neighbor
-        if (p.getX() >= 1 && p.getY() <= numColumns - 2) neighbors.add(board[p.getX() - 1][p.getY() + 1]);
+        if (p.getY() >= 1 && p.getX() <= numColumns - 2) neighbors.add(board[p.getY() - 1][p.getX() + 1]);
 
         // Left neighbor
-        if (p.getY() >= 1) neighbors.add(board[p.getX()][p.getY() - 1]);
+        if (p.getX() >= 1) neighbors.add(board[p.getY()][p.getX() - 1]);
 
         // Right neighbor
-        if (p.getY() <= numColumns - 2) neighbors.add(board[p.getX()][p.getY() + 1]);
+        if (p.getX() <= numColumns - 2) neighbors.add(board[p.getY()][p.getX() + 1]);
 
         // Bottom left neighbor
-        if (p.getX() <= numRows - 2 && p.getY() >= 1) neighbors.add(board[p.getX() + 1][p.getY() - 1]);
+        if (p.getY() <= numRows - 2 && p.getX() >= 1) neighbors.add(board[p.getY() + 1][p.getX() - 1]);
 
         // Bottom right neighbor
-        if (p.getX() <= numRows - 2) neighbors.add(board[p.getX() + 1][p.getY()]);
+        if (p.getY() <= numRows - 2) neighbors.add(board[p.getY() + 1][p.getX()]);
 
         return neighbors;
     }
@@ -105,8 +105,8 @@ public class HexBoard<T> {
     /**
      * Returns true if the positions are in proximity to each other, or false otherwise.
      *
-     * @param p1          the first position
-     * @param p2          the second position
+     * @param p1    the first position
+     * @param p2    the second position
      * @param range the maximum allowed distance between two positions
      * @return true if the positions are in proximity to each other, or false otherwise.
      */
@@ -137,7 +137,7 @@ public class HexBoard<T> {
     }
 
     /**
-     * Sets a hex at position x,y.
+     * Sets a hex at position (y,x).
      *
      * @param p   the position
      * @param hex the hex
@@ -145,8 +145,8 @@ public class HexBoard<T> {
      */
     public boolean setHex(Position p, T hex) {
         // Null values for the hex Object can be passed in and set if the position is valid (i.e., they work as expected)
-        if (p.getX() >= 0 && p.getX() <= numRows - 1 && p.getY() >= 0 && p.getY() <= numColumns - 1) {
-            board[p.getX()][p.getY()] = hex;
+        if (p.getY() >= 0 && p.getY() <= numRows - 1 && p.getX() >= 0 && p.getX() <= numColumns - 1) {
+            board[p.getY()][p.getX()] = hex;
             return true;
         }
         return false; // returns false if the position is outside the Array bounds

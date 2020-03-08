@@ -33,7 +33,7 @@ public class Terrain {
     /**
      * Returns the Terrain from the configuration file.
      *
-     * @param config the content
+     * @param config the config
      * @return the Terrain from the configuration file
      */
     public static Terrain getTerrainFromConfig(String config, String texture, int id) {
