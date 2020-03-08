@@ -1,0 +1,6 @@
+{
+  "type": "Rock",
+  "description": "An example configuration file for a rock terrain",
+  "defense": 10,
+  "terrainState": "IMPASSABLE"
+}
