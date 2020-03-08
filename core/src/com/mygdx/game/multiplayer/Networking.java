@@ -143,6 +143,7 @@ public class Networking {
 
                 try {
                     // Read to the next newline (\n) and display that text on labelMessage
+                    System.out.println(input.readLine());
                     parseCommand(new String[] {"server", "in", input.readLine()});
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -173,6 +174,7 @@ public class Networking {
 
                 try {
                     // Read to the next newline (\n) and display that text on labelMessage
+                    System.out.println(input.readLine());
                     parseCommand(new String[] {"client", "in", input.readLine()});
                 } catch (IOException e) {
                     e.printStackTrace();
