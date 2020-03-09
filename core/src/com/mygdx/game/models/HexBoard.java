@@ -103,7 +103,7 @@ public class HexBoard<T> {
 
     public List<T> getNearestHexNeighbors(Position p, int range) {
         Map<String, Position> marked = new HashMap<>();
-        marked.put(p.getY() + "," + p.getX(), p);
+        marked.put(p.toString(), p);
 
         Queue<Position> toExplore = new LinkedList<>();
         toExplore.add(p);
@@ -124,14 +124,14 @@ public class HexBoard<T> {
             }
 
             for (Position neighbor : getPositionNeighbors(current)) {
-                if (!marked.containsKey(neighbor.getY() + "," + neighbor.getX())) {
-                    marked.put(neighbor.getY() + "," + neighbor.getX(), neighbor);
+                if (!marked.containsKey(neighbor.toString())) {
+                    marked.put(neighbor.toString(), neighbor);
                     toExplore.add(neighbor);
                 }
             }
         }
 
-        marked.remove(p.getY() + "," + p.getX());
+        marked.remove(p.toString());
 
         List<T> result = new ArrayList<>();
         for (String s : marked.keySet()) {
