@@ -219,6 +219,15 @@ public class HexBoardTest {
     }
 
     @Test
+    public void testGetRandomShortestPath() {
+        assertEquals("should be 1", 1, h1.getRandomShortestPath(p62, p62).size());
+        assertEquals("should be 2", 2, h1.getRandomShortestPath(p43, p44).size());
+
+        assertEquals("should be 6", 6, h1.getRandomShortestPath(tl, m).size());
+        assertEquals("should be 19", 19, h1.getRandomShortestPath(tr, bl).size());
+    }
+
+    @Test
     public void testIsInProximity() {
         // Invalid positions
         assertFalse(h1.isInProximity(oob, tl, 999));

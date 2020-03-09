@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.Random;
 
 import lombok.Getter;
 
@@ -28,11 +29,11 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns the distance (least number of moves) between two positions.
+     * Returns the shortest distance between two positions.
      *
      * @param p1 the first position
      * @param p2 the second position
-     * @return the distance (least number of moves) between two positions
+     * @return the shortest distance between two positions
      */
     public Optional<Integer> getDistanceBetweenTwoPositions(Position p1, Position p2) {
         Optional<Position> opt1 = invertYPosition(p1);
@@ -64,10 +65,10 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns the object at position (y,x).
+     * Returns the hex at a position.
      *
      * @param p the position
-     * @return the object at position (y,x)
+     * @return the hex at a position
      */
     public Optional<T> getHex(Position p) {
         // Returns Optional.empty() if the position is outside the Array bounds
@@ -82,10 +83,10 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns a List of neighbors to a hex at position (y,x).
+     * Returns a List of neighbors to a hex.
      *
      * @param p the position
-     * @return a List of neighbors to a hex at (y,x)
+     * @return a List of neighbors to a hex
      */
     public List<T> getHexNeighbors(Position p) {
         List<Position> pNeighbors = getPositionNeighbors(p);
@@ -147,10 +148,10 @@ public class HexBoard<T> {
     }
 
     /**
-     * Returns a List of neighbors to a position (y,x).
+     * Returns a List of neighbors to a position.
      *
      * @param p the position
-     * @return a List of neighbors to a position at (y,x)
+     * @return a List of neighbors to a position
      */
     public List<Position> getPositionNeighbors(Position p) {
         List<Position> neighbors = new ArrayList<>();
@@ -192,12 +193,94 @@ public class HexBoard<T> {
     }
 
     /**
+     * Returns a random shortest path between two positions.
+     *
+     * @param p1 the first position
+     * @param p2 the second position
+     * @return a random shortest path between two positions
+     */
+    public List<Position> getRandomShortestPath(Position p1, Position p2) {
+        List<Position> path = new ArrayList<>();
+
+        if (p1.equals(p2)) {
+            path.add(p1);
+            return path;
+        }
+
+        int totalDistance;
+        Optional<Integer> opt = getDistanceBetweenTwoPositions(p1, p2);
+        if (opt.isPresent()) {
+            totalDistance = opt.get();
+        } else {
+            return path;
+        }
+
+        Map<String, Integer> marked = new HashMap<>();
+        marked.put(p1.toString(), totalDistance);
+
+        Queue<Position> toExplore = new LinkedList<>();
+        toExplore.add(p1);
+        toExplore.add(null);
+
+        int level = 0;
+        int neighborDistance;
+        while (!toExplore.isEmpty()) {
+            Position current = toExplore.remove();
+
+            if (current == null) {
+                level++;
+                toExplore.add(null);
+                if (toExplore.peek() == null) {
+                    break;
+                } else {
+                    continue;
+                }
+            }
+
+            for (Position neighbor : getPositionNeighbors(current)) {
+                Optional<Integer> opt1 = getDistanceBetweenTwoPositions(neighbor, p2);
+                if (opt.isPresent()) {
+                    neighborDistance = opt1.get();
+                } else {
+                    neighborDistance = -999;
+                }
+                if (!marked.containsKey(neighbor.toString()) && level + neighborDistance == totalDistance - 1) {
+                    System.out.println(level);
+                    if (p2.equals(neighbor)) {
+                        toExplore.add(null);
+                    }
+                    marked.put(neighbor.toString(), neighborDistance);
+                    toExplore.add(neighbor);
+                }
+            }
+        }
+
+        path.add(p1);
+        Position current = p1;
+        for (int i = 1; i < totalDistance; i++) {
+            List<Position> neighbors = getPositionNeighbors(current);
+            while (path.size() < i + 1) {
+                Random r = new Random();
+                int random = r.nextInt(neighbors.size());
+                Position p = neighbors.get(random);
+                if (marked.containsKey(p.toString()) && marked.get(p.toString()) == totalDistance - i) {
+                    path.add(p);
+                    current = p;
+                }
+            }
+        }
+        path.add(p2);
+
+        return path;
+    }
+
+    /**
      * Returns true if the positions are in proximity to each other, or false otherwise.
      *
      * @param p1    the first position
      * @param p2    the second position
      * @param range the maximum allowed distance between two positions
-     * @return true if the positions are in proximity to each other, or false otherwise.
+     * @return true if the positions are in proximity to each other, or false otherwise
      */
     public boolean isInProximity(Position p1, Position p2, int range) {
         if (range < 0) {
@@ -213,7 +296,7 @@ public class HexBoard<T> {
     }
 
     /**
-     * Sets a hex at position (y,x).
+     * Sets the hex at a position.
      *
      * @param p   the position
      * @param hex the hex
@@ -232,7 +315,7 @@ public class HexBoard<T> {
      * Returns a position with an inverted y-coordinate.
      *
      * @param p the position
-     * @return a position with an inverted y-coordinate.
+     * @return a position with an inverted y-coordinate
      */
     private Optional<Position> invertYPosition(Position p) {
         if (isValidPosition(p)) {
