@@ -238,14 +238,14 @@ public class HexBoard<T> {
                     continue;
                 }
 
+                marked.add(neighbor.toString());
+
                 Optional<Integer> opt2 = getDistanceBetweenTwoPositions(neighbor, p2);
                 if (opt2.isPresent()) {
                     neighborDistance = opt2.get();
                 } else {
                     continue;
                 }
-
-                marked.add(neighbor.toString());
 
                 if (level + neighborDistance == totalDistance - 1) {
                     temp.add(neighbor);
