@@ -1,13 +1,16 @@
 package com.mygdx.game.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 
 import lombok.Getter;
 
@@ -215,6 +218,12 @@ public class HexBoard<T> {
             return path;
         }
 
+        if (totalDistance == 1) {
+            path.add(p1);
+            path.add(p2);
+            return path;
+        }
+
         Map<String, Integer> marked = new HashMap<>();
         marked.put(p1.toString(), totalDistance);
 
@@ -242,13 +251,9 @@ public class HexBoard<T> {
                 if (opt.isPresent()) {
                     neighborDistance = opt1.get();
                 } else {
-                    neighborDistance = -999;
+                    continue;
                 }
                 if (!marked.containsKey(neighbor.toString()) && level + neighborDistance == totalDistance - 1) {
-                    System.out.println(level);
-                    if (p2.equals(neighbor)) {
-                        toExplore.add(null);
-                    }
                     marked.put(neighbor.toString(), neighborDistance);
                     toExplore.add(neighbor);
                 }
@@ -259,10 +264,17 @@ public class HexBoard<T> {
         Position current = p1;
         for (int i = 1; i < totalDistance; i++) {
             List<Position> neighbors = getPositionNeighbors(current);
+            List<Integer> indices = new ArrayList<>();
+
+            for (int j = 0; j < neighbors.size(); j++) {
+                indices.add(j);
+            }
+            Collections.shuffle(indices);
+
             while (path.size() < i + 1) {
-                Random r = new Random();
-                int random = r.nextInt(neighbors.size());
-                Position p = neighbors.get(random);
+                Position p = neighbors.get(indices.get(indices.size() - 1));
+                indices.remove(indices.size() - 1);
+
                 if (marked.containsKey(p.toString()) && marked.get(p.toString()) == totalDistance - i) {
                     path.add(p);
                     current = p;
