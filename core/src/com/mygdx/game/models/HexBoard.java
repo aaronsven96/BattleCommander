@@ -255,8 +255,9 @@ public class HexBoard<T> {
                 return temp;
             }
 
-            Collections.shuffle(temp);
-            current = temp.get(0);
+            Random r = new Random();
+            int index = r.nextInt(temp.size());
+            current = temp.get(index);
             path.add(current);
             level++;
         }
