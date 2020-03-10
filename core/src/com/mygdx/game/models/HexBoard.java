@@ -227,8 +227,8 @@ public class HexBoard<T> {
 
         Set<String> marked = new HashSet<>();
         Position current = p1;
-        int level = 0;
         int neighborDistance;
+        int level = 0;
         while (path.size() < totalDistance + 1) {
 
             List<Position> temp = new ArrayList<>();
