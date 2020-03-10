@@ -237,7 +237,6 @@ public class HexBoard<T> {
                 if (marked.contains(neighbor.toString())) {
                     continue;
                 }
-
                 marked.add(neighbor.toString());
 
                 Optional<Integer> opt2 = getDistanceBetweenTwoPositions(neighbor, p2);
