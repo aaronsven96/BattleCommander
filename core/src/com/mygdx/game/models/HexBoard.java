@@ -23,6 +23,7 @@ public class HexBoard<T> {
     private int numRows;
     private int numColumns;
 
+
     public HexBoard(int numRows, int numColumns) {
         if (numRows < 1 || numColumns < 1) throw new IllegalArgumentException("number of rows/columns must be positive");
 
@@ -204,9 +205,9 @@ public class HexBoard<T> {
      */
     public List<Position> getRandomShortestPath(Position p1, Position p2) {
         List<Position> path = new ArrayList<>();
+        path.add(p1);
 
         if (p1.equals(p2)) {
-            path.add(p1);
             return path;
         }
 
@@ -215,73 +216,51 @@ public class HexBoard<T> {
         if (opt.isPresent()) {
             totalDistance = opt.get();
         } else {
+            path.remove(0);
             return path;
         }
 
         if (totalDistance == 1) {
-            path.add(p1);
             path.add(p2);
             return path;
         }
 
-        Map<String, Integer> marked = new HashMap<>();
-        marked.put(p1.toString(), totalDistance);
-
-        Queue<Position> toExplore = new LinkedList<>();
-        toExplore.add(p1);
-        toExplore.add(null);
-
+        Set<String> marked = new HashSet<>();
+        Position current = p1;
         int level = 0;
         int neighborDistance;
-        while (!toExplore.isEmpty()) {
-            Position current = toExplore.remove();
+        while (path.size() < totalDistance + 1) {
 
-            if (current == null) {
-                level++;
-                toExplore.add(null);
-                if (toExplore.peek() == null) {
-                    break;
-                } else {
-                    continue;
-                }
-            }
+            List<Position> temp = new ArrayList<>();
 
             for (Position neighbor : getPositionNeighbors(current)) {
+                if (marked.contains(neighbor.toString())) {
+                    continue;
+                }
+
                 Optional<Integer> opt1 = getDistanceBetweenTwoPositions(neighbor, p2);
                 if (opt.isPresent()) {
                     neighborDistance = opt1.get();
                 } else {
                     continue;
                 }
-                if (!marked.containsKey(neighbor.toString()) && level + neighborDistance == totalDistance - 1) {
-                    marked.put(neighbor.toString(), neighborDistance);
-                    toExplore.add(neighbor);
+
+                marked.add(neighbor.toString());
+
+                if (level + neighborDistance == totalDistance - 1) {
+                    temp.add(neighbor);
                 }
             }
-        }
 
-        path.add(p1);
-        Position current = p1;
-        for (int i = 1; i < totalDistance; i++) {
-            List<Position> neighbors = getPositionNeighbors(current);
-            List<Integer> indices = new ArrayList<>();
-
-            for (int j = 0; j < neighbors.size(); j++) {
-                indices.add(j);
+            if (temp.size() == 0) {
+                return temp;
             }
-            Collections.shuffle(indices);
 
-            while (path.size() < i + 1) {
-                Position p = neighbors.get(indices.get(indices.size() - 1));
-                indices.remove(indices.size() - 1);
-
-                if (marked.containsKey(p.toString()) && marked.get(p.toString()) == totalDistance - i) {
-                    path.add(p);
-                    current = p;
-                }
-            }
+            Collections.shuffle(temp);
+            current = temp.get(0);
+            path.add(current);
+            level++;
         }
-        path.add(p2);
 
         return path;
     }
