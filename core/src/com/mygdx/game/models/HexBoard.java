@@ -212,9 +212,9 @@ public class HexBoard<T> {
         }
 
         int totalDistance;
-        Optional<Integer> opt = getDistanceBetweenTwoPositions(p1, p2);
-        if (opt.isPresent()) {
-            totalDistance = opt.get();
+        Optional<Integer> opt1 = getDistanceBetweenTwoPositions(p1, p2);
+        if (opt1.isPresent()) {
+            totalDistance = opt1.get();
         } else {
             path.remove(0);
             return path;
@@ -238,9 +238,9 @@ public class HexBoard<T> {
                     continue;
                 }
 
-                Optional<Integer> opt1 = getDistanceBetweenTwoPositions(neighbor, p2);
-                if (opt.isPresent()) {
-                    neighborDistance = opt1.get();
+                Optional<Integer> opt2 = getDistanceBetweenTwoPositions(neighbor, p2);
+                if (opt2.isPresent()) {
+                    neighborDistance = opt2.get();
                 } else {
                     continue;
                 }
