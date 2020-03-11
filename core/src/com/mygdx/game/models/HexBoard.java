@@ -106,7 +106,14 @@ public class HexBoard<T> {
         return hNeighbors;
     }
 
-    public List<T> getNearestHexNeighbors(Position p, int range) {
+    /**
+     * Returns a List of positions within range of a given position.
+     *
+     * @param p     the position
+     * @param range the range
+     * @return a List of positions within range of a given position
+     */
+    public List<Position> getNearestPositionNeighbors(Position p, int range) {
         Map<String, Position> marked = new HashMap<>();
         marked.put(p.toString(), p);
 
@@ -137,11 +144,23 @@ public class HexBoard<T> {
         }
 
         marked.remove(p.toString());
+        List<Position> result = new ArrayList<>(marked.values());
+        return result;
+    }
 
+
+    /**
+     * Returns a List of hexes within range of a given position.
+     *
+     * @param p     the position
+     * @param range the range
+     * @return a List of hexes within range of a given position
+     */
+    public List<T> getNearestHexNeighbors(Position p, int range) {
+        List<Position> positionNeighbors = getNearestPositionNeighbors(p, range);
         List<T> result = new ArrayList<>();
-        for (String s : marked.keySet()) {
-            Position neighbor = marked.get(s);
-            Optional<T> opt = getHex(neighbor);
+        for (Position pos : positionNeighbors) {
+            Optional<T> opt = getHex(pos);
             if (opt.isPresent()) {
                 T newT = opt.get();
                 result.add(newT);

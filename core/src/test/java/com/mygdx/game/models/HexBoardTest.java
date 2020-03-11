@@ -209,6 +209,24 @@ public class HexBoardTest {
     }
 
     @Test
+    public void testGetNearestPositionNeighbors() {
+        assertEquals("should be 6", 6, h1.getNearestPositionNeighbors(m, 1).size());
+        assertEquals("should be 18", 18, h1.getNearestPositionNeighbors(m, 2).size());
+        assertEquals("should be 36", 36, h1.getNearestPositionNeighbors(m, 3).size());
+        assertEquals("should be 60", 60, h1.getNearestPositionNeighbors(m, 4).size());
+        assertEquals("should be 79", 79, h1.getNearestPositionNeighbors(m, 5).size());
+        assertEquals("should be 87", 87, h1.getNearestPositionNeighbors(m, 6).size());
+        assertEquals("should be 93", 93, h1.getNearestPositionNeighbors(m, 7).size());
+        assertEquals("should be 97", 97, h1.getNearestPositionNeighbors(m, 8).size());
+        assertEquals("should be 99", 99, h1.getNearestPositionNeighbors(m, 9).size());
+
+        assertEquals("should be 3", 3, h1.getNearestPositionNeighbors(br, 1).size());
+        assertEquals("should be 8", 8, h1.getNearestPositionNeighbors(br, 2).size());
+        assertEquals("should be 15", 15, h1.getNearestPositionNeighbors(br, 3).size());
+        assertEquals("should be 24", 24, h1.getNearestPositionNeighbors(br, 4).size());
+    }
+
+    @Test
     public void testGetPositionNeighbors() {
         assertEquals("should be 3", 3, h1.getPositionNeighbors(tl).size());
         assertEquals("should be 6", 6, h1.getPositionNeighbors(m).size());
