@@ -337,7 +337,6 @@ public class HexMap implements Serializable {
      */
     private void save(String filename, boolean randomizeIds, int upperBound) {
         Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
-        Set<Integer> randomIds = new HashSet<>();
         hexMap.put("turn", getTurn());
         hexMap.put("rows", getRows());
         hexMap.put("columns", getColumns());

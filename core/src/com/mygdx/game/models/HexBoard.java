@@ -121,14 +121,14 @@ public class HexBoard<T> {
         toExplore.add(p);
         toExplore.add(null);
 
-        int count = 0;
+        int depth = 0;
         while (!toExplore.isEmpty()) {
             Position current = toExplore.remove();
 
             if (current == null) {
-                count++;
+                depth++;
                 toExplore.add(null);
-                if (toExplore.peek() == null || count == range) {
+                if (toExplore.peek() == null || depth == range) {
                     break;
                 } else {
                     continue;
@@ -144,8 +144,8 @@ public class HexBoard<T> {
         }
 
         marked.remove(p.toString());
-        List<Position> result = new ArrayList<>(marked.values());
-        return result;
+        List<Position> npNeighbors = new ArrayList<>(marked.values());
+        return npNeighbors;
     }
 
 
@@ -158,16 +158,16 @@ public class HexBoard<T> {
      */
     public List<T> getNearestHexNeighbors(Position p, int range) {
         List<Position> positionNeighbors = getNearestPositionNeighbors(p, range);
-        List<T> result = new ArrayList<>();
+        List<T> nhNeighbors = new ArrayList<>();
         for (Position pos : positionNeighbors) {
             Optional<T> opt = getHex(pos);
             if (opt.isPresent()) {
                 T newT = opt.get();
-                result.add(newT);
+                nhNeighbors.add(newT);
             }
         }
 
-        return result;
+        return nhNeighbors;
     }
 
     /**
@@ -177,42 +177,42 @@ public class HexBoard<T> {
      * @return a List of neighbors to a position
      */
     public List<Position> getPositionNeighbors(Position p) {
-        List<Position> neighbors = new ArrayList<>();
+        List<Position> pNeighbors = new ArrayList<>();
 
         // Invalid position check
-        if (!isValidPosition(p)) return neighbors;
+        if (!isValidPosition(p)) return pNeighbors;
 
         // Up neighbor
         if (p.getY() >= 1) {
-            neighbors.add(new Position(p.getY() - 1, p.getX()));
+            pNeighbors.add(new Position(p.getY() - 1, p.getX()));
         }
 
         // Down left neighbor
         if (p.getX() >= 1) {
-            neighbors.add(new Position(p.getY(), p.getX() - 1));
+            pNeighbors.add(new Position(p.getY(), p.getX() - 1));
         }
 
         // Up left neighbor
         if (p.getY() >= 1 && p.getX() >= 1) {
-            neighbors.add(new Position(p.getY() - 1, p.getX() - 1));
+            pNeighbors.add(new Position(p.getY() - 1, p.getX() - 1));
         }
 
         // Up right neighbor
         if (p.getX() <= numColumns - 2) {
-            neighbors.add(new Position(p.getY(), p.getX() + 1));
+            pNeighbors.add(new Position(p.getY(), p.getX() + 1));
         }
 
         // Down neighbor
         if (p.getY() <= numRows - 2) {
-            neighbors.add(new Position(p.getY() + 1, p.getX()));
+            pNeighbors.add(new Position(p.getY() + 1, p.getX()));
         }
 
         // Down right neighbor
         if (p.getY() <= numRows - 2 && p.getX() <= numColumns - 2) {
-            neighbors.add(new Position(p.getY() + 1, p.getX() + 1));
+            pNeighbors.add(new Position(p.getY() + 1, p.getX() + 1));
         }
 
-        return neighbors;
+        return pNeighbors;
     }
 
     /**
@@ -223,32 +223,21 @@ public class HexBoard<T> {
      * @return a random shortest path between two positions
      */
     public List<Position> getRandomShortestPath(Position p1, Position p2) {
-        List<Position> path = new ArrayList<>();
-        path.add(p1);
-
-        if (p1.equals(p2)) {
-            return path;
-        }
+        List<Position> rsPath = new ArrayList<>();
 
         int totalDistance;
         Optional<Integer> opt1 = getDistanceBetweenTwoPositions(p1, p2);
         if (opt1.isPresent()) {
             totalDistance = opt1.get();
         } else {
-            path.remove(0);
-            return path;
-        }
-
-        if (totalDistance == 1) {
-            path.add(p2);
-            return path;
+            return rsPath;
         }
 
         Set<String> marked = new HashSet<>();
         Position current = p1;
         int neighborDistance;
-        int level = 0;
-        while (path.size() < totalDistance + 1) {
+        int depth = 0;
+        while (rsPath.size() < totalDistance) {
 
             List<Position> temp = new ArrayList<>();
 
@@ -265,7 +254,7 @@ public class HexBoard<T> {
                     continue;
                 }
 
-                if (level + neighborDistance == totalDistance - 1) {
+                if (depth + neighborDistance == totalDistance - 1) {
                     temp.add(neighbor);
                 }
             }
@@ -277,11 +266,11 @@ public class HexBoard<T> {
             Random r = new Random();
             int index = r.nextInt(temp.size());
             current = temp.get(index);
-            path.add(current);
-            level++;
+            rsPath.add(current);
+            depth++;
         }
 
-        return path;
+        return rsPath;
     }
 
     /**
