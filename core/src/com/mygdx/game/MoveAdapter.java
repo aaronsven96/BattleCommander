@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.mygdx.game.models.BasicUnit;
 import com.mygdx.game.models.Command;
 import com.mygdx.game.models.HexMap;
 import com.mygdx.game.models.Orders;
@@ -10,7 +9,6 @@ import com.mygdx.game.models.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class MoveAdapter {
 
@@ -48,7 +46,7 @@ public class MoveAdapter {
             }
         }
         else{
-            Command newCommand = new Command(currentAction, selectedUnit, p);
+            Command newCommand = new Command(currentAction, selectedUnit, null, p);
             //Todo Add validity check
             tempOrders.putIfAbsent(selectedUnit, new ArrayList<>());
             tempOrders.get(selectedUnit).add(newCommand);

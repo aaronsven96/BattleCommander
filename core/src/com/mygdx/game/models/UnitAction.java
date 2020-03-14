@@ -6,7 +6,7 @@ public interface UnitAction {
 
     String getActionTexture();
 
-    boolean isValidAction(Position startPosition, Position endPosition, HexMap map);
+    boolean isValidAction(Command action, IntermediateBoard board);
 
-    boolean applyAction(Position startPosition, Position endPosition, HexMap map);
+    IntermediateBoard applyAction(Command action, IntermediateBoard board);
 }

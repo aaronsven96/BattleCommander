@@ -5,47 +5,50 @@ package com.mygdx.game.models;
  */
 public class Command {
 
-    /* Type of action the command represents */
+    /** Type of action the command represents */
     private String actionType;
 
-    /* Acting unit's ID */
+    /** Acting unit's ID */
     private int unitId;
 
-    /* Target unit's ID. Not necessary, commented out for now. */
-//     private int targetUnitId;
-
-    /* Targeted position */
+    /** The start and targeted positions of the action. */
+    private Position startPosition;
     private Position targetPosition;
 
-    public Command(String actionType, int unitId /*, int targetUnitId */, Position targetPosition) {
+    /** The distance between the start and end positions. */
+    private int distance;
+
+    /** Whether there is line of sight between the start and end positions */
+    private boolean hasLineOfSight;
+
+    public Command(String actionType, int unitId, Position startPosition, Position targetPosition, HexBoard<Terrain> board) {
         this.actionType = actionType;
         this.unitId = unitId;
-        /* this.targetUnitId = targetUnitId; */
+        this.startPosition = startPosition;
         this.targetPosition = targetPosition;
+        if (board.getDistanceBetweenTwoPositions(startPosition, targetPosition).isPresent()) {
+            distance = board.getDistanceBetweenTwoPositions(startPosition, targetPosition).get();
+        }
+        hasLineOfSight = board.checkLineOfSight(board, startPosition, targetPosition);
     }
 
     public int getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(int unitId) {
-        this.unitId = unitId;
+    public Position getStartPosition() {
+        return startPosition;
     }
-
-//    public int getTargetUnitId() {
-//        return targetUnitId;
-//    }
-//
-//    public void setTargetUnitId(int targetUnitId) {
-//        this.targetUnitId = targetUnitId;
-//    }
 
     public Position getTargetPosition() {
         return targetPosition;
     }
 
-    public void setTargetPosition(Position targetPosition) {
-        this.targetPosition = targetPosition;
+    public int getDistance() {
+        return distance;
     }
 
+    public boolean hasLineOfSight() {
+        return hasLineOfSight;
+    }
 }

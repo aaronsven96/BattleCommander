@@ -32,14 +32,16 @@ public class HexMap implements Serializable {
     private int turn;
     private static int turnGenerator;
     private Set<Integer> ids;
+    private Set<Integer> playerIds;
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns, Set<Integer> playerIds) {
         this.units = units;
         this.rows = rows;
         this.columns = columns;
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
+        this.playerIds = playerIds;
         this.turn = turnGenerator;
         turnGenerator++;
     }
@@ -78,6 +80,7 @@ public class HexMap implements Serializable {
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
 
         Set<Integer> ids = new HashSet<>();
+        Set<Integer> playerIds = new HashSet<>();
 
         // Set up units
         for (int i = 0; i < jsonArrayUnits.size(); i++) {
@@ -89,6 +92,7 @@ public class HexMap implements Serializable {
                 int id = object.get("id").getAsInt();
                 ids.add(id);
                 int pid = object.get("pid").getAsInt();
+                playerIds.add(pid);
                 String texture = object.get("texture").getAsString();
 
                 Position p = new Position(i, j);
@@ -137,7 +141,7 @@ public class HexMap implements Serializable {
         textures.add(unitTextures);
         textures.add(terrainTextures);
 
-        return new HexMap(units, terrain, mapShape, textures, rows, columns);
+        return new HexMap(units, terrain, mapShape, textures, rows, columns, playerIds);
     }
 
     // TODO: add interactions to the game
@@ -410,6 +414,10 @@ public class HexMap implements Serializable {
         String json = gson.toJson(hexMap); // convert Map to JSON String
 
         file.writeString(json, false); // write String to JSON file
+    }
+
+    public Set<Integer> getPlayerIds() {
+        return playerIds;
     }
 
     /**
