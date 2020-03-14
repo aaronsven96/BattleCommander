@@ -5,6 +5,11 @@ import java.util.Map;
 
 
 public class SupportAction implements UnitAction {
+
+    /** Action's name and texture */
+    private String actionName;
+    private String actionTexture;
+
     private int maxRange;
     private int strength;
 
@@ -15,12 +20,12 @@ public class SupportAction implements UnitAction {
 
     @Override
     public String getActionName() {
-        return null;
+        return actionName;
     }
 
     @Override
     public String getActionTexture() {
-        return null;
+        return actionTexture;
     }
 
     @Override

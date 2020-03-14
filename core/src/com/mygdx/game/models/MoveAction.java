@@ -1,6 +1,7 @@
 package com.mygdx.game.models;
 
 import java.util.List;
+import java.util.Map;
 
 public class MoveAction implements UnitAction {
 
@@ -8,15 +9,9 @@ public class MoveAction implements UnitAction {
     private String actionName;
     private String actionTexture;
 
-    // TODO: Implement multi-hex movement
-
-    /** Maximum distance the move can move */
-    private int maxLength;
-
-    public MoveAction(String actionName, String actionTexture, int maxLength) {
+    public MoveAction(String actionName, String actionTexture) {
         this.actionName = actionName;
         this.actionTexture = actionTexture;
-        this.maxLength = maxLength;
     }
 
     @Override
@@ -31,14 +26,14 @@ public class MoveAction implements UnitAction {
 
     /** Returns true if the move action is valid */
     @Override
-    public boolean isValidAction(Command action) {
-        return action.getDistance() <= maxLength;
+    public boolean isValidAction(Command action, IntermediateBoard board) {
+        return board.getTerrain().getHex(action.getStartPosition()).isPresent() && board.getTerrain().getHex(action.getTargetPosition()).isPresent();
     }
 
     /** Applies the move action and returns the new intermediate board */
     @Override
     public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
-        HexBoard<List<BasicUnit>> newBoard = board.getUnits();
+        HexBoard<Map<Integer, List<BasicUnit>>> newBoard = board.getUnits();
         for (int n = 0; n < newBoard.getHex(action.getStartPosition()).get().size(); n++) {
             if (newBoard.getHex(action.getStartPosition()).get().get(n).getId() == action.getUnitId()) {
                 List<BasicUnit> startHex = newBoard.getHex(action.getStartPosition()).get();
