@@ -12,48 +12,67 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Set;
+
+import lombok.Getter;
 
 /**
  * A class that represents all the HexBoard layers.
  */
+
+@Getter
 public class HexMap implements Serializable {
+    private static int turnGenerator; // used to update turn number
+    private final int rows; // number of rows
+    private final int columns; // number of columns
+
     private HexBoard<BasicUnit> units;
     private HexBoard<Terrain> terrain;
-    private HexBoard<Boolean> mapShape;
-    private List<HexBoard<String>> textures;
-    private final int rows;
-    private final int columns;
-    private int turn;
-    private static int turnGenerator;
-    private Set<Integer> ids;
+    private HexBoard<Boolean> mapShape; // HexBoard of active tiles
+    private List<HexBoard<String>> textures; // contains HexBoards of texture filenames for BasicUnits (zeroth position) and Terrain (first position)
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns) {
+    private Set<Integer> ids; // contains all BasicUnit and Terrain IDs in the Map
+    private Map<Integer, Position> idToPosition; // {ID=Position, ...}
+
+    private int turn; // turn number
+
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns, Set<Integer> ids, Map<Integer, Position> idToPosition) {
         this.units = units;
         this.rows = rows;
         this.columns = columns;
         this.terrain = terrain;
         this.mapShape = mapShape;
         this.textures = textures;
+        this.ids = ids;
+        this.idToPosition = idToPosition;
         this.turn = turnGenerator;
         turnGenerator++;
     }
 
     // Copy constructor
     public HexMap(HexMap original) {
-        this.rows = original.rows;
-        this.columns = original.columns;
+        rows = original.rows;
+        columns = original.columns;
         units = original.units;
         terrain = original.terrain;
         mapShape = original.mapShape;
         textures = original.textures;
+        ids = original.ids;
+        turn = original.turn;
+        idToPosition = original.idToPosition;
     }
 
+    /**
+     * Returns the HexMap from the configuration file.
+     *
+     * @param content the config
+     * @return the HexMap from the configuration file.
+     */
     public static HexMap getHexMapFromConfig(String content) {
         Gson gson = new Gson();
 
@@ -63,6 +82,7 @@ public class HexMap implements Serializable {
         turnGenerator = turn;
         int rows = hexMap.get("rows").getAsInt();
         int columns = hexMap.get("columns").getAsInt();
+        Set<Integer> ids = new HashSet<>();
 
         HexBoard<BasicUnit> units = new HexBoard<>(rows, columns);
         HexBoard<Terrain> terrain = new HexBoard<>(rows, columns);
@@ -76,8 +96,6 @@ public class HexMap implements Serializable {
         JsonArray jsonArrayUnits = hexMap.get("units").getAsJsonArray();
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
-
-        Set<Integer> ids = new HashSet<>();
 
         // Set up units
         for (int i = 0; i < jsonArrayUnits.size(); i++) {
@@ -137,46 +155,45 @@ public class HexMap implements Serializable {
         textures.add(unitTextures);
         textures.add(terrainTextures);
 
-        return new HexMap(units, terrain, mapShape, textures, rows, columns);
+        // Set up idToPosition, which maps each unique ID to a HexBoard Position
+        Map<Integer, Position> idToPosition = new HashMap<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Position p = new Position(i, j);
+
+                Optional<BasicUnit> buOpt = units.getHex(p);
+                if (buOpt.isPresent()) {
+                    BasicUnit bu = buOpt.get();
+                    int buId = bu.getId();
+                    idToPosition.put(buId, p);
+                }
+
+                Optional<Terrain> tOpt = terrain.getHex(p);
+                if (tOpt.isPresent()) {
+                    Terrain t = tOpt.get();
+                    int tId = t.getId();
+                    idToPosition.put(tId, p);
+                }
+            }
+        }
+
+        return new HexMap(units, terrain, mapShape, textures, rows, columns, ids, idToPosition);
     }
 
     // TODO: add interactions to the game
     // Interaction getInteraction(Position p);
 
     /**
-     * Returns a HexMap of Booleans which describes which tiles are in the map.
+     * Returns the position (y,x) of a given ID.
      *
-     * @return a HexMap of Booleans which describes which tiles are in the map.
+     * @param id the ID
+     * @return the Position of a given ID
      */
-    public HexBoard<Boolean> getMapShape() {
-        return mapShape;
-    }
-
-    /**
-     * Returns the number of columns in the map.
-     *
-     * @return the number of columns in the map
-     */
-    public int getNumColumns() {
-        return columns;
-    }
-
-    /**
-     * Returns the number of rows in the map.
-     *
-     * @return the number of rows in the map
-     */
-    public int getNumRows() {
-        return rows;
-    }
-
-    /**
-     * Returns the Terrain HexBoard.
-     *
-     * @return the Terrain HexBoard
-     */
-    public HexBoard<Terrain> getTerrain() {
-        return terrain;
+    public Optional<Position> getPositionById(int id) {
+        if (idToPosition.containsKey(id)) {
+            return Optional.of(idToPosition.get(id));
+        }
+        return Optional.empty();
     }
 
     /**
@@ -190,37 +207,10 @@ public class HexMap implements Serializable {
     }
 
     /**
-     * Returns a List of Strings which refer to the file location of the textures in each layer of the HexMap
-     *
-     * @return a List of Strings which refer to the file location of the textures in each layer of the HexMap
-     */
-    public List<HexBoard<String>> getTextures() {
-        return textures;
-    }
-
-    /**
-     * Returns the current turn number.
-     *
-     * @return the current turn number
-     */
-    public int getTurn() {
-        return turn;
-    }
-
-    /**
-     * Returns the BasicUnits HexBoard.
-     *
-     * @return the BasicUnits HexBoard
-     */
-    public HexBoard<BasicUnit> getUnits() {
-        return units;
-    }
-
-    /**
      * Returns the BasicUnit at a position.
      *
      * @param p the position
-     * @return the BasicUnits at a position
+     * @return the BasicUnit at a position
      */
     public Optional<BasicUnit> getUnit(Position p) {
         return units.getHex(p);
@@ -259,32 +249,8 @@ public class HexMap implements Serializable {
      * @return true if the IDs are in proximity, false otherwise
      */
     public boolean isInProximity(int id1, int id2, int range) {
-        List<Position> positions = new ArrayList<>();
-        Map<Integer, Position> proximityMap = new HashMap<>();
-
-
-        for (int i = 0; i < getNumRows(); i++) {
-            for (int j = 0; j < getNumColumns(); j++) {
-                Position p = new Position(i, j);
-
-                Optional<BasicUnit> buOpt = getUnits().getHex(p);
-                if (buOpt.isPresent()) {
-                    BasicUnit bu = buOpt.get();
-                    int buId = bu.getId();
-                    proximityMap.put(buId, p);
-                }
-
-                Optional<Terrain> tOpt = getTerrain().getHex(p);
-                if (tOpt.isPresent()) {
-                    Terrain t = tOpt.get();
-                    int tId = t.getId();
-                    proximityMap.put(tId, p);
-                }
-            }
-        }
-
-        if (proximityMap.containsKey(id1) && proximityMap.containsKey(id2)) {
-            return units.isInProximity(proximityMap.get(id1), proximityMap.get(id2), range);
+        if (idToPosition.containsKey(id1) && idToPosition.containsKey(id2)) {
+            return units.isInProximity(idToPosition.get(id1), idToPosition.get(id2), range);
         }
         return false;
     }
@@ -304,112 +270,6 @@ public class HexMap implements Serializable {
      */
     public void save(String filename) {
         save(filename, false, Integer.MAX_VALUE);
-    }
-
-    /**
-     * Saves the HexMap as a JSON file on the disk.
-     *
-     * @param filename     the filename
-     * @param randomizeIds if true, randomize all ID numbers in the save file
-     * @param upperBound   the upper bound (exclusive) on the number generator
-     */
-    private void save(String filename, boolean randomizeIds, int upperBound) {
-        Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
-        Set<Integer> randomIds = new HashSet<>();
-        hexMap.put("turn", getTurn());
-        hexMap.put("rows", getNumRows());
-        hexMap.put("columns", getNumColumns());
-
-        Random r = new Random();
-        int newId;
-
-        // Construct "units" Array
-        Map[][] buArr = new Map[getNumRows()][getNumColumns()];
-        BasicUnit unitAtHex;
-        for (int i = 0; i < getNumRows(); i++) {
-            for (int j = 0; j < getNumColumns(); j++) {
-                Optional<BasicUnit> optional = units.getHex(new Position(i, j));
-                if (optional.isPresent()) {
-                    unitAtHex = optional.get();
-                    Map<String, Object> newUnit = new LinkedHashMap<>();
-
-                    String config = unitAtHex.getType().toLowerCase() + ".json";
-                    int index = unitAtHex.getTexture().lastIndexOf("/");
-                    String unitTexture = unitAtHex.getTexture().substring(index + 1);
-
-                    newUnit.put("config", config);
-                    if (randomizeIds) {
-                        do {
-                            newId = r.nextInt(upperBound);
-                        } while (randomIds.contains(newId));
-                        randomIds.add(newId);
-                        newUnit.put("id", newId);
-                    } else {
-                        newUnit.put("id", unitAtHex.getId());
-                    }
-                    newUnit.put("pid", unitAtHex.getPid());
-                    newUnit.put("texture", unitTexture);
-
-                    buArr[i][j] = newUnit;
-                }
-            }
-        }
-        hexMap.put("units", buArr); // add "units" Array to Map
-
-        // Construct "terrain" Array
-        Map[][] terrainArr = new Map[getNumRows()][getNumColumns()];
-        Terrain terrainAtHex;
-        for (int i = 0; i < getNumRows(); i++) {
-            for (int j = 0; j < getNumColumns(); j++) {
-                Optional<Terrain> optional = terrain.getHex(new Position(i, j));
-                if (optional.isPresent()) {
-                    terrainAtHex = optional.get();
-                    Map<String, Object> newTerrain = new LinkedHashMap<>();
-
-                    String config = terrainAtHex.getType().toLowerCase() + ".json";
-                    int index = terrainAtHex.getTexture().lastIndexOf("/");
-                    String terrainTexture = terrainAtHex.getTexture().substring(index + 1);
-
-                    newTerrain.put("config", config);
-                    if (randomizeIds) {
-                        do {
-                            newId = r.nextInt(upperBound);
-                        } while (randomIds.contains(newId));
-                        randomIds.add(newId);
-                        newTerrain.put("id", newId);
-                    } else {
-                        newTerrain.put("id", terrainAtHex.getId());
-                    }
-                    newTerrain.put("texture", terrainTexture);
-
-                    terrainArr[i][j] = newTerrain;
-                }
-            }
-        }
-        hexMap.put("terrain", terrainArr); // add "terrain" Array to Map
-
-        // Construct "mapShape" Array
-        Boolean[][] mapShapeArr = new Boolean[getNumRows()][getNumColumns()];
-        Boolean mapShapeAtHex;
-        for (
-                int i = 0; i < getNumRows(); i++) {
-            for (int j = 0; j < getNumColumns(); j++) {
-                Optional<Boolean> optional = mapShape.getHex(new Position(i, j));
-                if (optional.isPresent()) {
-                    mapShapeAtHex = optional.get();
-                    mapShapeArr[i][j] = mapShapeAtHex;
-                }
-            }
-        }
-        hexMap.put("mapShape", mapShapeArr); // add "mapShape" Array to Map
-
-        String location = ConfigurationFactory.getInstance().getPathToSaveFiles();
-        FileHandle file = Gdx.files.local(location + filename);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(hexMap); // convert Map to JSON String
-
-        file.writeString(json, false); // write String to JSON file
     }
 
     /**
@@ -466,5 +326,101 @@ public class HexMap implements Serializable {
         ids.add(newId);
 
         return newId;
+    }
+
+    /**
+     * Saves the HexMap as a JSON file on the disk.
+     *
+     * @param filename     the filename
+     * @param randomizeIds if true, randomize all ID numbers in the save file
+     * @param upperBound   the upper bound (exclusive) on the number generator
+     */
+    private void save(String filename, boolean randomizeIds, int upperBound) {
+        Map<String, Object> hexMap = new LinkedHashMap<>(); // Map -> JSON String -> JSON file
+        hexMap.put("turn", getTurn());
+        hexMap.put("rows", getRows());
+        hexMap.put("columns", getColumns());
+
+        // Construct "units" Array
+        Map[][] buArr = new Map[getRows()][getColumns()];
+        BasicUnit unitAtHex;
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
+                Optional<BasicUnit> optional = units.getHex(new Position(i, j));
+                if (optional.isPresent()) {
+                    unitAtHex = optional.get();
+                    Map<String, Object> newUnit = new LinkedHashMap<>();
+
+                    String config = unitAtHex.getType().toLowerCase() + ".json";
+                    int index = unitAtHex.getTexture().lastIndexOf("/");
+                    String unitTexture = unitAtHex.getTexture().substring(index + 1);
+
+                    newUnit.put("config", config);
+                    if (randomizeIds) {
+                        int newId = getRandomId();
+                        newUnit.put("id", newId);
+                    } else {
+                        newUnit.put("id", unitAtHex.getId());
+                    }
+                    newUnit.put("pid", unitAtHex.getPid());
+                    newUnit.put("texture", unitTexture);
+
+                    buArr[i][j] = newUnit;
+                }
+            }
+        }
+        hexMap.put("units", buArr); // add "units" Array to Map
+
+        // Construct "terrain" Array
+        Map[][] terrainArr = new Map[getRows()][getColumns()];
+        Terrain terrainAtHex;
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
+                Optional<Terrain> optional = terrain.getHex(new Position(i, j));
+                if (optional.isPresent()) {
+                    terrainAtHex = optional.get();
+                    Map<String, Object> newTerrain = new LinkedHashMap<>();
+
+                    String config = terrainAtHex.getType().toLowerCase() + ".json";
+                    int index = terrainAtHex.getTexture().lastIndexOf("/");
+                    String terrainTexture = terrainAtHex.getTexture().substring(index + 1);
+
+                    newTerrain.put("config", config);
+                    if (randomizeIds) {
+                        int newId = getRandomId();
+                        newTerrain.put("id", newId);
+                    } else {
+                        newTerrain.put("id", terrainAtHex.getId());
+                    }
+                    newTerrain.put("texture", terrainTexture);
+
+                    terrainArr[i][j] = newTerrain;
+                }
+            }
+        }
+        hexMap.put("terrain", terrainArr); // add "terrain" Array to Map
+
+        // Construct "mapShape" Array
+        Boolean[][] mapShapeArr = new Boolean[getRows()][getColumns()];
+        Boolean mapShapeAtHex;
+        for (
+                int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
+                Optional<Boolean> optional = mapShape.getHex(new Position(i, j));
+                if (optional.isPresent()) {
+                    mapShapeAtHex = optional.get();
+                    mapShapeArr[i][j] = mapShapeAtHex;
+                }
+            }
+        }
+        hexMap.put("mapShape", mapShapeArr); // add "mapShape" Array to Map
+
+        String location = ConfigurationFactory.getInstance().getPathToSaveFiles();
+        FileHandle file = Gdx.files.local(location + filename);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(hexMap); // convert Map to JSON String
+
+        file.writeString(json, false); // write String to JSON file
     }
 }

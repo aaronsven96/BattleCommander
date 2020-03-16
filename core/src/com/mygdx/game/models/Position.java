@@ -32,7 +32,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "x: " + getX() + "y: " + getY();
+        return "(" + getY() + "," + getX() + ")";
     }
 
     @Override
