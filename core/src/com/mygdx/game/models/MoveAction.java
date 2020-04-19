@@ -32,21 +32,20 @@ public class MoveAction implements UnitAction {
 
     /** Applies the move action and returns the new intermediate board */
     @Override
-    public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
+    public void applyAction(Command action, IntermediateBoard board) {
         HexBoard<Map<Integer, List<BasicUnit>>> newBoard = board.getUnits();
-        for (int n = 0; n < newBoard.getHex(action.getStartPosition()).get().size(); n++) {
-            if (newBoard.getHex(action.getStartPosition()).get().get(n).getId() == action.getUnitId()) {
+        for (int i = 0; i < newBoard.getHex(action.getStartPosition()).get().size(); i++) {
+            if (newBoard.getHex(action.getStartPosition()).get().get(i).getId() == action.getUnitId()) {
                 List<BasicUnit> startHex = newBoard.getHex(action.getStartPosition()).get();
-                startHex.remove(n);
+                startHex.remove(i);
                 newBoard.setHex(action.getStartPosition(), startHex);
                 List<BasicUnit> targetHex = newBoard.getHex(action.getTargetPosition()).get();
-                targetHex.add(newBoard.getHex(action.getStartPosition()).get().get(n));
+                targetHex.add(newBoard.getHex(action.getStartPosition()).get().get(i));
                 newBoard.setHex(action.getTargetPosition(), targetHex);
                 break;
             }
         }
         board.getUnits().setHex(action.getStartPosition(), newBoard.getHex(action.getStartPosition()).get());
         board.getUnits().setHex(action.getTargetPosition(), newBoard.getHex(action.getTargetPosition()).get());
-        return board;
-    }
+     }
 }

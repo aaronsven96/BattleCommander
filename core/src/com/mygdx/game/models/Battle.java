@@ -1,26 +1,25 @@
 package com.mygdx.game.models;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
 
 public class Battle {
-    Set<Integer> playerIds;
-    Map<Integer, List<BasicUnit>> units;
+    private Set<Integer> playerIds;
+    private Map<Integer, List<BasicUnit>> units;
     private Map<Integer, Integer> strengths;
 
     public Battle(Map<Integer, List<BasicUnit>> units) {
-
+        this.units = units;
+        playerIds = new HashSet<>();
+        playerIds.addAll(units.keySet());
+        strengths = new HashMap<>();
+        playerIds.forEach((id) -> strengths.put(id, 0));
     }
-
     /**
      * Resolves the battle.
-     *
-     * @return a Map of player ids to their participating units post-resolution of combat
      */
-    public Map<Integer, List<BasicUnit>> resolveBattle() {
-
+    public void resolveBattle() {
+        units.forEach((id, units) -> units.forEach((unit) -> strengths.put(id, strengths.get(id) + unit.getStrength())));
+        units.forEach((id, units) -> );
     }
 }

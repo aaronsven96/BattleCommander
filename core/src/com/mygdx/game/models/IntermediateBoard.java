@@ -18,7 +18,6 @@ public class IntermediateBoard {
     private final int rows;
     private final int columns;
     private HexMap newBoard;
-
     public IntermediateBoard(HexMap board) {
         newBoard = new HexMap(board);
         terrain = board.getTerrain();
@@ -62,8 +61,8 @@ public class IntermediateBoard {
      * @return a HexMap from the IntermediateMap
      */
     public HexMap applyToBoard() {
-        for (int y = 0; y < getNumColumns(); y++) {
-            for (int x = 0; x < getNumRows(); x++) {
+        for (int y = 0; y < columns; y++) {
+            for (int x = 0; x < rows; x++) {
                 if (getUnits().getHex(new Position(y, x)).isPresent()) {
                    newBoard.getUnits().setHex(new Position(y, x), (BasicUnit) getUnits().getHex(new Position(y, x)).get().values().toArray()[0]);
                 }
@@ -73,18 +72,22 @@ public class IntermediateBoard {
     }
 
     /**
-     * Resolves an IntermediateBoard's combats.
-     *
-     * @param board an IntermediateBoard
-     * @return board after resolution of combat
+     * Resolves the IntermediateBoard's battles.
      */
-    public IntermediateBoard resolveCombat(IntermediateBoard board) {
-        return null;
+    public void resolveBattles() {
+        for (int y = 0; y < columns; y++) {
+            for (int x = 0; x < rows; x++) {
+                if (battles.getHex(new Position(y, x)).isPresent()) {
+                    battles.getHex(new Position(y, x)).get().resolveBattle();
+                }
+            }
+        }
     }
 
-    /**
+    /** 
      * Returns a HexBoard of Maps that map player ids to units.
-     * @return
+     *
+     * @return a HexBoard of Maps that map player ids to units
      */
     public HexBoard<Map<Integer, List<BasicUnit>>> getUnits() {
         return units;
