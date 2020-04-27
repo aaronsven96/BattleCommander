@@ -1,6 +1,8 @@
 package com.mygdx.game.models;
 
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,12 +12,19 @@ import java.util.Set;
 
 
 public class IntermediateBoard {
+    @Getter
     private HexBoard<Terrain> terrain;
+    @Getter
     private Set<Integer> playerIds;
+    @Getter
     private HexBoard<Map<Integer, List<BasicUnit>>> units;
+    @Getter
     private Map<Integer, List<BasicUnit>> playerUnits;
+    @Getter
     private HexBoard<Battle> battles;
+    @Getter
     private final int rows;
+    @Getter
     private final int columns;
     private HexMap newBoard;
     public IntermediateBoard(HexMap board) {
@@ -46,12 +55,8 @@ public class IntermediateBoard {
             this.playerUnits.put(i, playerUnitList);
         }
 
-        for (int y = 0; y < board.getNumColumns(); y++) {
-            for (int x = 0; x < board.getNumRows(); x++) {
-                if (units.getHex(new Position(y, x)).isPresent()) {
-                    battles.setHex(new Position(y, x), new Battle(units.getHex(new Position(y, x)).get()));
-                }
-            }
+        for (Battle battle : battles) {
+            battles.setHex(new Position(y, x), new Battle());
         }
     }
 
@@ -63,10 +68,10 @@ public class IntermediateBoard {
     public HexMap applyToBoard() {
         for (int y = 0; y < columns; y++) {
             for (int x = 0; x < rows; x++) {
-                if (getUnits().getHex(new Position(y, x)).isPresent()) {
-                   newBoard.getUnits().setHex(new Position(y, x), (BasicUnit) getUnits().getHex(new Position(y, x)).get().values().toArray()[0]);
+                if (units.getHex(new Position(y, x)).isPresent()) {
+                   newBoard.getUnits().setHex(new Position(y, x), (BasicUnit) units.getHex(new Position(y, x)).get().values().toArray()[0]);
                 }
-            }   
+            }
         }
         return newBoard;
     }
@@ -84,31 +89,13 @@ public class IntermediateBoard {
         }
     }
 
-    /** 
-     * Returns a HexBoard of Maps that map player ids to units.
-     *
-     * @return a HexBoard of Maps that map player ids to units
-     */
-    public HexBoard<Map<Integer, List<BasicUnit>>> getUnits() {
-        return units;
-    }
-
     /**
      * Returns a HexBoard of all Battles.
      *
      * @return a HexBoard of all Battles
      */
-    public HexBoard<Battle> getBattles() {
-        return battles;
-    }
-
-    /**
-     * Returns a Set of all player ids.
-     *
-     * @return a Set of all player ids
-     */
-    public Set<Integer> getPlayerIds() {
-        return playerIds;
+    public Optional<Battle> getBattle(Position position) {
+        return battles.getHex(position);
     }
 
     /**
@@ -116,25 +103,28 @@ public class IntermediateBoard {
      *
      * @return a HexBoard of Terrain
      */
-    public HexBoard<Terrain> getTerrain() {
-        return terrain;
+    public Optional<Terrain> getHexTerrain(Position position) {
+        return terrain.getHex(position);
     }
 
     /**
-     * Returns the number of columns in the map.
+     * Returns a BasicUnit from an id.
      *
-     * @return the number of columns in the map
+     * @param id the id of the unit you are searching for
+     * @return the BasicUnit that matches the id
      */
-    public int getNumColumns() {
-        return columns;
-    }
-
-    /**
-     * Returns the number of rows in the map.
-     *
-     * @return the number of rows in the map
-     */
-    public int getNumRows() {
-        return rows;
+    public Optional<BasicUnit> getUnitFromId(int id) {
+        for (Map<Integer, List<BasicUnit>> unitMap : units) {
+            for (Map.Entry<Integer, List<BasicUnit>> entry : unitMap.entrySet()) {
+                Integer playerId = entry.getKey();
+                List<BasicUnit> unitList = entry.getValue();
+                for (BasicUnit unit : unitList) {
+                    if (unit.getId() == id) {
+                        return Optional.of(unit);
+                    }
+                }
+            }
+        }
+        return Optional.empty();
     }
 }

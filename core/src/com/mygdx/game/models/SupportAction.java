@@ -34,7 +34,7 @@ public class SupportAction implements UnitAction {
     }
 
     @Override
-    public IntermediateBoard applyAction(Command action, IntermediateBoard board) {
+    public boolean applyAction(Command action, IntermediateBoard board) {
         HexBoard<List<Integer>> newBoard = new HexBoard<>(board.getUnits().getNumRows(), board.getUnits().getNumColumns());
         Map<Integer, Integer> newTargetHex = board.getStrengths().getHex(action.getTargetPosition()).get();
         if () {

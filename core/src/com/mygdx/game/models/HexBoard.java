@@ -1,13 +1,15 @@
 package com.mygdx.game.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import lombok.NonNull;
+
+import javax.annotation.Nonnull;
+import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * A class that represents the HexBoard of Type T that we will use as the map of the game.
  */
-public class HexBoard<T> {
+public class HexBoard<T> implements Iterable<T> {
     private T[][] board;
     private int numRows, numColumns;
 
@@ -157,5 +159,90 @@ public class HexBoard<T> {
     /** Returns true if there are no obstacles between the positions that would block line of sight */
     public boolean checkLineOfSight(HexBoard<Terrain> board, Position startPosition, Position endPosition) {
         return true;
+    }
+
+    @Override
+    @Nonnull
+    public Iterator<T> iterator() {
+        return new HexBoardIterator();
+    }
+
+//    @Override
+//    public void forEach(@NonNull Consumer action) {
+//        for (int y = 0; y < numRows; y++) {
+//            for (int x = 0; x < numColumns; x++) {
+//                if (getHex(new Position(y, x)).isPresent()) {
+//                    action.accept(getHex(new Position(y, x)).get());
+//                }
+//            }
+//        }
+//    }
+
+    private class HexBoardIterator implements Iterator<T> {
+        int rowCursor;
+        int columnCursor;
+        int lastRow = -1;
+        int lastColumn = -1;
+
+        @Override
+        public boolean hasNext() {
+            return this.rowCursor != numRows || this.columnCursor != numColumns;
+        }
+
+        @Override
+        public T next() {
+            int x = columnCursor;
+            int y = rowCursor;
+            if (x >= numColumns || y >= numRows) {
+                throw new NoSuchElementException();
+            } else {
+                T[][] board = HexBoard.this.board;
+                if (columnCursor == numColumns - 1) {
+                    columnCursor = 0;
+                    rowCursor = y + 1;
+                } else {
+                    columnCursor = x + 1;
+                }
+                return board[lastRow = y][lastColumn = x];
+            }
+        }
+
+        @Override
+        public void remove() {
+            if (lastRow < 0 && lastColumn < 0) {
+                throw new IllegalStateException();
+            } else {
+                try {
+                    board[lastRow][lastColumn] = null;
+                    columnCursor = lastColumn;
+                    rowCursor = lastRow;
+                    lastColumn = -1;
+                    lastRow = -1;
+                } catch (IndexOutOfBoundsException var2) {
+                    throw new ConcurrentModificationException();
+                }
+            }
+        }
+
+//        @Override
+//        public void forEachRemaining(Consumer action) {
+//            Objects.requireNonNull(action);
+//            int i = rowCursor;
+//            int j = columnCursor;
+//            if (i < numRows || j < numColumns) {
+//                for (int y = 0; y < numRows; y++) {
+//                    for (int x = 0; x < numColumns; x++) {
+//                        if (getHex(new Position(y, x)).isPresent()) {
+//                            action.accept(getHex(new Position(y, x)).get());
+//                        }
+//                    }
+//                }
+//
+//                rowCursor = i;
+//                columnCursor = j;
+//                lastRow = i - 1;
+//                lastColumn = j - 1;
+//            }
+//        }
     }
 }

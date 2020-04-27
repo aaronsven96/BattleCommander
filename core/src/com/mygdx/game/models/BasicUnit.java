@@ -226,4 +226,20 @@ public class BasicUnit implements Unit {
     public String getTexture() {
         return texture;
     }
+
+    /**
+     * Damages the unit and returns true if it is dead after.
+     */
+    public boolean damage(int damage) {
+        health -= damage;
+        return isDead();
+    }
+
+    /**
+     *
+     * @return true if the unit is dead
+     */
+    private boolean isDead() {
+        return health <= 0;
+    }
 }

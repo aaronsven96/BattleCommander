@@ -5,20 +5,20 @@ package com.mygdx.game.models;
  */
 public class Command {
 
-    /** Type of action the command represents */
+    /* Type of action the command represents */
     private String actionType;
 
-    /** Acting unit's ID */
+    /* Acting unit's ID */
     private int unitId;
 
-    /** The start and targeted positions of the action. */
+    /* The start and targeted positions of the action. */
     private Position startPosition;
     private Position targetPosition;
 
-    /** The distance between the start and end positions. */
+    /* The distance between the start and end positions. */
     private int distance;
 
-    /** Whether there is line of sight between the start and end positions */
+    /* Whether there is line of sight between the start and end positions */
     private boolean hasLineOfSight;
 
     public Command(String actionType, int unitId, Position startPosition, Position targetPosition, HexBoard<Terrain> board) {

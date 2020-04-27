@@ -8,5 +8,5 @@ public interface UnitAction {
 
     boolean isValidAction(Command action, IntermediateBoard board);
 
-    IntermediateBoard applyAction(Command action, IntermediateBoard board);
+    boolean applyAction(Command action, IntermediateBoard board);
 }
