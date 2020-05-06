@@ -99,7 +99,6 @@ public class HexMap implements Serializable {
         JsonArray jsonArrayTerrain = hexMap.get("terrain").getAsJsonArray();
         JsonArray jsonArrayMapShape = hexMap.get("mapShape").getAsJsonArray();
 
-        Set<Integer> ids = new HashSet<>();
         Set<Integer> playerIds = new HashSet<>();
 
         // Set up units

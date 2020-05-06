@@ -1,51 +1,41 @@
 package com.mygdx.game.models;
 
+
+import lombok.Getter;
 import java.util.List;
-import java.util.Map;
 
+
+@Getter
 public class MoveAction implements UnitAction {
+    private String name;
+    private String texture;
+    private int strength;
+    private int speed;
 
-    /** Action's name and texture */
-    private String actionName;
-    private String actionTexture;
-
-    public MoveAction(String actionName, String actionTexture) {
-        this.actionName = actionName;
-        this.actionTexture = actionTexture;
+    public MoveAction(String name, String texture, int strength, int speed) {
+        this.name = name;
+        this.texture = texture;
+        this.strength = strength;
+        this.speed = speed;
     }
 
+    /**
+     * Checks if a Command is valid, then moves a unit to an adjacent hex and adds it to the hex's battle.
+     *
+     * @param action the Command to resolve
+     * @param board the board to resolve onto
+     * @return true if the action is valid
+     */
     @Override
-    public String getActionName() {
-        return actionName;
-    }
-
-    @Override
-    public String getActionTexture() {
-        return actionTexture;
-    }
-
-    /** Returns true if the move action is valid */
-    @Override
-    public boolean isValidAction(Command action, IntermediateBoard board) {
-        return board.getTerrain().getHex(action.getStartPosition()).isPresent() && board.getTerrain().getHex(action.getTargetPosition()).isPresent();
-    }
-
-    /** Applies the move action and returns the new intermediate board */
-    @Override
-    public void applyAction(Command action, IntermediateBoard board) {
-        HexBoard<Map<Integer, List<BasicUnit>>> newBoard = board.getUnits();
-        for (int i = 0; i < newBoard.getHex(action.getStartPosition()).get().size(); i++) {
-            if (newBoard.getHex(action.getStartPosition()).get().get(i).getId() == action.getUnitId()) {
-                List<BasicUnit> startHex = newBoard.getHex(action.getStartPosition()).get();
-                startHex.remove(i);
-                newBoard.setHex(action.getStartPosition(), startHex);
-                List<BasicUnit> targetHex = newBoard.getHex(action.getTargetPosition()).get();
-                targetHex.add(newBoard.getHex(action.getStartPosition()).get().get(i));
-                newBoard.setHex(action.getTargetPosition(), targetHex);
-                break;
-            }
+    public boolean apply(Command action, IntermediateBoard board) {
+        if (isValid(action, board)) {
+            List<BasicUnit> newStart = board.getUnits().getHex(action.getStartPosition()).get().get(board.getUnitFromId(action.getUnitId()).get().getPid());
+            List<BasicUnit> newTarget = board.getUnits().getHex(action.getStartPosition()).get().get(board.getUnitFromId(action.getUnitId()).get().getPid());
+            newStart.forEach(unit -> {if(unit.getId() == action.getUnitId()){newTarget.add(unit);}});
+            newStart.forEach(unit -> {if(unit.getId() == action.getUnitId()){board.getBattles().getHex(action.getTargetPosition()).get().addUnit(unit, strength);}});
+            newStart.removeIf(unit -> unit.getId() == action.getUnitId());
+            return true;
         }
-        board.getUnits().setHex(action.getStartPosition(), newBoard.getHex(action.getStartPosition()).get());
-        board.getUnits().setHex(action.getTargetPosition(), newBoard.getHex(action.getTargetPosition()).get());
+        return false;
      }
 }

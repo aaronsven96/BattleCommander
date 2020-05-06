@@ -1,21 +1,11 @@
 package com.mygdx.game.models;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.ConcurrentModificationException;
+import java.util.*;
+import java.util.function.Consumer;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 /**
  * A class that represents the HexBoard of Type T that we will use as the map of the game.
@@ -25,6 +15,7 @@ public class HexBoard<T> implements Iterable<T> {
     private T[][] board;
     private int numRows;
     private int numColumns;
+    private Position cursor; // The cursor in the forEach loop, column, then row
 
 
     public HexBoard(int numRows, int numColumns) {
@@ -33,6 +24,7 @@ public class HexBoard<T> implements Iterable<T> {
         board = (T[][]) new Object[numRows][numColumns];
         this.numRows = numRows; // number of rows
         this.numColumns = numColumns; // number of columns
+        cursor = new Position(0, 0);
     }
 
     /**
@@ -322,26 +314,29 @@ public class HexBoard<T> implements Iterable<T> {
 
     @Override
     @Nonnull
-    public Iterator<T> iterator() {
+    public HexBoardIterator iterator() {
         return new HexBoardIterator();
     }
 
-//    @Override
-//    public void forEach(@NonNull Consumer action) {
-//        for (int y = 0; y < numRows; y++) {
-//            for (int x = 0; x < numColumns; x++) {
-//                if (getHex(new Position(y, x)).isPresent()) {
-//                    action.accept(getHex(new Position(y, x)).get());
-//                }
-//            }
-//        }
-//    }
+    @Override
+    @NonNull
+    public void forEach(Consumer<? super T> action) {
+        HexBoardIterator var2 = this.iterator();
+
+        while(var2.hasNext()) {
+            T t = var2.next();
+            this.cursor = new Position(var2.getRowCursor(), var2.getColumnCursor());
+            action.accept(t);
+        }
+    }
 
     private class HexBoardIterator implements Iterator<T> {
-        int rowCursor;
-        int columnCursor;
-        int lastRow = -1;
-        int lastColumn = -1;
+        @Getter
+        private int rowCursor;
+        @Getter
+        private int columnCursor;
+        private int lastRow = -1;
+        private int lastColumn = -1;
 
         @Override
         public boolean hasNext() {
@@ -382,27 +377,6 @@ public class HexBoard<T> implements Iterable<T> {
                 }
             }
         }
-
-//        @Override
-//        public void forEachRemaining(Consumer action) {
-//            Objects.requireNonNull(action);
-//            int i = rowCursor;
-//            int j = columnCursor;
-//            if (i < numRows || j < numColumns) {
-//                for (int y = 0; y < numRows; y++) {
-//                    for (int x = 0; x < numColumns; x++) {
-//                        if (getHex(new Position(y, x)).isPresent()) {
-//                            action.accept(getHex(new Position(y, x)).get());
-//                        }
-//                    }
-//                }
-//
-//                rowCursor = i;
-//                columnCursor = j;
-//                lastRow = i - 1;
-//                lastColumn = j - 1;
-//            }
-//        }
     }
 
     /**
