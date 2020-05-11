@@ -37,7 +37,7 @@ public interface UnitAction {
      * @return true if action is valid
      */
     default boolean isValid(Command action, IntermediateBoard board) {
-        return board.isValidPosition(action.getStartPosition()) && board.isValidPosition(action.getTargetPosition()) && board.isValidUnit(action.getUnitId());
+        return board.isHex(action.getStartPosition()) && board.isHex(action.getTargetPosition()) && board.isValidUnit(action.getUnitId());
     }
 
     /**

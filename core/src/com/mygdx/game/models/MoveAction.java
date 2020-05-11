@@ -7,10 +7,10 @@ import java.util.List;
 
 @Getter
 public class MoveAction implements UnitAction {
-    private String name;
-    private String texture;
-    private int strength;
-    private int speed;
+    private final String name;
+    private final String texture;
+    private final int strength;
+    private final int speed;
 
     public MoveAction(String name, String texture, int strength, int speed) {
         this.name = name;
@@ -29,11 +29,23 @@ public class MoveAction implements UnitAction {
     @Override
     public boolean apply(Command action, IntermediateBoard board) {
         if (isValid(action, board)) {
-            List<BasicUnit> newStart = board.getUnits().getHex(action.getStartPosition()).get().get(board.getUnitFromId(action.getUnitId()).get().getPid());
-            List<BasicUnit> newTarget = board.getUnits().getHex(action.getStartPosition()).get().get(board.getUnitFromId(action.getUnitId()).get().getPid());
-            newStart.forEach(unit -> {if(unit.getId() == action.getUnitId()){newTarget.add(unit);}});
-            newStart.forEach(unit -> {if(unit.getId() == action.getUnitId()){board.getBattles().getHex(action.getTargetPosition()).get().addUnit(unit, strength);}});
-            newStart.removeIf(unit -> unit.getId() == action.getUnitId());
+            List<BasicUnit> newStart = board.getUnits().getHex(action.getStartPosition()).get();
+            List<BasicUnit> newTarget = board.getUnits().getHex(action.getStartPosition()).get();
+            for (BasicUnit basicUnit : newStart) {
+                if (basicUnit.getId() == action.getUnitId()) {
+                    newTarget.add(basicUnit);
+                    board.getBattle(action.getTargetPosition()).get().addUnit(basicUnit, strength, action.getStartPosition());
+                    break;
+                }
+            }
+            for (BasicUnit unit : newStart) {
+                if (unit.getId() == action.getUnitId()) {
+                    newStart.remove(unit);
+                    break;
+                }
+            }
+            board.getUnits().setHex(action.getStartPosition(), newStart);
+            board.getUnits().setHex(action.getTargetPosition(), newTarget);
             return true;
         }
         return false;

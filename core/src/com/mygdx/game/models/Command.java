@@ -1,54 +1,30 @@
 package com.mygdx.game.models;
 
+
+import lombok.Getter;
+
+
 /**
- * Class to represent a command
+ * Represents a command.
  */
+@Getter
 public class Command {
 
     /* Type of action the command represents */
-    private String actionType;
+    private final String actionType;
 
     /* Acting unit's ID */
-    private int unitId;
+    private final int unitId;
 
-    /* The start and targeted positions of the action. */
-    private Position startPosition;
-    private Position targetPosition;
+    /* The start and targeted positions of the action */
+    private final Position startPosition;
+    private final Position targetPosition;
 
-    /* The distance between the start and end positions. */
-    private int distance;
-
-    /* Whether there is line of sight between the start and end positions */
-    private boolean hasLineOfSight;
-
-    public Command(String actionType, int unitId, Position startPosition, Position targetPosition, HexBoard<Terrain> board) {
+    public Command(String actionType, int unitId, Position startPosition,
+                   Position targetPosition) {
         this.actionType = actionType;
         this.unitId = unitId;
         this.startPosition = startPosition;
         this.targetPosition = targetPosition;
-        if (board.getDistanceBetweenTwoPositions(startPosition, targetPosition).isPresent()) {
-            distance = board.getDistanceBetweenTwoPositions(startPosition, targetPosition).get();
-        }
-        hasLineOfSight = board.checkLineOfSight(board, startPosition, targetPosition);
-    }
-
-    public int getUnitId() {
-        return unitId;
-    }
-
-    public Position getStartPosition() {
-        return startPosition;
-    }
-
-    public Position getTargetPosition() {
-        return targetPosition;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
-    public boolean hasLineOfSight() {
-        return hasLineOfSight;
     }
 }

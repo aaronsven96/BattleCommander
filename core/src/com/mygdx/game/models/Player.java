@@ -1,13 +1,16 @@
 package com.mygdx.game.models;
 
 
-import java.util.HashSet;
-import java.util.Set;
+import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- * A class that represents a player.
+ * Represents a player.
  */
+@Getter
 public class Player {
     private int playerId;
 
@@ -16,27 +19,16 @@ public class Player {
     }
 
     /**
-     * Returns a Set of player ids.
-     *
-     * @return A Set of player ids
-     */
-    public int getPlayerId() {
-        return playerId;
-    }
-
-    /**
      * Returns a list of unit ids for a player
      *
-     * @param units a HexBoard of units
-     * @return A list of unit ids
+     * @param units the HexBoard to check
+     * @return a list of unit ids that belong to the player
      */
-    public Set<Integer> getUnitIds(HexBoard<BasicUnit> units) {
-        Set<Integer> unitIds = new HashSet<>();
-        for (int y = 0; y < units.getNumColumns(); y++) {
-            for (int x = 0; x < units.getNumRows(); x++) {
-                if (units.getHex(new Position(y, x)).isPresent()) {
-                    unitIds.add(units.getHex(new Position(y, x)).get().getId());
-                }
+    public List<Integer> getUnitIds(HexBoard<BasicUnit> units) {
+        List<Integer> unitIds = new ArrayList<>();
+        for (BasicUnit unit : units) {
+            if (unit.getPid() == playerId && units.getHex(units.getCursor()).isPresent()) {
+                unitIds.add(units.getHex(units.getCursor()).get().getId());
             }
         }
         return unitIds;

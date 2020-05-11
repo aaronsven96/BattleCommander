@@ -42,7 +42,7 @@ public class HexMap implements Serializable {
 
     private int turn; // turn number
 
-    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns, Set<Integer> ids, Map<Integer, Position> idToPosition) {
+    private HexMap(HexBoard<BasicUnit> units, HexBoard<Terrain> terrain, HexBoard<Boolean> mapShape, List<HexBoard<String>> textures, int rows, int columns, Set<Integer> playerIds, Set<Integer> ids, Map<Integer, Position> idToPosition) {
         this.units = units;
         this.rows = rows;
         this.columns = columns;
@@ -182,7 +182,7 @@ public class HexMap implements Serializable {
             }
         }
 
-        return new HexMap(units, terrain, mapShape, textures, rows, columns, ids, idToPosition);
+        return new HexMap(units, terrain, mapShape, textures, rows, columns, ids, playerIds, idToPosition);
     }
 
     // TODO: add interactions to the game

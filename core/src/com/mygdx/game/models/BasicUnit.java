@@ -94,6 +94,7 @@ public class BasicUnit implements Unit {
     }
 
     /**
+     * Returns true if the unit is dead.
      *
      * @return true if the unit is dead
      */

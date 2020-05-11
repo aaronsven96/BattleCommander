@@ -2,6 +2,9 @@ package com.mygdx.game.models;
 
 
 import lombok.Getter;
+import lombok.Setter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +17,72 @@ import java.util.HashSet;
  */
 @Getter
 public class Battle {
+    private Position position;
     private Set<Integer> playerIds;
     private Map<Integer, List<BasicUnit>> units;
     private Map<Integer, Integer> strengths;
+    private Map<BasicUnit, Position> startPositions;
+    @Setter
+    private BasicUnit defender;
 
-    public Battle() {
+    public Battle(Position position) {
+        this.position = position;
         units = new HashMap<>();
         playerIds = new HashSet<>();
         strengths = new HashMap<>();
     }
+    
     /**
      * Resolves the battle.
+     *
+     * @return a retreat for the hex
      */
-    public void resolveBattle() {
+    public Retreat resolve() {
+        int winner = defender.getPid();
+        for (int playerId : playerIds) {
+            if (strengths.get(playerId) > strengths.get(winner)) {
+                winner = playerId;
+            }
+        }
+        for (int playerId : playerIds) {
+            if (strengths.get(playerId).equals(strengths.get(winner)) && winner != defender.getPid()) {
+                 winner = -1;
+            }
+        }
+        for (int attacker : playerIds) {
+            List<BasicUnit> enemies = new ArrayList<>();
+            for (int defender : playerIds) {
+                if (defender != attacker) {
+                    enemies.addAll(units.get(defender));
+                }
+            }
+            int totalHealth = 0;
+            for (BasicUnit unit : enemies) {
+                totalHealth += unit.getHealth();
+            }
+            int totalHealthAfter = totalHealth - strengths.get(attacker);
+            int healthPerUnit = (int) Math.ceil((double) totalHealthAfter / enemies.size());
+            enemies.removeIf(unit -> {
+                strengths.put(attacker, strengths.get(attacker) - unit.getHealth() - healthPerUnit);
+                return unit.damage(unit.getHealth() - healthPerUnit);
+            });
+            enemies.sort(Comparator.comparingInt(BasicUnit::getId));
+            enemies.sort(Comparator.comparingInt(BasicUnit::getMaxHealth));
+            enemies.removeIf(unit -> {
+                if (strengths.get(attacker) > 0) {
+                    return unit.damage(1);
+                }
+                return false;
+            });
+        }
+        Retreat retreat = new Retreat(position, winner);
+        retreat.setDefender(defender);
+        for (List<BasicUnit> hex : units.values()) {
+            for (BasicUnit unit : hex) {
+                retreat.addUnit(unit, startPositions.get(unit));
+            }
+        }
+        return retreat;
     }
 
     /**
@@ -35,7 +91,7 @@ public class Battle {
      * @param unit the unit to be added
      * @param strength the strength to add to the unit's player
      */
-    public void addUnit(BasicUnit unit, int strength) {
+    public void addUnit(BasicUnit unit, int strength, Position startPosition) {
         if (!playerIds.contains(unit.getPid())) {
             playerIds.add(unit.getPid());
             strengths.put(unit.getPid(), 0);
@@ -44,6 +100,7 @@ public class Battle {
         newUnits.add(unit);
         units.put(unit.getPid(), newUnits);
         addStrength(unit.getPid(), strength);
+        startPositions.put(unit, startPosition);
     }
 
     /**

@@ -1,28 +1,29 @@
 package com.mygdx.game.models;
 
 
+import lombok.Getter;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 
 /**
- * All of the Commands given to a unit for a turn
+ * All of the Commands given to a unit for a turn.
  */
+@Getter
 public class Orders implements Serializable {
 
     /* The acting unit's ID */
-    private int unitId;
+    private final int unitId;
 
-    private Position startPosition;
+    private final Position startPosition;
 
     /* The Commands the Orders contain */
     private Iterator<Command> commands;
 
-    private List<Command> commandList;
+    private final List<Command> commandList;
 
-    /* The current Command*/
+    /* The current Command */
     private Command currentCommand;
 
     public Orders(int unitId, List<Command> commands, Position startPosition) {
@@ -32,7 +33,8 @@ public class Orders implements Serializable {
         this.commands = commands.iterator();
     }
 
-    /** Iterates to the next Command if it can, and returns a boolean of whether
+    /**
+     * Iterates to the next Command if it can, and returns a boolean of whether
      * there is a next command.
      */
     public boolean nextCommand() {
@@ -47,23 +49,7 @@ public class Orders implements Serializable {
         commands = commandList.iterator();
     }
 
-    public int getUnitId() {
-        return unitId;
-    }
-
-    public Position getStartPosition(){
-        return startPosition;
-    }
-
-    public void setUnitId(int unitId) {
-        this.unitId = unitId;
-    }
-
     public int getLength() {
         return commandList.size();
-    }
-
-    public Command getCurrentCommand() {
-        return currentCommand;
     }
 }

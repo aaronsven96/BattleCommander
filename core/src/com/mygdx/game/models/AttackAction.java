@@ -2,16 +2,15 @@ package com.mygdx.game.models;
 
 
 import lombok.Getter;
-import java.util.List;
-import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
 
 @Getter
 public class AttackAction implements UnitAction {
-    private String name;
-    private String texture;
-    private int[] damage;
-    private int speed;
+    private final String name;
+    private final String texture;
+    private final int[] damage;
+    private final int speed;
 
     public AttackAction(String name, String texture, int[] damage, int speed) {
         this.name = name;
@@ -29,7 +28,7 @@ public class AttackAction implements UnitAction {
      */
     @Override
     public boolean isValid(Command action, IntermediateBoard board) {
-        return board.isValidPosition(action.getStartPosition()) && board.isValidPosition(action.getTargetPosition()) && board.isValidUnit(action.getUnitId()) && board.getTerrain().checkLineOfSight(board.getTerrain(), action.getStartPosition(), action.getTargetPosition()) && getRangedDamage(board.getUnits().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).get()) > 0;
+        return (action.getStartPosition().getX() != action.getTargetPosition().getX() || action.getStartPosition().getY() != action.getTargetPosition().getY()) && board.isHex(action.getStartPosition()) && board.isHex(action.getTargetPosition()) && board.isValidUnit(action.getUnitId()) && board.getTerrain().checkLineOfSight(board.getTerrain(), action.getStartPosition(), action.getTargetPosition()) && board.getUnits().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).isPresent() && getRangedDamage(board.getUnits().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).get()) > 0;
     }
 
     /**
@@ -40,13 +39,9 @@ public class AttackAction implements UnitAction {
      * @return true if the action is valid
      */
     @Override
-    public boolean apply(Command action, IntermediateBoard board) {
+    public boolean apply(@NotNull Command action, @NotNull IntermediateBoard board) {
         if (isValid(action, board)) {
-            for (Map.Entry<Integer, List<BasicUnit>> entry : board.getUnits().getHex(action.getTargetPosition()).get().entrySet()) {
-                Integer playerId = entry.getKey();
-                List<BasicUnit> units = entry.getValue();
-                units.removeIf(unit -> unit.damage(getRangedDamage(action.getDistance())));
-            }
+            board.getUnits().getHex(action.getTargetPosition()).get().removeIf(unit -> unit.damage(getRangedDamage(board.getUnits().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).get())));
             return true;
         }
         return false;

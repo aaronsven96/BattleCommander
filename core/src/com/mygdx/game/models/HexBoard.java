@@ -15,7 +15,7 @@ public class HexBoard<T> implements Iterable<T> {
     private T[][] board;
     private int numRows;
     private int numColumns;
-    private Position cursor; // The cursor in the forEach loop, column, then row
+    private Position cursor; // The cursor position in the forEach loop
 
 
     public HexBoard(int numRows, int numColumns) {
@@ -318,18 +318,6 @@ public class HexBoard<T> implements Iterable<T> {
         return new HexBoardIterator();
     }
 
-    @Override
-    @NonNull
-    public void forEach(Consumer<? super T> action) {
-        HexBoardIterator var2 = this.iterator();
-
-        while(var2.hasNext()) {
-            T t = var2.next();
-            this.cursor = new Position(var2.getRowCursor(), var2.getColumnCursor());
-            action.accept(t);
-        }
-    }
-
     private class HexBoardIterator implements Iterator<T> {
         @Getter
         private int rowCursor;
@@ -357,6 +345,7 @@ public class HexBoard<T> implements Iterable<T> {
                 } else {
                     columnCursor = x + 1;
                 }
+                HexBoard.this.cursor = new Position(rowCursor, columnCursor);
                 return board[lastRow = y][lastColumn = x];
             }
         }

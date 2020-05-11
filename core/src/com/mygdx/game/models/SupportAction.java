@@ -8,12 +8,12 @@ import java.util.Map;
 
 @Getter
 public class SupportAction implements UnitAction {
-    private String name;
-    private String texture;
-    private int speed;
-    private int[] strength;
+    private final String name;
+    private final String texture;
+    private final int speed;
+    private final int[] strength;
 
-    public SupportAction(String name, String texture, int maxRange, int speed, int[] strength) {
+    public SupportAction(String name, String texture, int speed, int[] strength) {
         this.name = name;
         this.texture = texture;
         this.speed = speed;
@@ -29,7 +29,7 @@ public class SupportAction implements UnitAction {
      */
     @Override
     public boolean isValid(Command action, IntermediateBoard board) {
-        return board.isValidPosition(action.getStartPosition()) && board.isValidPosition(action.getTargetPosition()) && board.isValidUnit(action.getUnitId()) && board.getTerrain().checkLineOfSight(board.getTerrain(), action.getStartPosition(), action.getTargetPosition()) && getRangedStrength(board.getUnits().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).get()) > 0;
+        return (action.getStartPosition().getX() != action.getTargetPosition().getX() || action.getStartPosition().getY() != action.getTargetPosition().getY()) && board.isHex(action.getStartPosition()) && board.isHex(action.getTargetPosition()) && board.isValidUnit(action.getUnitId()) && board.getTerrain().checkLineOfSight(board.getTerrain(), action.getStartPosition(), action.getTargetPosition()) && board.getUnits().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).isPresent() && getRangedStrength(board.getUnits().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).get()) > 0;
     }
 
     /**
@@ -41,12 +41,10 @@ public class SupportAction implements UnitAction {
      */
     @Override
     public boolean apply(Command action, IntermediateBoard board) {
-        HexBoard<List<Integer>> newBoard = new HexBoard<>(board.getUnits().getNumRows(), board.getUnits().getNumColumns());
-        Map<Integer, Integer> newTargetHex = board.getStrengths().getHex(action.getTargetPosition()).get();
-        if () {
-            newTargetHex.get(board.getUnitOwnerId().get()) += strength;
+        if (isValid(action, board)) {
+            board.getBattle(action.getTargetPosition()).get().addStrength(board.getUnitFromId(action.getUnitId()).get().getPid(), getRangedStrength(board.getBattles().getDistanceBetweenTwoPositions(action.getStartPosition(), action.getTargetPosition()).get()));
         }
-        newBoard.setHex(action.getTargetPosition(), newTargetHex);
+        return false;
     }
 
     /**
