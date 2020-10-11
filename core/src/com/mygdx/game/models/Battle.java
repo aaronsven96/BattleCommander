@@ -17,10 +17,10 @@ import java.util.HashSet;
  */
 @Getter
 public class Battle {
-    private Position position;
-    private Set<Integer> playerIds;
-    private Map<Integer, List<BasicUnit>> units;
-    private Map<Integer, Integer> strengths;
+    private final Position position;
+    private final Set<Integer> playerIds;
+    private final Map<Integer, List<BasicUnit>> units;
+    private final Map<Integer, Integer> strengths;
     private Map<BasicUnit, Position> startPositions;
     @Setter
     private BasicUnit defender;
@@ -75,8 +75,7 @@ public class Battle {
                 return false;
             });
         }
-        Retreat retreat = new Retreat(position, winner);
-        retreat.setDefender(defender);
+        Retreat retreat = new Retreat(position, winner, defender);
         for (List<BasicUnit> hex : units.values()) {
             for (BasicUnit unit : hex) {
                 retreat.addUnit(unit, startPositions.get(unit));

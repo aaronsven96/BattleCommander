@@ -58,7 +58,7 @@ public class IntermediateBoard {
             for (BasicUnit unit : hex) {
                 if (unit != null) {
                      if (newHex != null) {
-                         throw new Exception("too many units on a hex");
+                         throw new Exception("excess units on hex");
                      }
                      newHex = unit;
                 }
@@ -85,7 +85,7 @@ public class IntermediateBoard {
         }
         for (List<BasicUnit> hex : units) {
             if (hex.size() > 1) {
-                hex.clear();
+                hex.removeIf(unit -> unit.getUnitState() == UnitState.routed);
             }
         }
     }

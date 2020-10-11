@@ -1,25 +1,23 @@
 package com.mygdx.game.models;
 
 
-import lombok.Setter;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class Retreat {
-    private Map<BasicUnit, Position> startPositions;
+    private final Map<BasicUnit, Position> startPositions;
     private final Position position;
     private final int winner;
-    @Setter
-    private BasicUnit defender;
+    private final BasicUnit defender;
 
-    public Retreat(Position position, int winner) {
+    public Retreat(Position position, int winner, BasicUnit defender) {
         startPositions = new HashMap<>();
         this.position = position;
         this.winner = winner;
-
+        this.defender = defender;
     }
 
     /**
@@ -35,9 +33,26 @@ public class Retreat {
      * @param units a HexBoard of units to resolve onto
      */
     public HexBoard<List<BasicUnit>> resolve(HexBoard<List<BasicUnit>> units) {
-        HexBoard<List<BasicUnit>> newUnits = units;
-        for (Position position : startPositions.values()) {
+        // TODO: Make this work
 
-        }
+//        BasicUnit winUnit = null;
+//        for (Map.Entry<BasicUnit, Position> entry : startPositions.entrySet()) {
+//            if (entry.getKey().getPid() != winner) {
+//                if (entry.getKey().getId() == defender.getId()) {
+//
+//                } else {
+//                    List<BasicUnit> newTarget = units.getHex(entry.getValue()).get();
+//                    newTarget.add(entry.getKey());
+//                    units.setHex(entry.getValue(), newTarget);
+//                    entry.getKey().setUnitState(UnitState.routed);
+//                }
+//            } else if (winUnit == null) {
+//                winUnit = entry.getKey();
+//            }
+//        }
+//        List<BasicUnit> newPosition = new ArrayList<BasicUnit>();
+//        newPosition.add(winUnit);
+//        units.setHex(position, newPosition);
+        return units;
     }
 }

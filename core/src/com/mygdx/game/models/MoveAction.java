@@ -30,16 +30,11 @@ public class MoveAction implements UnitAction {
     public boolean apply(Command action, IntermediateBoard board) {
         if (isValid(action, board)) {
             List<BasicUnit> newStart = board.getUnits().getHex(action.getStartPosition()).get();
-            List<BasicUnit> newTarget = board.getUnits().getHex(action.getStartPosition()).get();
-            for (BasicUnit basicUnit : newStart) {
-                if (basicUnit.getId() == action.getUnitId()) {
-                    newTarget.add(basicUnit);
-                    board.getBattle(action.getTargetPosition()).get().addUnit(basicUnit, strength, action.getStartPosition());
-                    break;
-                }
-            }
+            List<BasicUnit> newTarget = board.getUnits().getHex(action.getTargetPosition()).get();
             for (BasicUnit unit : newStart) {
                 if (unit.getId() == action.getUnitId()) {
+                    newTarget.add(unit);
+                    board.getBattle(action.getTargetPosition()).get().addUnit(unit, strength, action.getStartPosition());
                     newStart.remove(unit);
                     break;
                 }
